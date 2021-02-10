@@ -3,9 +3,12 @@ Type: Book
 Title: Colsci Book
 Version: 0.0.1
 Imports:
+  alphashape3d,
   bookdown,
+  mapproj,
   NbClust,
-  pavo
+  pavo,
+  rgl
 Remotes: 
   rstudio/bookdown
 License: CC BY 4.0
