@@ -1,6 +1,6 @@
 Package: placeholder
 Type: Book
-Title: The pavo handbook for studying colour in R
+Title: "The pavo handbook: studying biological colouration in R"
 Version: 0.0.1
 Imports:
   alphashape3d,
