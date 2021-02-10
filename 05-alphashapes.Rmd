@@ -1,29 +1,8 @@
----
-title: "Colour volume estimation"
-author: "Hugo Gruson"
-date: "`r Sys.Date()`"
-output: rmarkdown::html_vignette
-bibliography: main.bib
-link-citations: true
-vignette: >
-  %\VignetteIndexEntry{Colour volume estimation}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
----
-
-```{r setup, include = FALSE}
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>",
-  fig.align = "center",
-  fig.show = "hold",
-  eval = identical(Sys.getenv("IN_PKGDOWN"), "true")
-)
-```
-
 ```{r include = FALSE, eval=require("rgl")}
 knitr::knit_hooks$set(webgl = rgl::hook_webgl)
 ```
+
+# Colour volume estimation
 
 Traditionally, colour volume or "colourfulness" of an object has been measured
 by computing the volume of the convex hull containing the data points, as
@@ -34,7 +13,7 @@ while allowing the presence of voids and pockets, which may lead to a more
 accurate measurement of "colourfulness" than convex hulls. For more information
 on the theoretical background, please report to the related article [@Gruson2020]
 
-# $\alpha$-shapes in chromaticity diagrams
+## $\alpha$-shapes in chromaticity diagrams
 
 You can plot the colour volume using $\alpha$-shape with the `vol()` function
 (for non-interactive plots, `tcsvol()` otherwise) by specifying 
@@ -78,7 +57,7 @@ plot(tcs_flowers)
 vol(tcs_flowers, type = "alpha", avalue = 0.5)
 ```
 
-# $\alpha$-shapes in perceptually uniform spaces
+## $\alpha$-shapes in perceptually uniform spaces
 
 In the previous section, we focused on $\alpha$-shapes in chromaticity diagrams since
 it is the most common space where convex hulls (that $\alpha$-shapes aim at
@@ -111,7 +90,7 @@ rgl::bg3d("white")
 plot(ashape_jnd)
 ```
 
-# Colour volume overlap with $\alpha$-shapes
+## Colour volume overlap with $\alpha$-shapes
 
 $\alpha$-shapes can also be used to measure the colour similarity of two objects, 
 by computing the colour volume overlap. This is done in `pavo` with the 

@@ -1,46 +1,10 @@
----
-title: "(2) Importing, Processing, and Visualising Data"
-author: "Rafael Maia, Thomas White, Hugo Gruson, John Endler, Pierre-Paul Bitton, Chad Eliason"
-date: "`r Sys.Date()`"
-output:
-  rmarkdown::html_vignette:
-    toc: true
-    toc_depth: 4
-link-citations: true
-bibliography: main.bib
-vignette: >
-  %\VignetteIndexEntry{(2) Importing, Processing, and Visualising Data}
-  %\VignetteEngine{knitr::rmarkdown}
-  \usepackage[utf8]{inputenc}
----
-
-<style type="text/css">
-/* Put all captions in italics */
-.caption {
-  font-style: italic;
-}
-/* Auto-wrap long code line */
-code.sourceCode {
-  white-space: pre-wrap;
-}
-</style>
-
-```{r include = FALSE}
-# Do not use partial matching
-knitr::knit_hooks$set(fig = knitr::hook_pngquant)
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>",
-  fig.align = "center",
-  fig.show = "hold"
-)
-```
+# Importing, Processing, and Visualising Data
 
 [pavo_repo]: https://github.com/rmaia/pavo
 
 [data_location]: https://github.com/rmaia/pavo/tree/master/data_external/vignette
 
-# Organizing Spectral Data
+## Organizing Spectral Data
 
 Let's begin by loading the package.
 
@@ -50,7 +14,7 @@ library(pavo)
 set.seed(1612217)
 ```
 
-## Spectral Dataset Description
+### Spectral Dataset Description
 
 The raw spectral data used in this example are available from the package repository on [github][pavo_repo], located [here][data_location]. You can download and extract it to follow the vignette exactly. Alternatively, the data are included as an RData file as part of the package installation, and so can be loaded directly (see below).
 
@@ -58,7 +22,7 @@ The data consist of reflectance spectra, obtained using Avantes equipment and so
 
 In addition, `pavo` includes three datasets that can be called with the `data()` function. `data(teal)`, `data(sicalis)`, and `data(flowers)` will all be used in this vignette. See the help files for each dataset for more information; via `?teal`, `?sicalis`, and `?flowers`.
 
-## Importing
+### Importing
 
 The first thing we need to do is import spectral data into R using the function `getspec()`. It's worth noting that `getspec()` is simply a wrapper for `lr_get_spec()` from the package [`lightr`](https://docs.ropensci.org/lightr/), which is a more specialised and feature-rich package for the import of spectral data and metadata [@gruson2019]. Since the example spectra were obtained using Avantes software, we will need to specify that the files have the `.ttt` extension. Further, the data is organized in subdirectories for each species. `getspec()` will search through subdirectories recursively, and may include the names of the subdirectories in the spectra name if desired. `getspec()` also uses parallel processing thanks to the `future` package. You can check the documentation (`?future::plan()`) for more details but an easy way to set up parallel processing in most cases is to use the `plan("multiprocess")` command. A final issue with the data is that it was collected using a computer with international numbering input, which means it uses commas instead of periods as a decimal separator. We can specify that in the function call.
 
@@ -132,7 +96,7 @@ fakedat.new2 <- as.rspec(fakedat, lim = c(300, 1000))
 plot(fakedat.new2[, 2] ~ fakedat.new2[, 1], type = "l")
 ```
 
-## Subsetting and Merging Spectral Data
+### Subsetting and Merging Spectral Data
 
 Once an `rspec` object has been created, either by importing raw spectral data or converting a dataset with the `as.rspec()` function, you can subset the spectra based on their names using a modified version of `R`'s built-in `subset` function. For example, the following code illustrates how to create an `rspec` object containing only tanagers:
 
@@ -169,9 +133,9 @@ specs.new <- merge(specs.tanager, specs.parakeet)
 
 Note that this re-combined file (`specs.new`) has only a single `wl` column with the merged spectra as columns. Keep in mind that the order of objects in `merge` will determine the order of columns in the final merged object (i.e. tanagers will be before parakeets).
 
-# Processing Spectral Data
+## Processing Spectral Data
 
-## Averaging Spectra
+### Averaging Spectra
 
 As previously described, our data (contained in the `specs` object) consists of multiple individuals, and each was measured three times, as is common to avoid measurement bias. A good way to visualize the repeatability of our measurements is to plot the spectra of each individual separately. The function `explorespec()` provides an easy way of doing so. You may specify the number of spectra to be plotted in the same panel using the argument `specreps`, and the function will adjust the number of panels per page accordingly. We will exemplify this function using only the 12 cardinal individuals measured:
 
@@ -204,7 +168,7 @@ sppspec <- aggspec(mspecs, by = spp, FUN = mean)
 round(sppspec[1:5, ], 2)
 ```
 
-## Normalizing and Smoothing Spectra
+### Normalizing and Smoothing Spectra
 
 Data obtained from spectrometers often requires further processing before analysis and/or publication. For example, electrical noise can produce unwanted "spikes" in reflectance curves. The `pavo` function `procspec()` can handle a variety of processing techniques. For example, the reflectance curve from the parakeet is noisy in the short (300-400 nm) and long (650-700 nm) wavelength ranges (see Figure below, black line). To eliminate this noise, we will use local regression smoothing implemented by the `loess.smooth()` function in `R`, wrapped in the `opt="smooth"` argument of `procspec()`.
 
@@ -249,7 +213,7 @@ mtext("Wavelength (nm)", side = 1, outer = TRUE, line = 1)
 mtext("Normalised reflectance (%)", side = 2, outer = TRUE, line = 1)
 ```
 
-## Binning and PCA Analysis of Spectral Shape
+### Binning and PCA Analysis of Spectral Shape
 
 Another intended usage of `procspec()` is preparation of spectral data for dimensionality reduction (for example, using Principal Component Analysis, or PCA). Following @Cuthill1999, we can use `opt = 'center'` to centre spectra to have a mean reflectance of zero (thus removing brightness as a dominant variable in the PCA) and then bin the spectra into user-defined bins (using the `opt = 'bin'` argument) to obtain a dataframe suitable for the PCA.
 
@@ -285,7 +249,7 @@ plot(sppspec, select = sel, labels.stack = names(sppspec)[sel], type = "s", col 
 mtext("Wavelength (nm)", side = 1, outer = TRUE, line = 1)
 ```
 
-## Dealing With Negative Values in Spectra
+### Dealing With Negative Values in Spectra
 
 Negative values in spectra are unwanted, as they are uninterpretable (how can there be less than zero light reflected by a surface?) and can affect estimates of colour variables. Nonetheless, certain spectrometer manufacturers allow negative values to be saved. To handle negative values, the `procspec()` function has an argument called `fixneg`. The two options available are (1) adding the absolute value of the most negative value to the whole spectrum with `addmin`, and (2) changing all negative values to zero with `zero`.
 
@@ -316,11 +280,11 @@ mtext("Reflectance (%)", side = 2, outer = TRUE, line = 1)
 
 These manipultions may have different effects on the final spectra, which the user should keep in mind and use according to the final goal of the analysis. For example, by adding the minimum reflectance to all other wavelength, the shape of the curve is preserved, but the maximum reflectance is much higher. On the other hand, substituting negative values with zero preserves absolute reflectance values, but may cause the spectral shape to be lost. The "best" transformation will depend on the severity of the problem of negative values and the goal of the analysis (e.g. will reflectance intensity be used? What is more important, to preserve reflectance values or the total shape of the curve?). Which correction to use would also depend on the source of the negative values. If they are thought to originate from improper calibration of the spectrophotometer, `fixneg = addmin` would be appropriate. However, if they are thought to originate from electric noise, `fixneg = zero` would be more appropriate.
 
-# Visualizing Spectral Data
+## Visualizing Spectral Data
 
 `pavo` offers three main plotting functions. The main one is `plot`, which combines several different options in a flexible framework for most commonly used purposes. The `explorespec()` function aims at providing initial exploratory analysis, as demonstrated in Section 1. Finally, `aggplot()` provides a simple framework for publication-quality plots of aggregated spectral data.
 
-## The `plot` Function Options
+### The `plot` Function Options
 
 Since `pavo` uses the class `rspec` to identify spectral data, the function `plot.rspec()` can be called simply by calling `plot(data)`. If the object is not of class `rspec` the multivariate visualisation methods will not work as expected, so it might be useful to check the data using `is.rspec()` and convert with `as.rspec()` if necessary.
 
@@ -332,7 +296,7 @@ We have implemented three methods of visualizing spectral data using `plot`:
 
 These options are in addition to the exploratory plotting offered by `explorespec()`, as seen in the figures in section 1. To showcase the capabilities of `plot.rspec()`, we will use the `teal` dataset included in `pavo`. This dataset consists of reflectance spectra from the iridescent wing patch of a green-winged teal (_Anas carolinensis_). Reflectance measurements were taken between 300 and 700 nm at different incident angles, ranging from 15° to 70° (in 5° increments) [@Eliason2012].
 
-### The `overlay` Option
+#### The `overlay` Option
 
 We can start out by visualizing these spectra with the `overlay` option in plot. Another neat option `pavo` offers is to convert reflectance spectra to their approximate perceived colour, by using the function `spec2rgb()`. This can make for some very interesting plots and even exploratory data analysis, as shown above.
 
@@ -341,7 +305,7 @@ data(teal)
 plot(teal, type = "o", col = spec2rgb(teal))
 ```
 
-### The `stack` Option
+#### The `stack` Option
 
 Another option is the `stack` plot (again, with human vision approximations of the colour produced by the spectra using `spec2rgb()`).
 
@@ -357,7 +321,7 @@ mtext("Cumulative reflectance (A.U.)", side = 2, outer = T, line = 1)
 
 Note that in the above figure, the y axis to the right includes the index of each spectrum. This makes it easier to identify and subset specific spectra or groups of spectra using the `select` argument in `plot.rspec()`. Note also that the first index is actually 2, preserving the sequence in the original dataset (since the first column is wavelength). Though this may seem confusing at first ("why is my first spec number 2?") this preserves subsetting hierarchy: using `plot(teal, select = 2)` will show the same spectra that would be selected if you use `teal[ ,2]`.
 
-### The `heatmap` Option
+#### The `heatmap` Option
 
 Since this dataset is three-dimensional (containing wavelengths, reflectance values and incident angles) we can also use the `heatmap` function. First, it will be necessary to define a vector for the incident angles each spectrum was measured at:
 
@@ -382,7 +346,7 @@ plot(teal.sm,
 
 These plots can be very useful to observe changes over time, for example, or any other type of continuous variation.
 
-## The `aggplot()` Function
+### The `aggplot()` Function
 
 `aggplot()` has a very similar interface to `aggspec()`, allowing for quick plotting of aggregated spectra combined by a factor, such as species, sex, experimental treatment, and so on. Its main output is a plot with lines of group mean spectra outlined by a shaded area indicating some measure of variability, such as the standard deviation of the group. Note that functions that aren't already implemented in R must be passed like they would be to functions such as `apply` (e.g., `function(x) sd(x)/sqrt(length(x))` in the example below).
 
@@ -400,7 +364,7 @@ aggplot(mspecs, spp,
         lcol = 1, shadecol = "grey", alpha = 0.7)
 ```
 
-# Organizing Spatial (image) Data
+## Organizing Spatial (image) Data
 
 We first import our images with `getimg()`, which functions in a similar manner to `getspec()`. Since we are importing more than one image, we can simply point the function to the folder containing the images, and it will use parallel processing (where possible) to import any jpg, bmp, or png images in the folder. As with the raw spectra, these images are also available at the package repository [here][data-location], but are included in the package installation for convenience.
 
@@ -430,9 +394,9 @@ is.rimg(fake_rimg)
 str(fake_rimg)
 ```
 
-# Visualising Image Data
+## Visualising Image Data
 
-## The `plot` and `summary` Functions
+### The `plot` and `summary` Functions
 
 Thanks to the underlying class system of `pavo`, the generic functions `plot` and `summary` recognise and respond to image-data in an appropriate manner, as is the case with spectral data. A quick call to `plot`, for example, prints our images. Note that while we call an image individually below (for convenient printing in the vignette), we could simply feed the entire list of images to `plot` and it would automatically step through each image in the list upon user input.
 
@@ -445,13 +409,13 @@ plot(butterflies[[1]])
 
 The `summary` function offers some summary information about images or lists of images as we might expect. If we specify `plot = TRUE` however, the function instead plots the image. When such images have been colour-classified this also plots the images' colour palette alongside (see below). This is an extremely useful diagnostic tool when classifying images, as it allows us to see how well the classification algorithm has performed in clustering colour pattern elements into discrete colour categories. As with all plots, the function takes all standard plot arguments (see `?par`), such as custom colours, which again can be diagnostically useful.
 
-# Processing Image Data
+## Processing Image Data
 
-## Overview
+### Overview
 
 Images often require some post-capture processing, depending on the intended use, and `pavo` offers some useful options via `procimg()`. The functionality of `procimg()` is currently limited to only that which is closely relevant to the analyses currently implemented, as we assume any major processing and quality-checking (e.g. image rotation and colour correction) is undertaken by the user beforehand. However, should users with to keep their image processing within the R ecosystem, there now exist several excellent image-processing packages such as `imager` and `magick`, which `pavo` can seamlessly work with. Indeed, the functions `rimg2cimg()` and `rimg2magick()` convert images from `pavo` preferred structure to that used by `imager` (with the reverse simply achieved via `as.rimg()`), which simplifies the transitions between these packages.
 
-## Setting Scales and Defining Objects
+### Setting Scales and Defining Objects
 
 The functionality of `procimg()` is currently centred on rotating and resizing images, setting a real-world image scale, and/or distinguishing the focal object from its background. Rotating an image simply requires inputting an angle, in degrees, by which the image is rotated about its centre, while resizing requires a scaling factor by which the size of image(s) are to be decreased or increased. Setting scales and distinguishing backgrounds, in contrast, are both interactive procedures, meaning that we are presented with the focal image and must select points on it using the mouse (either a line, when setting a scale, or a polygon when identifying the focus). If setting a scale, we specify a scale in our preferred units via `scaledist`, and then click the endpoints of the scale within the image (which could be a 'formal' scale, or simply the length of a wing or another known reference object). This information, as usual, is attached to the image as an attribute.
 
@@ -468,6 +432,3 @@ butterflies <- procimg(butterflies, outline = TRUE, iterations = 1)
 ```
 
 All of these options can be simultaneously specified in a single call to `procimg()`, and the `pavo 2.0` publication offers a useful example of such processing, since the more involved features are difficult to illustrate here due to their interactive nature.
-
-# References
-

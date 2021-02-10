@@ -1,16 +1,4 @@
----
-title: "Spectral Shape Descriptors"
-author: "Rafael Maia, Thomas White, Hugo Gruson, John Endler, Pierre-Paul Bitton, Chad Eliason"
-date: "`r Sys.Date()`"
-output: 
-  rmarkdown::html_vignette:
-link-citations: true
-bibliography: main.bib
-vignette: >
-  %\VignetteIndexEntry{Spectral Shape Descriptors}
-  %\VignetteEngine{knitr::rmarkdown}
-  \usepackage[utf8]{inputenc}
----
+# Spectral shape descriptors
 
 <style>
 tr:hover {
@@ -55,5 +43,3 @@ of reflectance curve in a region of interest
 of the spectrum
 - $\lambda_{R_{mid}}$: wavelength at the reflectance midpoint between $R_{max}$
 and $R_{min}$ (i.e., $\frac{R_{max}+R_{min}}{2}$)
-
-# References
