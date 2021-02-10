@@ -1,9 +1,5 @@
 # Importing, Processing, and Visualising Data
 
-[pavo_repo]: https://github.com/rmaia/pavo
-
-[data_location]: https://github.com/rmaia/pavo/tree/master/data_external/vignette
-
 ## Organizing Spectral Data
 
 Let's begin by loading the package.
