@@ -20,6 +20,11 @@ jobs:
       - name: Setup R
         uses: r-lib/actions/setup-r@master
 
+      - name: Config git actor
+        run: |
+          git config --local user.email "actions@github.com"
+          git config --local user.name "GitHub Actions"
+
       - name: Install system requirements
         run: |
           brew install pandoc
@@ -53,10 +58,16 @@ jobs:
           key: bookdown-${{ hashFiles('**/*Rmd') }}
           restore-keys: bookdown-
 
-      - name: Build manual
+      - name: Render gitbook
         run: |
-          ./_build.sh
+          bookdown::render_book('index.Rmd', 'bookdown::gitbook')
+        shell: Rscript {0}
 
       - name: Publish manual
         run: |
-          ./_deploy.sh
+          git clone -b gh-pages https://${{github.actor}}:${{secrets.GITHUB_TOKEN}}@github.com/${{github.repository}}.git book-output
+          cd book-output
+          cp -r ../_book/* ./
+          git add --all *
+          git commit -m "Update the book" || true
+          git push https://${{github.actor}}:${{secrets.GITHUB_TOKEN}}@github.com/${{github.repository}}.git gh-pages
