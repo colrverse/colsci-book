@@ -26,6 +26,9 @@ jobs:
       - name: Install system requirements
         run: |
           brew install pandoc
+          brew install cask xquartz
+          brew install imagemagick@6
+
       - name: Query dependencies
         run: |
           install.packages('remotes')
