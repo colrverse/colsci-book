@@ -1,7 +1,11 @@
 Package: placeholder
 Type: Book
-Title: Does not matter.
+Title: Colsci Book
 Version: 0.0.1
-Imports: bookdown
-Remotes: rstudio/bookdown
+Imports:
+  bookdown,
+  NbClust,
+  pavo
+Remotes: 
+  rstudio/bookdown
 License: CC BY 4.0
