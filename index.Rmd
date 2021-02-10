@@ -15,4 +15,6 @@ github-repo: bisaloo/colsci-book
 
 [pavo_repo]: https://github.com/rmaia/pavo
 
+# Introduction
+
 This book contains the documentation for the [pavo R package][pavo_repo]
