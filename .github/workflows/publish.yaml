@@ -55,8 +55,8 @@ jobs:
 
       - name: Build manual
         run: |
-          _build.sh
+          ./_build.sh
 
       - name: Publish manual
         run: |
-          _deploy.sh
+          ./_deploy.sh
