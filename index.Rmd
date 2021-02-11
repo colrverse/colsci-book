@@ -13,6 +13,7 @@ github-repo: bisaloo/colsci-book
 ---
 
 [pavo_repo]: https://github.com/rmaia/pavo
+[data_location]: https://github.com/rmaia/pavo/tree/master/data_external/vignette
 
 # Package Overview
 
