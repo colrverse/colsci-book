@@ -292,6 +292,11 @@ We have implemented three methods of visualizing spectral data using `plot`:
 
 These options are in addition to the exploratory plotting offered by `explorespec()`, as seen in the figures in section 1. To showcase the capabilities of `plot.rspec()`, we will use the `teal` dataset included in `pavo`. This dataset consists of reflectance spectra from the iridescent wing patch of a green-winged teal (_Anas carolinensis_). Reflectance measurements were taken between 300 and 700 nm at different incident angles, ranging from 15° to 70° (in 5° increments) [@Eliason2012].
 
+```{r, echo = FALSE, fig.cap = "Anas carolinensis, by pixabay user Cock-Robin, CC0"}
+# Source: https://pixabay.com/es/photos/animal-estanque-agua-ave-4646309/
+knitr::include_graphics("fig/anas-carolinensis.jpg")
+```
+
 #### The `overlay` Option
 
 We can start out by visualizing these spectra with the `overlay` option in plot. Another neat option `pavo` offers is to convert reflectance spectra to their approximate perceived colour, by using the function `spec2rgb()`. This can make for some very interesting plots and even exploratory data analysis, as shown above.
