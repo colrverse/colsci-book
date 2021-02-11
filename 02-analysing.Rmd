@@ -36,7 +36,7 @@ Second, reflectance spectra can be analysed by accounting for the visual system 
 
 #### Colourimetric Variables
 
-Obtaining colourimetric variables (pertaining to hue, saturation and brightness/value) is pretty straightforward in `pavo`. Since reflectance spectra is stored in an object of class `rspec`, the `summary` function recognizes the object as such and extracts 23 variables, as outlined in @Montgomerie2006. Though outlined in a book chapter on bird colouration, these variables are broadly applicable to any reflectance data, particularly if the taxon of interest has colour vision within the UV-human visible range.
+Obtaining colourimetric variables (pertaining to hue, saturation and brightness/value) is pretty straightforward in `pavo`. Since reflectance spectra is stored in an object of class `rspec`, the `summary` function recognizes the object as such and extracts 23 variables, as outlined in @Montgomerie2006 (and reproduced [here](spectral-shape-descriptors.html)). Though outlined in a book chapter on bird colouration, these variables are broadly applicable to any reflectance data, particularly if the taxon of interest has colour vision within the UV-human visible range.
 
 The description and formulas for these variables can be found by running `?summary.rspec`.
 
