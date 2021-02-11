@@ -10,5 +10,6 @@ Imports:
   pavo,
   rgl
 Remotes: 
+  rmaia/pavo,
   rstudio/bookdown
 License: CC BY 4.0
