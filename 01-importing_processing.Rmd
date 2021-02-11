@@ -187,7 +187,7 @@ lines(spec.sm[, 5] ~ sppspec[, 1], col = "red", lwd = 2)
 
 We can also try different normalisations. Options include subtracting the minimum reflectance of a spectrum at all wavelengths (effectively making the minimum reflectance equal to zero, `opt = "min"`, left panel, below) and making the reflectance at all wavelength proportional to the maximum reflectance (i.e. setting maximum reflectance to 1; `opt = "max"`, centre panel, below). Note that the user can specify multiple processing options that will be applied sequentially to the spectral data by `procspec()` (right panel, below).
 
-```{r, results='hide'}
+```{r}
 # Run some different normalisations
 specs.max <- procspec(sppspec, opt = "max")
 specs.min <- procspec(sppspec, opt = "min")
@@ -213,7 +213,7 @@ mtext("Normalised reflectance (%)", side = 2, outer = TRUE, line = 1)
 
 Another intended usage of `procspec()` is preparation of spectral data for dimensionality reduction (for example, using Principal Component Analysis, or PCA). Following @Cuthill1999, we can use `opt = 'center'` to centre spectra to have a mean reflectance of zero (thus removing brightness as a dominant variable in the PCA) and then bin the spectra into user-defined bins (using the `opt = 'bin'` argument) to obtain a dataframe suitable for the PCA.
 
-```{r, results='hide'}
+```{r}
 # PCA analysis
 spec.bin <- procspec(sppspec, opt = c("bin", "center"))
 head(spec.bin)
@@ -249,7 +249,7 @@ mtext("Wavelength (nm)", side = 1, outer = TRUE, line = 1)
 
 Negative values in spectra are unwanted, as they are uninterpretable (how can there be less than zero light reflected by a surface?) and can affect estimates of colour variables. Nonetheless, certain spectrometer manufacturers allow negative values to be saved. To handle negative values, the `procspec()` function has an argument called `fixneg`. The two options available are (1) adding the absolute value of the most negative value to the whole spectrum with `addmin`, and (2) changing all negative values to zero with `zero`.
 
-```{r, results='hide'}
+```{r}
 # Create a duplicate spectrum and add some negative values
 refl <- sppspec[, 7] - 20
 testspecs <- as.rspec(cbind(c(300:700), refl))

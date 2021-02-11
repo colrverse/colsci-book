@@ -2,7 +2,7 @@
 
 Let's again begin by loading the package.
 
-```{r, warning=FALSE, results='hide', message=FALSE}
+```{r, warning=FALSE, message=FALSE}
 # Load the package, and set a global random-number seed for the reproducible generation of fake data later on.
 library(pavo)
 set.seed(1612217)
@@ -40,17 +40,17 @@ Obtaining colourimetric variables (pertaining to hue, saturation and brightness/
 
 The description and formulas for these variables can be found by running `?summary.rspec`.
 
-```{r, results='hide'}
+```{r}
 summary(spec.sm)
 ```
 
 `summary` also takes an additional argument `subset` which if changed from the default `FALSE` to `TRUE` will return only the most commonly used colourimetrics [@Andersson2006]. `summary` can also take a vector of colour variable names, which can be used to filter the results
 
-```{r, results='hide'}
+```{r}
 summary(spec.sm, subset = TRUE)
 ```
 
-```{r, results='hide'}
+```{r}
 # Extract only brightness variables
 summary(spec.sm, subset = c('B1', 'B2', 'B3'))
 ```
@@ -155,7 +155,7 @@ summary(vismod1)
 
 We can visualise what `vismodel()` is doing when estimating quantum catches by comparing the reflectance spectra to the estimates they are generating:
 
-```{r, fig=TRUE, include=TRUE, results = 'hide', fig.width=8.5, fig.height=5, fig.cap="Plots of species mean reflectance curves with corresponding relative usml cone stimulations (insets)."}
+```{r, fig=TRUE, include=TRUE, fig.width=8.5, fig.height=5, fig.cap="Plots of species mean reflectance curves with corresponding relative usml cone stimulations (insets)."}
 oldpar <- par(no.readonly = TRUE)
 par(mfrow = c(2, 6), oma = c(3, 3, 0, 0))
 layout(rbind(c(2, 1, 4 , 3, 6 , 5),
@@ -184,7 +184,7 @@ idealizeddichromat <- sensmodel(c(350, 650))
 plot(idealizeddichromat, col = spec2rgb(idealizeddichromat), ylab = "Absorbance")
 ```
 
-```{r, results='hide'}
+```{r}
 vismod.idi <- vismodel(sppspec, visual = idealizeddichromat, relative = FALSE)
 vismod.idi
 ```
@@ -641,7 +641,7 @@ Where $Qi$ represent the interquantile distances (e.g. $Q1=ultraviolet$, $Q2=blu
 
 The segment classification model is obtained through the `colspace()` argument `space = 'segment'`, following initial modelling with `vismodel()`. The example below uses idealized reflectance spectra to illustrate how the avian colour space defined from the segment classification maps to the human colour wheel:
 
-```{r, fig=TRUE, include=TRUE, results = 'hide', fig.width=4, fig.height=4, fig.cap="Idealized reflectance spectra and their projection on the axes of segment classification"}
+```{r, fig=TRUE, include=TRUE, fig.width=4, fig.height=4, fig.cap="Idealized reflectance spectra and their projection on the axes of segment classification"}
 fakedata1 <- vapply(
   seq(100, 500, by = 20),
   function(x) rowSums(cbind(
