@@ -364,15 +364,24 @@ head(flowers[1:4])
 $$x = \frac{1}{\sqrt{2}}(Q_l - Q_s)$$
 
 **Trichromats:**
-$$x = \frac{1}{\sqrt{2}}(Q_l - Q_m)$$
-$$y = \frac{\sqrt{2}}{\sqrt{3}}(Q_s - \frac{Q_l + Q_m}{2})$$
 
+$$
+\begin{split}
+x &= \frac{1}{\sqrt{2}}(Q_l - Q_m) \\
+y &= \frac{\sqrt{2}}{\sqrt{3}}(Q_s - \frac{Q_l + Q_m}{2})
+\end{split}
+$$
 **Tetrachromats:**
-$$x = \frac{1}{\sqrt{2}}(Q_l - Q_m)$$
-$$y = \frac{\sqrt{2}}{\sqrt{3}}(Q_s - \frac{Q_l + Q_m}{2})$$
-$$z = \frac{\sqrt{3}}{2}(Q_u - \frac{Q_l + Q_m + Q_s}{3})$$
 
-Where Q~u~, Q~s~, Q~m~, and Q~l~ refer to quantum catch estimates for UV-, short, medium-, and long-wavelength photoreceptors, respectively.
+$$
+\begin{split}
+x &= \frac{1}{\sqrt{2}}(Q_l - Q_m) \\
+y &= \frac{\sqrt{2}}{\sqrt{3}}(Q_s - \frac{Q_l + Q_m}{2})
+z &= \frac{\sqrt{3}}{2}(Q_u - \frac{Q_l + Q_m + Q_s}{3})
+\end{split}
+$$
+
+Where $Q_u$, $Q_s$, $Q_m$, and $Q_l$ refer to quantum catch estimates for UV-, short, medium-, and long-wavelength photoreceptors, respectively.
 
 For a dichromatic example, we can model our floral reflectance data using the visual system of the domestic dog _Canis familiaris_, which has two cones with maximal sensitivity near 440 and 560 nm.
 
@@ -482,9 +491,12 @@ vis.flowers <- vismodel(flowers, visual = 'apis', qcatch = 'Ei', relative = FALS
 
 We can then apply the hexagon model in `colspace`, which will convert our photoreceptor 'excitation values' to coordinates in the hexagon according to:
 
-$$x = \frac{\sqrt{3}}{2(E_g + E_{uv})}$$
-
-$$y = E_b - 0.5(E_{uv} + E_g)$$
+$$
+\begin{split}
+x &= \frac{\sqrt{3}}{2(E_g + E_{uv})}\\
+y &= E_b - 0.5(E_{uv} + E_g)
+\end{split}
+$$
 
 ```{r}
 hex.flowers <- colspace(vis.flowers, space = 'hexagon')
@@ -502,8 +514,12 @@ plot(hex.flowers, sectors = 'coarse', pch = 21, bg = spec2rgb(flowers))
 
 The colour opponent coding (coc) space is an earlier hymenopteran visual model [@Backhaus1991] which, although now seldom used in favour of the hexagon, may prove useful for comparative work. While the initial estimation of photoreceptor excitation is similar to that in the hexagon, the coc subsequently specifies `A` and `B` coordinates based on empirically-derived weights for the output from each photoreceptor:
 
-$$A = -9.86E_u + 7.70E_b + 2.16E_g$$
-$$B = -5.17E_u + 20.25E_b - 15.08E_g$$
+$$
+\begin{split}
+A &= -9.86E_u + 7.70E_b + 2.16E_g\\
+B &= -5.17E_u + 20.25E_b - 15.08E_g
+\end{split}
+$$
 
 Where $E_i$ is the excitation value (hyperbolic-transformed quantum catch) in photoreceptor $i$.
 
@@ -525,9 +541,13 @@ plot(coc.flowers, pch = 21, bg = spec2rgb(flowers), yaxt = "n")
 
 The CIE (International Commission on Illumination) colourspaces are a suite of models of human colour vision and perception. `pavo 1.0` now includes two of the most commonly used: the foundational 1931 CIE XYZ space, and the more modern, perceptually calibrated CIE LAB space and its cylindrical CIE LCh transformation. Tristimulus values in XYZ space are calculated as:
 
-$$X = k\int_{300}^{700}{R(\lambda)I(\lambda)\bar{x}(\lambda)\,d\lambda}$$
-$$Y = k\int_{300}^{700}{R(\lambda)I(\lambda)\bar{y}(\lambda)\,d\lambda}$$
-$$Z = k\int_{300}^{700}{R(\lambda)I(\lambda)\bar{z}(\lambda)\,d\lambda}$$
+$$
+\begin{split}
+X &= k\int_{300}^{700}{R(\lambda)I(\lambda)\bar{x}(\lambda)\,d\lambda}\\
+Y &= k\int_{300}^{700}{R(\lambda)I(\lambda)\bar{y}(\lambda)\,d\lambda}\\
+Z &= k\int_{300}^{700}{R(\lambda)I(\lambda)\bar{z}(\lambda)\,d\lambda}
+\end{split}
+$$
 
 where _x_, _y_, and _z_ are the trichromatic colour matching functions for a 'standard colourimetric viewer'. These functions are designed to describe an average human's chromatic response within a specified viewing arc in the fovea (to account for the uneven distribution of cones across eye). `pavo` includes both the CIE 2-degree and the modern 10-degree standard observer, which can be selected in the `visual` option in the `vismodel` function. In these equations, k is the normalising factor
 
@@ -535,9 +555,13 @@ $$k = \frac{100}{\int_{300}^{700}{I(\lambda)\bar{y}(\lambda)\,d\lambda}}$$
 
 and the chromaticity coordinates of stimuli are calculated as
 
-$$x = \frac{X}{X + Y + Z}$$
-$$y = \frac{Y}{X + Y + Z}$$
-$$z = \frac{Z}{X + Y + Z} = 1 - x - y$$
+$$
+\begin{split}
+x &= \frac{X}{X + Y + Z}\\
+y &= \frac{Y}{X + Y + Z}\\
+z &= \frac{Z}{X + Y + Z} = 1 - x - y
+\end{split}
+$$
 
 For modelling in both XYZ and LAB spaces, here we'll use the CIE 10-degree standard observer, and assume a `D65` 'standard daylight' illuminant. Again, although they are colourspace models, we need to set `relative = FALSE` to return raw quantum catch estimates, `vonkries = TRUE` to account for the required normalising factor (as above), and `achromatic = 'none'` since there is no applicable way to estimate luminance in the CIE models. As with all models that have particular requirements, `vismodel()` will output warnings and/or errors if unusual or non-standard arguments are specified.
 
@@ -559,15 +583,19 @@ plot(ciexyz.flowers, pch = 21, bg = spec2rgb(flowers))
 The `Lab` space is a more recent development, and is a colour-opponent model that attempts to mimic the nonlinear responses of the human eye. The `Lab` space is also calibrated (unlike the `XYZ` space) such that Euclidean distances between points represent relative perceptual distances. This means that two stimuli that are farther apart in `Lab` space should be _perceived_ as more different than two closer points. As the name suggests, the dimensions of the `Lab` space are *L*ightness (i.e. subjective brightness), along with two colour-opponent dimensions designated *a* and *b*. The `colspace()` function, when `space = cielab`, simply converts points from the `XYZ` model according to:
 
 $$
-L=\begin{cases}
+\begin{split}
+
+L &=\begin{cases}
 116\left(\frac{Y}{Y_n}\right)^\frac{1}{3} & \text{if } \frac{Y}{Y_n} > 0.008856 \\
 903.3\left(\frac{Y}{Y_n}\right) & \text{if } \frac{Y}{Y_n} \leq 0.008856
-\end{cases}
+\end{cases}\\
+
+a &= 500\left(f\left(\frac{X}{X_n}\right) - f\left(\frac{Y}{Y_n}\right)\right)\\
+
+b &= 500\left(f\left(\frac{Y}{Y_n}\right) - f\left(\frac{Z}{Z_n}\right)\right)
+
+\end{split}
 $$
-
-$$a = 500\left(f\left(\frac{X}{X_n}\right) - f\left(\frac{Y}{Y_n}\right)\right)$$
-
-$$b = 500\left(f\left(\frac{Y}{Y_n}\right) - f\left(\frac{Z}{Z_n}\right)\right)$$
 
 where
 
@@ -580,9 +608,13 @@ $$
 
 Here, $X_n, Y_n, Z_n$ are neutral point values to model visual adaptation, calculated as:
 
-$$X_n = \int_{300}^{700}{R_n(\lambda)I(\lambda)\bar{x}(\lambda)\,d\lambda}$$
-$$Y_n = \int_{300}^{700}{R_n(\lambda)I(\lambda)\bar{y}(\lambda)\,d\lambda}$$
-$$Z_n = \int_{300}^{700}{R_n(\lambda)I(\lambda)\bar{z}(\lambda)\,d\lambda}$$
+$$
+\begin{split}
+X_n &= \int_{300}^{700}{R_n(\lambda)I(\lambda)\bar{x}(\lambda)\,d\lambda}\\
+Y_n &= \int_{300}^{700}{R_n(\lambda)I(\lambda)\bar{y}(\lambda)\,d\lambda}\\
+Z_n &= \int_{300}^{700}{R_n(\lambda)I(\lambda)\bar{z}(\lambda)\,d\lambda}
+\end{split}
+$$
 
 when $R_n(\lambda)$ is a perfect diffuse reflector (i.e. 1).
 
@@ -609,9 +641,12 @@ vis.flowers <- vismodel(flowers, qcatch = 'Qi', visual = 'musca', achromatic = '
 
 Our call to `colspace()` will then simply estimate the location of stimuli in the categorical space as the difference in relative stimulation between 'pale' (R7p - R8p) and 'yellow' (R7y - R8y) photoreceptor pairs:
 
-$$x = R7_p - R8_p$$
-
-$$y = R7_y - R8_y$$
+$$
+\begin{split}
+x &= R7_p - R8_p\\
+y &= R7_y - R8_y
+\end{split}
+$$
 
 ```{r}
 cat.flowers <- colspace(vis.flowers, space = 'categorical')
@@ -634,8 +669,12 @@ Note that, while a segment analysis ranging from 300 or 400 nm to 700 nm corresp
 
 The segment differences or "opponents" are calculated as:
 
-$$LM = \frac{ R_\lambda \sum_{\lambda={Q4}} R_\lambda - \sum_{\lambda={Q2}} R_\lambda }{\sum_{\lambda={min}}^{max}R_\lambda}$$
-$$MS = \frac{ R_\lambda \sum_{\lambda={Q3}} R_\lambda - \sum_{\lambda={Q1}} R_\lambda }{\sum_{\lambda={min}}^{max}R_\lambda}$$
+$$
+\begin{split}
+LM &= \frac{ R_\lambda \sum_{\lambda={Q4}} R_\lambda - \sum_{\lambda={Q2}} R_\lambda }{\sum_{\lambda={min}}^{max}R_\lambda}\\
+MS &= \frac{ R_\lambda \sum_{\lambda={Q3}} R_\lambda - \sum_{\lambda={Q1}} R_\lambda }{\sum_{\lambda={min}}^{max}R_\lambda}
+\end{split}
+$$
 
 Where $Qi$ represent the interquantile distances (e.g. $Q1=ultraviolet$, $Q2=blue$, $Q3=green$ and $Q4=red$)
 
