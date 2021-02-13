@@ -12,10 +12,17 @@ github-repo: bisaloo/colsci-book
 # description: "This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook."
 ---
 
+```{r setup, echo = FALSE}
+knitr::opts_chunk$set(
+  class.warning = "cw",
+  class.message = "cm"
+)
+```
+
 [pavo_repo]: https://github.com/rmaia/pavo
 [data_location]: https://github.com/rmaia/pavo/tree/master/data_external/vignette
 
-```{r}
+```{r, echo = FALSE}
 book_repo <- "https://github.com/Bisaloo/colsci-book"
 book_site <- "https://bisaloo.github.io/colsci-book"
 ```
