@@ -316,8 +316,8 @@ teal.norm <- procspec(teal, opt = c("min", "max"))
 plot(teal, type = "s", col = spec2rgb(teal))
 plot(teal.norm, type = "s", col = spec2rgb(teal))
 
-mtext("Wavelength (nm)", side = 1, outer = T, line = 1)
-mtext("Cumulative reflectance (A.U.)", side = 2, outer = T, line = 1)
+mtext("Wavelength (nm)", side = 1, outer = TRUE, line = 1)
+mtext("Cumulative reflectance (A.U.)", side = 2, outer = TRUE, line = 1)
 ```
 
 Note that in the above figure, the y axis to the right includes the index of each spectrum. This makes it easier to identify and subset specific spectra or groups of spectra using the `select` argument in `plot.rspec()`. Note also that the first index is actually 2, preserving the sequence in the original dataset (since the first column is wavelength). Though this may seem confusing at first ("why is my first spec number 2?") this preserves subsetting hierarchy: using `plot(teal, select = 2)` will show the same spectra that would be selected if you use `teal[ ,2]`.
