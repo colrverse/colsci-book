@@ -5,7 +5,8 @@
 Let's begin by loading the package.
 
 ```{r, warning=FALSE, results='hide', message=FALSE}
-# Load the package, and set a global random-number seed for the reproducible generation of fake data later on.
+# Load the package, and set a global random-number seed for the reproducible
+# generation of fake data later on.
 library(pavo)
 set.seed(1612217)
 ```

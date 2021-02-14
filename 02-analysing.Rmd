@@ -3,7 +3,8 @@
 Let's again begin by loading the package.
 
 ```{r, warning=FALSE, message=FALSE}
-# Load the package, and set a global random-number seed for the reproducible generation of fake data later on.
+# Load the package, and set a global random-number seed for the reproducible
+# generation of fake data later on.
 library(pavo)
 set.seed(1612217)
 ```
@@ -745,7 +746,10 @@ Specialised colourspace models such as the colour-hexagon, coc space, CIELab and
 
 ```{r}
 # Model flower colours according to a honeybee
-vis.flowers <- vismodel(flowers, visual = "apis", qcatch = "Ei", relative = FALSE, vonkries = TRUE, achromatic = "l", bkg = "green")
+vis.flowers <- vismodel(
+  flowers, visual = "apis", qcatch = "Ei", relative = FALSE, vonkries = TRUE, 
+  achromatic = "l", bkg = "green"
+)
 hex.flowers <- colspace(vis.flowers, space = "hexagon")
 
 # Estimate colour distances. No need to specify relative receptor densities, noise etc.,
@@ -762,16 +766,19 @@ The `coldist()` function is no longer limited to di-, tri- or tetrachromatic vis
 
 ```{r, fig=TRUE, include=TRUE, fig.width=4, fig.height=4, fig.cap="Visual system of a pretend mantis shrimp with 10 cones"}
 # Create an arbitrary visual phenotype with 10 photoreceptors
-fakemantisshrimp <- sensmodel(c(325, 350, 400, 425, 450, 500, 550, 600, 650, 700), beta = FALSE, integrate = FALSE)
+fakemantisshrimp <- sensmodel(c(325, 350, 400, 425, 450, 500, 550, 600, 650, 700), 
+                              beta = FALSE, integrate = FALSE)
 
 # Convert to percentages, just to colour the plot
 fakemantisshrimp.colours <- fakemantisshrimp * 100
 fakemantisshrimp.colours[, "wl"] <- fakemantisshrimp[, "wl"]
 
-plot(fakemantisshrimp, col = spec2rgb(fakemantisshrimp.colours), lwd = 2, ylab = "Absorbance")
+plot(fakemantisshrimp, col = spec2rgb(fakemantisshrimp.colours), lwd = 2, 
+     ylab = "Absorbance")
 
 # Run visual model and calculate colour distances
-vm.fms <- vismodel(flowers, visual = fakemantisshrimp, relative = FALSE, achromatic = FALSE)
+vm.fms <- vismodel(flowers, visual = fakemantisshrimp, 
+                   relative = FALSE, achromatic = FALSE)
 
 JND.fms <- coldist(vm.fms, n = c(1, 1, 2, 2, 3, 3, 4, 4, 5, 5))
 
@@ -879,7 +886,8 @@ hsl_vals
 # Now feed this information into the adjacency analysis using the 'less-colourful'
 # of our two images, for convenience (though this could be readily extended to
 # include a list of images along with a list of distances and hsl values)
-adjacent(butterflies_class[[2]], xscale = 200, xpts = 200, bkgID = 1, coldists = distances, hsl = hsl_vals)
+adjacent(butterflies_class[[2]], xscale = 200, xpts = 200, bkgID = 1,
+         coldists = distances, hsl = hsl_vals)
 ```
 
 #### Example 2 (complex): whole visual environments
@@ -898,7 +906,8 @@ plot(lizard)
 # our reflectance measurements. Note that the grid here is likely too coarse to capture the necessary detail,
 # though the sampling density is something to be closely considered on a case-by-case basis
 plot(lizard)
-points(expand.grid(seq(0, dim(lizard)[1], 25), seq(0, dim(lizard)[1], 25)), pch = 16, col = 'red')
+points(expand.grid(seq(0, dim(lizard)[1], 25), seq(0, dim(lizard)[1], 25)),
+       pch = 16, col = 'red')
 ```
 
 For the sake of this example we'll simulate 100 reflectance spectra, as though we had collected them following the above grid. We'll do this by creating four very similar groups of of 25 spectra, which will also allow us to get a sense of how our clustering methods perform. Of course real spectra will be more variable, but the same principles apply.
@@ -940,7 +949,8 @@ jnd.mat[which(jnd.mat < 1)] <- 0
 # Load up a library and use k-means clustering to estimate the number of discrete
 # colours present in our sample.
 library(NbClust)
-clust <- NbClust(jnd.fakescene, diss = jnd.mat, distance = NULL, method = 'centroid', index = 'hartigan')
+clust <- NbClust(jnd.fakescene, diss = jnd.mat, distance = NULL, 
+                 method = 'centroid', index = 'hartigan')
 clust$Best.nc
 ```
 
