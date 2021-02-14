@@ -12,7 +12,20 @@ github-repo: bisaloo/colsci-book
 # description: "This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook."
 ---
 
+```{r setup, echo = FALSE}
+knitr::opts_chunk$set(
+  class.warning = "cw",
+  class.message = "cm"
+)
+```
+
 [pavo_repo]: https://github.com/rmaia/pavo
+[data_location]: https://github.com/rmaia/pavo/tree/master/data_external/vignette
+
+```{r, echo = FALSE}
+book_repo <- "https://github.com/Bisaloo/colsci-book"
+book_site <- "https://bisaloo.github.io/colsci-book"
+```
 
 # Package Overview
 
@@ -25,7 +38,7 @@ github-repo: bisaloo/colsci-book
 3. **Visualise** the output, with multiple options provided for exploration and analysis.
 
 ```{r, echo = FALSE, fig.cap = "A non-exhaustive overview of the colour-pattern analysis workflow in pavo, as of version 2.0, displaying some key functions at each stage.", out.width = '100%', dpi = 72}
-knitr::include_graphics("https://raw.githubusercontent.com/rmaia/pavo/master/vignettes/fig/workflow.png")
+knitr::include_graphics(file.path(book_repo, "blob/main/fig/workflow.png?raw=TRUE"))
 ```
 
 In the remaining chapters we begin by detailing the importing, processing and visualisation of spectral and image data, before moving on to discussion of the many analyses that `pavo` allows. Our hope is to demonstrate the flexibility of `pavo`, and to provide a cohesive, reproducible workflow for colour pattern analysis within `R`. As always, the development version of `pavo` can be found on [github][pavo_repo], while the stable release is available via CRAN.

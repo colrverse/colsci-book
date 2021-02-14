@@ -12,7 +12,7 @@ set.seed(1612217)
 
 ### Spectral Dataset Description
 
-The raw spectral data used in this example are available from the package repository on [github][pavo_repo], located [here][https://github.com/rmaia/pavo/tree/master/data_external/vignette]. You can download and extract it to follow the vignette exactly. Alternatively, the data are included as an RData file as part of the package installation, and so can be loaded directly (see below).
+The raw spectral data used in this example are available from the package repository on [github][pavo_repo], located [here][data_location]. You can download and extract it to follow the vignette exactly. Alternatively, the data are included as an RData file as part of the package installation, and so can be loaded directly (see below).
 
 The data consist of reflectance spectra, obtained using Avantes equipment and software, from seven bird species: Northern Cardinal _Cardinalis cardinalis_, Wattled Jacana _Jacana jacana_, Baltimore Oriole _Icterus galbula_, Peach-fronted Parakeet _Aratinga aurea_, American Robin _Turdus migratorius_, and Sayaca Tanager _Thraupis sayaca_. Several individuals were measured (sample size varies by species), and 3 spectra were collected from each individual. However, the number of individuals measured per species is uneven and the data have additional peculiarities that should emphasize the flexibility `pavo` offers, as we'll see below.
 
@@ -187,7 +187,7 @@ lines(spec.sm[, 5] ~ sppspec[, 1], col = "red", lwd = 2)
 
 We can also try different normalisations. Options include subtracting the minimum reflectance of a spectrum at all wavelengths (effectively making the minimum reflectance equal to zero, `opt = "min"`, left panel, below) and making the reflectance at all wavelength proportional to the maximum reflectance (i.e. setting maximum reflectance to 1; `opt = "max"`, centre panel, below). Note that the user can specify multiple processing options that will be applied sequentially to the spectral data by `procspec()` (right panel, below).
 
-```{r, results='hide'}
+```{r}
 # Run some different normalisations
 specs.max <- procspec(sppspec, opt = "max")
 specs.min <- procspec(sppspec, opt = "min")
@@ -213,7 +213,7 @@ mtext("Normalised reflectance (%)", side = 2, outer = TRUE, line = 1)
 
 Another intended usage of `procspec()` is preparation of spectral data for dimensionality reduction (for example, using Principal Component Analysis, or PCA). Following @Cuthill1999, we can use `opt = 'center'` to centre spectra to have a mean reflectance of zero (thus removing brightness as a dominant variable in the PCA) and then bin the spectra into user-defined bins (using the `opt = 'bin'` argument) to obtain a dataframe suitable for the PCA.
 
-```{r, results='hide'}
+```{r}
 # PCA analysis
 spec.bin <- procspec(sppspec, opt = c("bin", "center"))
 head(spec.bin)
@@ -249,7 +249,7 @@ mtext("Wavelength (nm)", side = 1, outer = TRUE, line = 1)
 
 Negative values in spectra are unwanted, as they are uninterpretable (how can there be less than zero light reflected by a surface?) and can affect estimates of colour variables. Nonetheless, certain spectrometer manufacturers allow negative values to be saved. To handle negative values, the `procspec()` function has an argument called `fixneg`. The two options available are (1) adding the absolute value of the most negative value to the whole spectrum with `addmin`, and (2) changing all negative values to zero with `zero`.
 
-```{r, results='hide'}
+```{r}
 # Create a duplicate spectrum and add some negative values
 refl <- sppspec[, 7] - 20
 testspecs <- as.rspec(cbind(c(300:700), refl))
@@ -292,6 +292,11 @@ We have implemented three methods of visualizing spectral data using `plot`:
 
 These options are in addition to the exploratory plotting offered by `explorespec()`, as seen in the figures in section 1. To showcase the capabilities of `plot.rspec()`, we will use the `teal` dataset included in `pavo`. This dataset consists of reflectance spectra from the iridescent wing patch of a green-winged teal (_Anas carolinensis_). Reflectance measurements were taken between 300 and 700 nm at different incident angles, ranging from 15° to 70° (in 5° increments) [@Eliason2012].
 
+```{r, echo = FALSE, fig.cap = "Anas carolinensis, by pixabay user Cock-Robin, CC0"}
+# Source: https://pixabay.com/es/photos/animal-estanque-agua-ave-4646309/
+knitr::include_graphics("fig/anas-carolinensis.jpg")
+```
+
 #### The `overlay` Option
 
 We can start out by visualizing these spectra with the `overlay` option in plot. Another neat option `pavo` offers is to convert reflectance spectra to their approximate perceived colour, by using the function `spec2rgb()`. This can make for some very interesting plots and even exploratory data analysis, as shown above.
@@ -311,8 +316,8 @@ teal.norm <- procspec(teal, opt = c("min", "max"))
 plot(teal, type = "s", col = spec2rgb(teal))
 plot(teal.norm, type = "s", col = spec2rgb(teal))
 
-mtext("Wavelength (nm)", side = 1, outer = T, line = 1)
-mtext("Cumulative reflectance (A.U.)", side = 2, outer = T, line = 1)
+mtext("Wavelength (nm)", side = 1, outer = TRUE, line = 1)
+mtext("Cumulative reflectance (A.U.)", side = 2, outer = TRUE, line = 1)
 ```
 
 Note that in the above figure, the y axis to the right includes the index of each spectrum. This makes it easier to identify and subset specific spectra or groups of spectra using the `select` argument in `plot.rspec()`. Note also that the first index is actually 2, preserving the sequence in the original dataset (since the first column is wavelength). Though this may seem confusing at first ("why is my first spec number 2?") this preserves subsetting hierarchy: using `plot(teal, select = 2)` will show the same spectra that would be selected if you use `teal[ ,2]`.
