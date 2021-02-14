@@ -734,7 +734,7 @@ seg.fdc <- colspace(seg.vis, space = "segment")
 plot(seg.fdc, col = spec2rgb(fakedata.c))
 ```
 
-##### Colourspace istances with `coldist`
+##### Colourspace Distances with `coldist`
 
 Under the colour space framework, colour distances can be calculated simply as Euclidean distances of the relative cone stimulation data, either log-transformed or not, depending on how it was defined. However, these distances cannot be interpreted in terms of JNDs, since no receptor noise is incorporated in the model. Euclidean distances can be computed in `R` using the `coldist()` function on the `colspace()` output:
 
