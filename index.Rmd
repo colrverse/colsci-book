@@ -25,6 +25,23 @@ options(
 )
 ```
 
+```{css, echo = FALSE}
+p.caption {
+  color: #777;
+  margin-top: 10px;
+}
+p code {
+  white-space: inherit;
+}
+pre {
+  word-break: normal;
+  word-wrap: normal;
+}
+pre code {
+  white-space: inherit;
+}
+```
+
 [pavo_repo]: https://github.com/rmaia/pavo
 [data_location]: https://github.com/rmaia/pavo/tree/master/data_external/vignette
 
