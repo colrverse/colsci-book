@@ -472,8 +472,8 @@ The function `voloverlap()` gives the volume ($V$) of the convex hull delimited 
 
 So we can clearly see that there is overlap between the throat and breast colours (of about 6%), but not between the throat and the crown colours (Figures above).
 
-$\alpha$-shapes are a new tool available in `pavo` to estimate colour volumes, 
-while allowing the presence of voids and pockets, which may lead to a more
+Alternatively, $\alpha$-shapes are a new tool available in `pavo` to estimate colour volumes, 
+while allowing the presence of voids and pockets. $\alpha$-shapes may thus lead to a more
 accurate measurement of "colourfulness" than convex hulls. For more information
 on the theoretical background, please report to the related article [@Gruson2020].
 
@@ -487,7 +487,6 @@ knitr::opts_knit$set(global.device = TRUE)
 ```
 
 ```{r}
-library(pavo)
 data(flowers)
 vis_flowers <- vismodel(flowers, visual = "avg.uv")
 tcs_flowers <- colspace(vis_flowers)
@@ -542,9 +541,10 @@ plot(ashape_jnd)
 ```
 
 $\alpha$-shapes can also be used to measure the colour similarity of two objects, 
-by computing the colour volume overlap. This is done in `pavo` with the 
-`overlap3d()` function. For example, let's compare the colour volume of the 
-crown and the breast of stripe-tailed yellow finches (*Sicalis citrina*):
+by computing the colour volume overlap. This is done with the `type = "alpha"` argument 
+in `voloverlap()`. For example, let's compare ibce agaub the colour volume of the 
+crown and the breast of stripe-tailed yellow finches (*Sicalis citrina*),
+but this time with $\alpha$-shapes:
 
 
 ```{r}
