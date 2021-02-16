@@ -180,13 +180,13 @@ par(oldpar)
 
 As described above, `vismodel` also accepts user-defined visual systems, background and illuminants. We will illustrate this by showcasing the function `sensmodel`, which models spectral sensitivities of retinas based on their peak cone sensitivity, as described in @Govardovskii2000 and @Hart2005. `sensmodel` takes several optional arguments, but the main one is a vector containing the peak sensitivities for the cones being modelled. Let's model an idealized dichromat visual system, with cones peaking in sensitivity at 350 and 650 nm:
 
-```{r, fig=TRUE, include=TRUE, fig.width=5, fig.height=4, fig.cap="Idealized dichromat photoreceptors created using `sensmodel`."}
-idealizeddichromat <- sensmodel(c(350, 650))
-plot(idealizeddichromat, col = spec2rgb(idealizeddichromat), ylab = "Absorbance")
+```{r, fig=TRUE, include=TRUE, fig.width=5, fig.height=4, fig.cap="The receptor sensitivities of an idealised dichromat created using `sensmodel()`."}
+ideal_dichromat <- sensmodel(c(350, 650))
+plot(ideal_dichromat, ylab = "Absorbance")
 ```
 
 ```{r}
-vismod.idi <- vismodel(sppspec, visual = idealizeddichromat, relative = FALSE)
+vismod.idi <- vismodel(sppspec, visual = ideal_dichromat, relative = FALSE)
 vismod.idi
 ```
 
@@ -248,7 +248,7 @@ to:
 coldist(vismod1, subset = c('cardinal', 'jacana'))
 ```
 
-A bootstrap-based variant of `coldist()`, described in @Maia2018 as part of a more general analytical framework, is implemented via the function `bootcoldist()`. As the name suggests, `bootcoldist()` uses a bootstrap procedure to generate confidence intervals for the mean chromatic and/or achromatic distance between two or more samples of colours. This has the benefit of generating useful errors around distance estimates, which can be inspected for the inclusion of appropriate 'threshold', when asking common kinds of questions that relate to between-group differences (e.g. animals-vs-backgrounds, sexual dichromatism, colour polymorphism). The function's arguments are shared `coldist()` save for a few extra requirements. The `by` argument is used to specify a grouping variable that defines the groups to be compared, while `boot.n` and `alpha` control the number of bootstrap replicates and the confidence level for the confidence interval, respectively. The latter two have sensible defaults, but the `by` argument is required.
+A bootstrap-based variant of `coldist()`, described in @Maia2018 as part of a more general analytical framework, is implemented via the function `bootcoldist()`. As the name suggests, `bootcoldist()` uses a bootstrap procedure to generate confidence intervals for the mean chromatic and/or achromatic distance between two or more samples of colours. This has the benefit of generating useful errors around distance estimates, and may also be inspected for the inclusion of an appropriate 'threshold', when asking common kinds of questions that relate to between-group differences (e.g. animals-vs-backgrounds, sexual dichromatism, colour polymorphism). The function's arguments are shared with `coldist()` save for a few extra requirements. For one, the `by` argument is used to specify a grouping variable that defines the groups to be compared, while `boot.n` and `alpha` control the number of bootstrap replicates and the confidence level for the confidence interval, respectively. The latter two have sensible defaults, but the `by` argument is required.
 
 Here we run present a quick example that tests for colour differences across three body regions (breast, crown, and throat) of the finch _Sicalis citrina_, given seven measures of each region from different males.
 
@@ -288,7 +288,7 @@ abline(h = 1, lty = 3, lwd = 2)  # Add a 'threshold' line at dS = 1
 
 ##### Converting receptor noise-corrected distances to Cartesian coordinates
 
-You can convert distances in JND back to Cartesian position coordinates with the function `jnd2xyz()`. Note that the actual position of these points in the XYZ space is arbitrary; therefore the function allows you to rotate the data so that, for example, the vector leading to the long-wavelength cone aligns with the X axis:
+You can convert noise-corrected Euclidean distances to coordinates in Cartesian 'noise-corrected space' with the function `jnd2xyz()`. In this space, the distance between points corresponds exactly to their noise-corrected Euclidean distance as estimated under the receptor-noise limited model. Note that the absolute position of these points in the XYZ space is arbitrary, however, therefore the function allows you to rotate the data so that, for example, the vector leading to the long-wavelength cone aligns with the X axis:
 
 ```{r, message=FALSE}
 fakedata1 <- vapply(
@@ -341,11 +341,11 @@ which you can then plot as well:
 plot(fakedata.cc, theta = 55, phi = 25, col = spec2rgb(fakedata.c))
 ```
 
-The axes in this colourspace are in JND units. For more information on these functions, see `?jnd2xyz`, `?jndrot` and `?jndplot`.
+The axes in this colourspace denote noise-corrected Euclidean distances. For more information on these functions, see `?jnd2xyz`, `?jndrot` and `?jndplot`.
 
 #### Colourspaces
 
-Another general, flexible way in which to represent stimuli is via a colour space model. Under such models photon catches are expressed in relative values (so that the quantum catches of all receptors involved in chromatic discrimination sum to 1). The maximum stimulation of each cone $n$ is placed at the vertex of a $(n-1)$-dimensional polygon that encompasses all theoretical colours that can be perceived by that visual system. For the avian visual system comprised of four cones, for example, all colours can be placed somewhere in the volume of a tetrahedron, in which each of the four vertices represents the maximum stimulation of that particular cone type.
+Another general, flexible way in which to represent stimuli is via a colourspace model. Under such models photon catches are expressed in relative values (so that the quantum catches of all receptors involved in chromatic discrimination sum to 1). The maximum stimulation of each cone $n$ is placed at the vertex of a $(n-1)$-dimensional polygon that encompasses all theoretical colours that can be perceived by that visual system. For the avian visual system comprised of four cones, for example, all colours can be placed somewhere in the volume of a tetrahedron, in which each of the four vertices represents the maximum stimulation of that particular cone type.
 
 Though these models do not account for receptor noise (and thus do not allow an estimate of JNDs), they presents several advantages. First, they make for a very intuitive representation of colour points accounting for attributes of the colour vision of the signal receiver. Second, they allow for the calculation of several interesting variables that represent colour. For example, hue can be estimated from the angle of the point relative to the xy plane (blue-green-red) and the z axis (UV); saturation can be estimated as the distance of the point from the achromatic centre.
 
@@ -452,7 +452,9 @@ For tetrahedral models, another plotting option available is `projplot`, which p
 projplot(tetra.flowers, pch = 20, col = spec2rgb(flowers))
 ```
 
-Finally, a useful function for tri- and tetrahedral models is `voloverlap()`, which calculates the overlap in tri- or tetrahedral colour volume between two sets of points. This can be useful to explore whether different species occupy similar (overlapping) or different (non- overlapping) "sensory niches", or to test for mimetism, dichromatism, etc. [@Stoddard2011]. To show this function, we will use the `sicalis` dataset, which includes measurements from the crown (C), throat (T) and breast (B) of seven stripe-tailed yellow finches (_Sicalis citrina_).
+**Estimating colour volumes**
+
+A further useful function for tri- and tetrahedral models is `voloverlap()`, which calculates the overlap in tri- or tetrahedral colour volume between two sets of points. This can be useful to explore whether different species occupy similar (overlapping) or different (non- overlapping) "sensory niches", or to test for mimetism, dichromatism, etc. [@Stoddard2011]. To demonstrate, we will use the `sicalis` dataset, which includes measurements from the crown (C), throat (T) and breast (B) of seven stripe-tailed yellow finches (_Sicalis citrina_).
 
 ```{r}
 data(sicalis)
@@ -468,9 +470,7 @@ voloverlap(tcs.sicalis.T, tcs.sicalis.B, plot = TRUE)
 voloverlap(tcs.sicalis.T, tcs.sicalis.C, plot = TRUE)
 ```
 
-The function `voloverlap()` gives the volume ($V$) of the convex hull delimited by the overlap between the two original volumes, and two proportions are calculated from that: $$\text{vsmallest} = V_{overlap} / \min(V_A, V_B)$$ and $$\text{vboth} = V_{overlap} / (V_A + V_B)$$. Thus, if one of the volumes is entirely contained in the other, `vsmallest` will equal 1.
-
-So we can clearly see that there is overlap between the throat and breast colours (of about 6%), but not between the throat and the crown colours (Figures above).
+The function `voloverlap()` gives the volume ($V$) of the convex hull delimited by the overlap between the two original volumes, and two proportions are calculated from that: $$\text{vsmallest} = V_{overlap} / \min(V_A, V_B)$$ and $$\text{vboth} = V_{overlap} / (V_A + V_B)$$. Thus, if one of the volumes is entirely contained in the other, `vsmallest` will equal 1. So we can clearly see that there is overlap between the throat and breast colours (of about 6%), but not between the throat and the crown colours (Figures above).
 
 Alternatively, $\alpha$-shapes are a new tool available in `pavo` to estimate colour volumes, 
 while allowing the presence of voids and pockets. $\alpha$-shapes may thus lead to a more
@@ -512,7 +512,7 @@ vol(tcs_flowers, type = "alpha", avalue = 0.5)
 In the previous examples, we focused on $\alpha$-shapes in chromaticity diagrams since
 it is the most common space where convex hulls (that $\alpha$-shapes aim at
 replacing) are used. But it is also possible to use $\alpha$-shapes in other spaces,
-such as perceptually uniform spaces.
+such as perceptually uniform (noise-corrected) spaces.
 
 Let's first build this uniform space and look at the data points in this space:
 
@@ -563,13 +563,13 @@ voloverlap(tcs.sicalis.C, tcs.sicalis.B, type = "alpha", plot = TRUE)
 
 **Summary variables for groups of points**
 
-Another advantage of colourspace models is that they allow for the calculation of useful summary statistics of groups of points, such as the centroid of the points, the total volume occupied, the mean and variance of hue span and the mean saturation. In `pavo`, the result of a `colspace()` call is an object of class `colspace`, and thus these summary statistics can be calculated simply by calling `summary`. Note that the `summary` call can also take a `by` vector of group identities, so that the variables are calculated for each group separately:
+Another advantage of colourspace models is that they allow for the calculation of useful summary statistics of groups of points, such as the centroid of the points, the total volume occupied (as above), the mean and variance of hue span and the mean saturation. In `pavo`, the result of a `colspace()` call is an object of class `colspace`, and thus these summary statistics can be calculated simply by calling `summary`. Note that the `summary` call can also take a `by` vector of group identities, so that the variables are calculated for each group separately:
 
 ```{r}
 summary(tetra.flowers)
 ```
 
-It is important to highlight that oftentimes, the properties of the visual system will make it impossible to reach the entirety of the Maxwell triangle space (or tetrahedron for tetrachromatic viewers). You can view the maximum gamut of a given viewer by switching the `gamut` argument to `TRUE` in `plot.colspace()`:
+It is important to highlight that oftentimes, the properties of the visual system and/or illuminant will make it impossible to reach the entirety of a given colourspace. You can view the maximum gamut of a given viewer by switching the `gamut` argument to `TRUE` in `plot.colspace()`:
 
 ```{r}
 vis.flowers <- vismodel(flowers, visual = "ctenophorus")
@@ -582,7 +582,6 @@ This information is also available in the summary, in the "Max possible chromati
 ```{r}
 summary(tri.flowers)
 ```
-
 
 ##### The Colour Hexagon
 
