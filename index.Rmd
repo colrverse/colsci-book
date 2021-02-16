@@ -6,6 +6,7 @@ site: bookdown::bookdown_site
 output: bookdown::gitbook
 documentclass: book
 bibliography: [book.bib, packages.bib]
+css: "style.css"
 biblio-style: apalike
 link-citations: yes
 github-repo: bisaloo/colsci-book
@@ -23,23 +24,6 @@ options(
   width = 68,
   str = strOptions(strict.width = "cut")
 )
-```
-
-```{css, echo = FALSE}
-p.caption {
-  color: #777;
-  margin-top: 10px;
-}
-p code {
-  white-space: inherit;
-}
-pre {
-  word-break: normal;
-  word-wrap: normal;
-}
-pre code {
-  white-space: inherit;
-}
 ```
 
 [pavo_repo]: https://github.com/rmaia/pavo

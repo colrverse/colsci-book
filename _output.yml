@@ -1,5 +1,4 @@
 bookdown::bs4_book:
-  css: style.css
   repo: https://github.com/colrverse/colsci-book
 bookdown::pdf_book:
   includes:
