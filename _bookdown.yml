@@ -1,4 +1,5 @@
 book_filename: "colsci-book"
+repo: https://github.com/colrverse/colsci-book
 language:
   ui:
     chapter_name: "Chapter "
