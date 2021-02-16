@@ -1,13 +1,6 @@
-bookdown::gitbook:
+bookdown::bs4_book:
   css: style.css
-  config:
-    toc:
-      before: |
-        <li><a href="./">The pavo handbook: studying biological colouration in R</a></li>
-      after: |
-        <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
-    edit: https://github.com/bisaloo/colsci-book/edit/main/%s
-#    download: ["pdf", "epub"]
+  repo: https://github.com/colrverse/colsci-book
 bookdown::pdf_book:
   includes:
     in_header: preamble.tex
