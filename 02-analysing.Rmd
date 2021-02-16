@@ -740,7 +740,11 @@ The categorical colour vision model of @Troje1993 is a model of dipteran vision,
 We'll use the visual systems of the muscoid fly _Musca domestica_, and will begin by estimating linear (i.e. untransformed) quantum catches for each of the four photoreceptors.
 
 ```{r}
-vis.flowers <- vismodel(flowers, qcatch = 'Qi', visual = 'musca', achromatic = 'none', relative = TRUE)
+vis.flowers <- vismodel(flowers, 
+                        qcatch = 'Qi', 
+                        visual = 'musca', 
+                        achromatic = 'none', 
+                        relative = TRUE)
 ```
 
 Our call to `colspace()` will then simply estimate the location of stimuli in the categorical space as the difference in relative stimulation between 'pale' (R7p - R8p) and 'yellow' (R7y - R8y) photoreceptor pairs:
@@ -982,7 +986,7 @@ adjacent(butterflies_class[[2]], xscale = 200, xpts = 200, bkgID = 1,
 
 Of course colour patterns are not always so simple, and we may want to analyse the spatial geometry of more complex or subtle scenes. In such cases, it may be preferable to largely forego image-based clustering and classification altogether and instead use spectral data directly in an adjacency-style analysis [as per 'method 1' in @Endler2012]. One such approach would have us take spectral measurements across a patch in an evenly-spaced grid
 
-```{r, fig=TRUE, fig.cap="A cryptic lizard, along with a possible sampling grid for spectral measurement.", fig.show="hold", out.width="45%"}
+```{r, fig=TRUE, fig.cap="A cryptic lizard, along with a possible sampling grid for spectral measurement.", fig.show="hold", out.width="65%"}
 
 # Load up our image of a camouflaged lizard
 lizard <- getimg(system.file("testdata/images/vig/", package = 'pavo'))
