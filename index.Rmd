@@ -15,7 +15,13 @@ github-repo: bisaloo/colsci-book
 ```{r setup, echo = FALSE}
 knitr::opts_chunk$set(
   class.warning = "cw",
-  class.message = "cm"
+  class.message = "cm",
+  width = 68,
+  comment = "#>"
+)
+options(
+  width = 68,
+  str = strOptions(strict.width = "cut")
 )
 ```
 
