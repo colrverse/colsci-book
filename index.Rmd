@@ -18,7 +18,8 @@ knitr::opts_chunk$set(
   class.warning = "cw",
   class.message = "cm",
   width = 68,
-  comment = "#>"
+  comment = "#>",
+  tidy = "styler"
 )
 options(
   width = 68,
