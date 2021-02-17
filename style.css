@@ -2,10 +2,10 @@ pre.sourceCode {
   border-left: 5px solid gray !important;
 }
 .cm {
-  color: #177889 !important;
+  background: #c4ebf4 !important;
 }
 .cw {
-  color: #c89400 !important;
+  background: #f1d88d !important;
 }
 code {
   padding: 0 !important;
