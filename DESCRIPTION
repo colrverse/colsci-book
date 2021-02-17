@@ -8,7 +8,8 @@ Imports:
   mapproj,
   NbClust,
   pavo,
-  rgl
+  rgl,
+  styler
 Remotes: 
   rmaia/pavo,
   rstudio/bookdown

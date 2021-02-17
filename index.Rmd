@@ -6,6 +6,7 @@ site: bookdown::bookdown_site
 output: bookdown::gitbook
 documentclass: book
 bibliography: [book.bib, packages.bib]
+css: "style.css"
 biblio-style: apalike
 link-citations: yes
 github-repo: bisaloo/colsci-book
@@ -15,7 +16,14 @@ github-repo: bisaloo/colsci-book
 ```{r setup, echo = FALSE}
 knitr::opts_chunk$set(
   class.warning = "cw",
-  class.message = "cm"
+  class.message = "cm",
+  width = 68,
+  comment = "#>",
+  tidy = "styler"
+)
+options(
+  width = 68,
+  str = strOptions(strict.width = "cut")
 )
 ```
 
