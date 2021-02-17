@@ -5,11 +5,15 @@ Version: 0.0.1
 Imports:
   alphashape3d,
   bookdown,
+  bslib,
+  downlit,
+  jsonlite,
   mapproj,
   NbClust,
   pavo,
   rgl,
-  styler
+  styler,
+  xml2
 Remotes: 
   rmaia/pavo,
   rstudio/bookdown
