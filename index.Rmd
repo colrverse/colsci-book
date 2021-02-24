@@ -17,6 +17,7 @@ github-repo: bisaloo/colsci-book
 knitr::opts_chunk$set(
   class.warning = "cw",
   class.message = "cm",
+  fig.align = "center",
   width = 68,
   comment = "#>",
   tidy = "styler"
