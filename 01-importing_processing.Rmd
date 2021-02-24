@@ -443,9 +443,8 @@ Thanks to the underlying class system of `pavo`, the generic functions `plot` an
 # Note the plot titles are taken 
 # from the file names, and can be overridden.
 par(mfrow = c(1, 2))
-plot(butterflies_acuity[[1]])
-plot(butterflies_acuity[[2]])
-
+plot(butterflies[[1]])
+plot(butterflies[[2]])
 ```
 
 The `summary` function offers some summary information about images or lists of images as we might expect. If we specify `plot = TRUE` however, the function instead plots the image. When such images have been colour-classified this also plots the images' colour palette alongside (see below). This is an extremely useful diagnostic tool when classifying images, as it allows us to see how well the classification algorithm has performed in clustering colour pattern elements into discrete colour categories. As with all plots, the function takes all standard plot arguments (see `?par`), such as custom colours, which again can be diagnostically useful.
