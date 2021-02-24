@@ -406,7 +406,7 @@ aggplot(mspecs, spp,
 We first import our images with `getimg()`, which functions in a similar manner to `getspec()`. Since we are importing more than one image, we can simply point the function to the folder containing the images, and it will use parallel processing (where possible) to import any jpg, bmp, or png images in the folder. As with the raw spectra, these images are also available at the package repository [here][data-location], but are included in the package installation for convenience.
 
 ```{r}
-butterflies <- getimg(system.file("testdata/images/", 
+butterflies <- getimg(system.file("testdata/images/butterflies", 
                                   package = 'pavo'))
 ```
 
@@ -442,7 +442,9 @@ Thanks to the underlying class system of `pavo`, the generic functions `plot` an
 
 # Note the plot titles are taken 
 # from the file names, and can be overridden.
-plot(butterflies[[1]])
+par(mfrow = c(1, 2))
+plot(butterflies_acuity[[1]])
+plot(butterflies_acuity[[2]])
 
 ```
 
@@ -454,9 +456,37 @@ The `summary` function offers some summary information about images or lists of 
 
 Images often require some post-capture processing, depending on the intended use, and `pavo` offers some useful options via `procimg()`. The functionality of `procimg()` is currently limited to only that which is closely relevant to the analyses currently implemented, as we assume any major processing and quality-checking (e.g. image rotation and colour correction) is undertaken by the user beforehand. However, should users with to keep their image processing within the R ecosystem, there now exist several excellent image-processing packages such as `imager` and `magick`, which `pavo` can seamlessly work with. Indeed, the functions `rimg2cimg()` and `rimg2magick()` convert images from `pavo` preferred structure to that used by `imager` (with the reverse simply achieved via `as.rimg()`), which simplifies the transitions between these packages.
 
+### Filtering images to model the visual acuity of animals
+
+The resolving power of animals is in large part defined by their visual acuity, and this reality has has important consequences for  questions of signal evolution and visual ecology. This process can can now be accounted for (in part) via `procimg()` which implements the AcuityView algorithm of Caves and Johnson (2018). Note that for users familiar with the algorithm this is the 2.0 implementation, which now accepts any rectangular images (not only those which are square with dimensions a power of 2). 
+
+In brief, the algorithm allows us to gain some insight into the spatial information which can and cannot be detected by a viewer.
+
+To run the procedure, `procimg()` requires three arguments: `obj_dist`,  the real-world distance between the viewer and the focal object in the image, `obj_width`, the real-world width of the entire image, and `eye_res`, the resolution of the viewer in degrees. Any units of measurement are suitable for `obj_dist` and `obj_width`, but they must match. Here we'll run our butterfly images through the process assuming a conspecific viewer at a distance of 60 cm, an image width of 10 cm, and visual acuity 0.2 CPD. 
+
+```{r, fig=TRUE, message=FALSE, include=TRUE, fig.width=4, fig.height=4, fig.cap="Images of our butterflies after modelling for the acuity of a conspecific viewer"}
+
+# Model the appearance of our butterflies given the reduced visual acuity of another
+# animal viewer as per the AcuityView 2.0 algorithm (Caves & Johnsen 2018). Here our 
+# butterfly is 60 cm away, the image width is 10 cm, and the spatial resolution 
+# of the viewer is 0.2-degrees.
+butterflies_acuity <- procimg(butterflies, obj_dist = 60, obj_width = 10, eye_res = 0.2)
+
+# See the results
+par(mfrow = c(1, 2))
+plot(butterflies_acuity[[1]])
+plot(butterflies_acuity[[2]])
+```
+
+Note there are some important considerations and caveats to the method. The core publication of Caves & Johnsen (2018) provides rich discussion of these points (and should of course also be cited whenever used). In brief, however, it should be remembered that:
+
+1. While AcuityView allows us to gain insight into what spatial information can and cannot be detected by a viewer, the converted image is not what the animal actually sees. No experimental or theoretical treatment can provide much insight into the perceptual world of another animal. 
+2. The converted image does not account for edge enhancement and other processing by the retina and brain that that can sharpen (but not add detail) to an image. The converted image is also static, which does not allow one to assess how movement may reveal the presence of an otherwise indiscernible object. 
+3. The AcuityView algorithm makes several assumptions about the modulation transfer function (MTF). First, it assumes that the MTF is constant over the region of the eye that views the scene, and that the scene of interest is viewed by the portion of the retina with the highest acuity (e.g. fovea). It also assumes that the MTF is circularly symmetrical, which is not always true. Some eyes have non-circular PSFs which can lead to non-circular MTFs (e.g. Baldwin Fergus et al., 2015). Finally, it assumes that the MTF is wavelength-independent, whereas an MTF which is strongly affected by light scattering may exhibit some dependence on wavelength as a result. Note that greater flexibility in specifying the MTF will be implemented in the future.
+
 ### Setting Scales and Defining Objects
 
-The functionality of `procimg()` is currently centred on rotating and resizing images, setting a real-world image scale, and/or distinguishing the focal object from its background. Rotating an image simply requires inputting an angle, in degrees, by which the image is rotated about its centre, while resizing requires a scaling factor by which the size of image(s) are to be decreased or increased. Setting scales and distinguishing backgrounds, in contrast, are both interactive procedures, meaning that we are presented with the focal image and must select points on it using the mouse (either a line, when setting a scale, or a polygon when identifying the focus). If setting a scale, we specify a scale in our preferred units via `scaledist`, and then click the endpoints of the scale within the image (which could be a 'formal' scale, or simply the length of a wing or another known reference object). This information, as usual, is attached to the image as an attribute.
+The other central purpose of `procimg()` is centres on rotating and resizing images, setting a real-world image scale, and/or distinguishing the focal object from its background. Rotating an image simply requires inputting an angle, in degrees, by which the image is rotated about its centre, while resizing requires a scaling factor by which the size of image(s) are to be decreased or increased. Setting scales and distinguishing backgrounds, in contrast, are both interactive procedures, meaning that we are presented with the focal image and must select points on it using the mouse (either a line, when setting a scale, or a polygon when identifying the focus). If setting a scale, we specify a scale in our preferred units via `scaledist`, and then click the endpoints of the scale within the image (which could be a 'formal' scale, or simply the length of a wing or another known reference object). This information, as usual, is attached to the image as an attribute.
 
 ```{r, eval = FALSE}
 # Interactively specify the real-world scale of the image.
