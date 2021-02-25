@@ -459,8 +459,6 @@ Images often require some post-capture processing, depending on the intended use
 
 The resolving power of animals is in large part defined by their visual acuity, and this reality has has important consequences for  questions of signal evolution and visual ecology. This process can can now be accounted for (in part) via `procimg()` which implements the AcuityView algorithm of Caves and Johnson (2018). Note that for users familiar with the algorithm this is the 2.0 implementation, which now accepts any rectangular images (not only those which are square with dimensions a power of 2). 
 
-In brief, the algorithm allows us to gain some insight into the spatial information which can and cannot be detected by a viewer.
-
 To run the procedure, `procimg()` requires three arguments: `obj_dist`,  the real-world distance between the viewer and the focal object in the image, `obj_width`, the real-world width of the entire image, and `eye_res`, the resolution of the viewer in degrees. Any units of measurement are suitable for `obj_dist` and `obj_width`, but they must match. Here we'll run our butterfly images through the process assuming a conspecific viewer at a distance of 60 cm, an image width of 10 cm, and visual acuity 0.2 CPD. 
 
 ```{r, fig=TRUE, message=FALSE, include=TRUE, fig.width=7, fig.height=6, out.width='100%', fig.cap="Images of our butterflies after modelling for the acuity of a conspecific viewer"}
@@ -481,11 +479,11 @@ plot(butterflies_acuity[[1]])
 plot(butterflies_acuity[[2]])
 ```
 
-Note there are some important considerations and caveats to the method. The core publication of Caves & Johnsen (2018) provides rich discussion of these points (and should of course also be cited whenever used). In brief, however, it should be remembered that:
+Note there are some important considerations and caveats to the method. The core publication of @caves2018acuityview provides rich discussion of these points (and should of course also be cited whenever used). In brief, however, it should be remembered that:
 
 1. While AcuityView allows us to gain insight into what spatial information can and cannot be detected by a viewer, the converted image is not what the animal actually sees. No experimental or theoretical treatment can provide much insight into the perceptual world of another animal. 
 2. The converted image does not account for edge enhancement and other processing by the retina and brain that that can sharpen (but not add detail) to an image. The converted image is also static, which does not allow one to assess how movement may reveal the presence of an otherwise indiscernible object. 
-3. The AcuityView algorithm makes several assumptions about the modulation transfer function (MTF). First, it assumes that the MTF is constant over the region of the eye that views the scene, and that the scene of interest is viewed by the portion of the retina with the highest acuity (e.g. fovea). It also assumes that the MTF is circularly symmetrical, which is not always true. Some eyes have non-circular PSFs which can lead to non-circular MTFs (e.g. Baldwin Fergus et al., 2015). Finally, it assumes that the MTF is wavelength-independent, whereas an MTF which is strongly affected by light scattering may exhibit some dependence on wavelength as a result. Note that greater flexibility in specifying the MTF will be implemented in the future.
+3. The AcuityView algorithm makes several assumptions about the modulation transfer function (MTF). First, it assumes that the MTF is constant over the region of the eye that views the scene, and that the scene of interest is viewed by the portion of the retina with the highest acuity (e.g. fovea). It also assumes that the MTF is circularly symmetrical, which is not always true. Some eyes have non-circular PSFs which can lead to non-circular MTFs (e.g. Baldwin Fergus et al., 2015). Finally, it assumes that the MTF is wavelength-independent, whereas an MTF which is strongly affected by light scattering may exhibit some dependence on wavelength as a result. Note that greater flexibility in specifying the MTF will be implemented in the future, but feel free to get in touch if this is required in the shorter term.
 
 ### Setting Scales and Defining Objects
 
