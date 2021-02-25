@@ -387,7 +387,7 @@ These plots can be very useful to observe changes over time, for example, or any
 
 `aggplot()` has a very similar interface to `aggspec()`, allowing for quick plotting of aggregated spectra combined by a factor, such as species, sex, experimental treatment, and so on. Its main output is a plot with lines of group mean spectra outlined by a shaded area indicating some measure of variability, such as the standard deviation of the group. Note that functions that aren't already implemented in R must be passed like they would be to functions such as `apply` (e.g., `function(x) sd(x)/sqrt(length(x))` in the example below).
 
-```{r, fig=TRUE, include=TRUE, fig.width=6, fig.height=4, fig.cap="Example plots created using `aggplot`. Left: using median, standard deviation, and coloured lines. Right: using mean, standard error, and greyscale", fig.show="hold", out.width="45%"}
+```{r, fig=TRUE, include=TRUE, fig.width=7, fig.height=6, fig.cap="Example plots created using `aggplot`. Left: using median, standard deviation, and coloured lines. Right: using mean, standard error, and greyscale", fig.show="hold", out.width="45%"}
 # Plot using median and standard deviation, default colours
 aggplot(mspecs, spp, 
         FUN.center = median, 
@@ -438,7 +438,7 @@ str(fake_rimg)
 
 Thanks to the underlying class system of `pavo`, the generic functions `plot` and `summary` recognise and respond to image-data in an appropriate manner, as is the case with spectral data. A quick call to `plot`, for example, prints our images. Note that while we call an image individually below (for convenient printing in the vignette), we could simply feed the entire list of images to `plot` and it would automatically step through each image in the list upon user input.
 
-```{r, fig=TRUE, include=TRUE, fig.width=4, fig.height=4, fig.cap="Raw images of our butterflies"}
+```{r, fig=TRUE, include=TRUE, fig.width=7, fig.height=6, out.width=100%, fig.cap="Raw images of our butterflies"}
 
 # Note the plot titles are taken 
 # from the file names, and can be overridden.
@@ -463,13 +463,17 @@ In brief, the algorithm allows us to gain some insight into the spatial informat
 
 To run the procedure, `procimg()` requires three arguments: `obj_dist`,  the real-world distance between the viewer and the focal object in the image, `obj_width`, the real-world width of the entire image, and `eye_res`, the resolution of the viewer in degrees. Any units of measurement are suitable for `obj_dist` and `obj_width`, but they must match. Here we'll run our butterfly images through the process assuming a conspecific viewer at a distance of 60 cm, an image width of 10 cm, and visual acuity 0.2 CPD. 
 
-```{r, fig=TRUE, message=FALSE, include=TRUE, fig.width=4, fig.height=4, fig.cap="Images of our butterflies after modelling for the acuity of a conspecific viewer"}
+```{r, fig=TRUE, message=FALSE, include=TRUE, fig.width=7, fig.height=6, out.width=100%, fig.cap="Images of our butterflies after modelling for the acuity of a conspecific viewer"}
 
-# Model the appearance of our butterflies given the reduced visual acuity of another
-# animal viewer as per the AcuityView 2.0 algorithm (Caves & Johnsen 2018). Here our 
-# butterfly is 60 cm away, the image width is 10 cm, and the spatial resolution 
-# of the viewer is 0.2-degrees.
-butterflies_acuity <- procimg(butterflies, obj_dist = 60, obj_width = 10, eye_res = 0.2)
+# Model the appearance of our butterflies given the reduced 
+# visual acuity of another animal viewer as per the 
+# AcuityView 2.0 algorithm (Caves & Johnsen 2018). Here 
+# our butterfly is 60 cm away, the image width is 10 cm, 
+# and the spatial resolution of the viewer is 0.2-degrees.
+butterflies_acuity <- procimg(butterflies, 
+                              obj_dist = 60, 
+                              obj_width = 10, 
+                              eye_res = 0.2)
 
 # See the results
 par(mfrow = c(1, 2))
