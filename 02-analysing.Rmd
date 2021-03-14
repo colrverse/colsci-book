@@ -99,7 +99,7 @@ head(musca_sense)
 
 ```{r echo = FALSE, results = 'asis'}
 vistab <- data.frame(phenotype = c("avg.uv", "avg.v", "bluetit", "star", "pfowl", "apis", "ctenophorus", "canis", "musca", "cie2",
-                                   "cie10", "segment", "habronattus", "rhinecanthus"),
+                                   "cie10", "segment", "habronattus", "rhinecanthus", "drosophila"),
                      description = c("average ultraviolet-sensitive avian (tetrachromat)",
                                      "average violet-sensitive avian (tetrachromat)",
                                      "The blue tit _Cyanistes caeruleus_ (tetrachromat)",
@@ -113,7 +113,8 @@ vistab <- data.frame(phenotype = c("avg.uv", "avg.v", "bluetit", "star", "pfowl"
                                      "10-degree colour matching functions for CIE models of human colour vision (trichromat)",
                                      "A generic 'viewer' with broad sensitivities for use in the segment analysis of Endler (1990) (tetrachromat)",
                                      "The jumping spider _Habronattus pyrrithrix_ (trichromat)",
-                                     "The triggerfish _Rhinecanthus aculeatus_ (trichromat)"))
+                                     "The triggerfish _Rhinecanthus aculeatus_ (trichromat)",
+                                     "The vinegar fly *Drosophila melanogaster*"))
 knitr::kable(vistab, caption = "Built-in visual phenotypes available in pavo")
 ```
 
