@@ -632,9 +632,9 @@ summary(tri.flowers)
 
 ##### The Colour Hexagon
 
-The hexagon colour space of @Chittka1992 is a generalised colour-opponent model of hymenopteran vision that has found extremely broad use, particularly in studies of bee-flower interactions. It's also often broadly applied across hymenopteran species, because the photopigments underlying trichromatic vision in Hymenoptera appear to be quite conserved [@Briscoe2001]. What's particularly useful is that colour distances within the hexagon have been extensively validated against behaviour, and thus offer a relatively reliable measure of perceptual distance.
+The hexagon colour space of @Chittka1992 is a generalised colour-opponent model of hymenopteran vision that has found extremely broad use, particularly in studies of bee-flower interactions. It's also often broadly applied across hymenopteran species, because the photopigments underlying trichromatic vision in Hymenoptera appear to be quite conserved [@Briscoe2001]. What's particularly useful is that colour distances within the hexagon have been extensively validated against behaviour, at least among honeybees, and thus offer a relatively reliable measure of perceptual distance.
 
-In the hexagon, photoreceptor quantum catches are typically hyperbolically transformed (and `pavo` will return a warning if the transform is not selected), and vonkries correction is often used used to model photoreceptor adaptation to a vegetation background. This can all now be specified in `vismodel()`. including the optional use of a 'green' vegetation background. Note that although this is a colourspace model, we specific `relative = FALSE` to return unnormalised quantum catches, as required for the model.
+In the hexagon, photoreceptor quantum catches are typically hyperbolically transformed (and `pavo` will return a warning if the transform is not selected), and vonkries correction is often used used to model photoreceptor adaptation to a vegetation background. This can all now be specified in `vismodel()`. including the optional use of a built-in 'green' vegetation background. Note that although this is a colourspace model, we specific `relative = FALSE` to return unnormalised quantum catches, as required for the model. 
 
 ```{r}
 vis.flowers <- vismodel(flowers, 
@@ -646,7 +646,7 @@ vis.flowers <- vismodel(flowers,
                         bkg = "green")
 ```
 
-We can then apply the hexagon model in `colspace`, which will convert our photoreceptor 'excitation values' to coordinates in the hexagon according to:
+We can then apply the hexagon model in `colspace`, which will convert our photoreceptor excitation values to coordinates in the hexagon according to:
 
 $$
 \begin{split}
@@ -669,6 +669,8 @@ plot(hex.flowers,
      pch = 21, 
      bg = spec2rgb(flowers))
 ```
+
+Note that 'green receptor contrast' (as per Spaethe (2001) and much subsequent work) in the hexagon model is often of interest, given its role in mediating the detection of stimuli at small visual angles. This is (by necessity) **not** the value returned as `lum` in the output of `vismodel()`. Instead, 'green contrast' is simply the long-wavelength receptor excitation values returned (`l`), when both the long wavelength receptor is specified as the 'achromatic' receptor and the vonkries transform is applied (as above). In the literature, green contrast may be expressed as an absolute excitation value ranging 0-1, with 0.5 representing unity (i.e. no contrast), or as the relative deviation from 0.5.
 
 ##### The Colour Opponent Coding (COC) Space
 
