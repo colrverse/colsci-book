@@ -20,7 +20,7 @@ The data consist of reflectance spectra, obtained using Avantes equipment and so
 
 In addition, `pavo` includes three datasets that can be called with the `data()` function. `data(teal)`, `data(sicalis)`, and `data(flowers)` will all be used in this vignette. See the help files for each dataset for more information; via `?teal`, `?sicalis`, and `?flowers`.
 
-### Importing
+### Importing spectra
 
 The first thing we need to do is import spectral data into R using the function `getspec()`. It's worth noting that `getspec()` is simply a wrapper for `lr_get_spec()` from the package [`lightr`](https://docs.ropensci.org/lightr/), which is a more specialised and feature-rich package for the import of spectral data and metadata [@gruson2019]. Since the example spectra were obtained using Avantes software, we will need to specify that the files have the `.ttt` extension. Further, the data is organized in subdirectories for each species. `getspec()` will search through subdirectories recursively, and may include the names of the subdirectories in the spectra name if desired. `getspec()` also uses parallel processing thanks to the `future` package. You can check the documentation (`?future::plan()`) for more details but an easy way to set up parallel processing in most cases is to use the `plan("multiprocess")` command. A final issue with the data is that it was collected using a computer with international numbering input, which means it uses commas instead of periods as a decimal separator. We can specify that in the function call.
 
@@ -58,7 +58,7 @@ When `pavo` imports spectra, it creates an object of class `rspec`, which inheri
 is.rspec(specs)
 ```
 
-If you already have multiple spectra in a single data frame that you'd like to use with `pavo` functions, you can use the command `as.rspec()` to convert it to an rspec object. The function will attempt to identify the wavelength variable or you can specify the column containing wavelengths with the `whichwl` argument. The default way that `as.rspec()` handles reflectance data is to interpolate the data in 1-nm bins, as is commonly done for spectral analyses. However, this can be turned off by using: `interp = FALSE`. As an example, we will create some fake reflectance data, name the column containing wavelengths (in 0.5-nm bins) _wavelength_ rather than _wl_ (required for `pavo` functions to work) and also put the column containing wavelengths third rather than first.
+If you already have multiple spectra in a single data frame that you'd like to use with `pavo` functions, you can use the command `as.rspec()` to convert it to an rspec object. The function will attempt to identify the wavelength variable or you can specify the column containing wavelengths with the `whichwl` argument. The default way that `as.rspec()` handles reflectance data is to interpolate the data in 1-nm bins, as is commonly done for spectral analyses. However, this can be turned off by using: `interp = FALSE`. As an example, we will create some fake reflectance data (n.b. we could use `simulate_spec()`, but the results would already be an `rspec` object), name the column containing wavelengths (in 0.5-nm bins) _wavelength_ rather than _wl_ (required for `pavo` functions to work) and also put the column containing wavelengths third rather than first.
 
 ```{r}
 # Create some fake reflectance data with 
@@ -102,9 +102,36 @@ fakedat.new2 <- as.rspec(fakedat, lim = c(300, 1000))
 plot(fakedat.new2[, 2] ~ fakedat.new2[, 1], type = "l")
 ```
 
+### Simulating spectra
+
+In version 2.9.0 of `pavo` we also introduced the function `simulate_spec()`, which allows for the simple and flexible simulation of naturalistic spectra. The arguments allows us to specify sigmoidal (s-shaped) and/or Gaussian (bell-shaped) features, which can be combined as we like to simulate a suite of biological processes.
+
+For example, we might simulate a spectrum with a single Gaussian peak at 500 nm, which might be seen as in various structural colours, or even the absorbance of visual pigments.
+
+```{r, fig=TRUE, include=TRUE, fig.width=6, fig.height=4.5, fig.align='center'}
+spec_gauss <- simulate_spec(wl_peak = 400)
+plot(spec_gauss)
+```
+
+Or a more complex example could include a single sigmoidal peak, with multiple Gaussian peaks, in the one spectrum.
+
+```{r, fig=TRUE, include=TRUE, fig.width=6, fig.height=4.5, fig.align='center'}
+spec_multi <- simulate_spec(wl_inflect = 575, wl_peak = c(340, 430), width_gauss = c(20, 60))
+plot(spec_multi)
+```
+
+Finally, we might simulate a set of Gaussian reflectance curves with peaks varying between 400-600 nm. Such an approach could be useful for various simulation-based studies which seek, for example, to explore optimal receptor sets, or the constraints on colour signal production and perception.
+
+```{r, fig=TRUE, include=TRUE, fig.width=6, fig.height=4.5, fig.align='center'}
+peaks <- seq(400, 600, 10)  # Peak locations
+specs_varying <- lapply(seq_along(peaks), function(x) simulate_spec(wl_peak = peaks[x]))  # Simulate spectra
+specs_varying <- Reduce(merge, specs_varying)  # Combine
+plot(specs_varying)  # Plot
+```
+
 ### Subsetting and Merging Spectral Data
 
-Once an `rspec` object has been created, either by importing raw spectral data or converting a dataset with the `as.rspec()` function, you can subset the spectra based on their names using a modified version of `R`'s built-in `subset` function. For example, the following code illustrates how to create an `rspec` object containing only tanagers:
+Once an `rspec` object has been created, either by importing raw spectral data, converting a dataset with the `as.rspec()` function, or simulation, you can subset the spectra based on their names using a modified version of `R`'s built-in `subset` function. For example, the following code illustrates how to create an `rspec` object containing only tanagers:
 
 ```{r}
 specs.tanager1 <- subset(specs, "tanager")
