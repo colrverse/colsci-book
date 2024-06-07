@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Chapter 4 Spectral shape descriptors | The pavo handbook: studying biological colouration in R</title>
+<meta name="generator" content="bookdown 0.39.1 with bs4_book()">
+<meta property="og:title" content="Chapter 4 Spectral shape descriptors | The pavo handbook: studying biological colouration in R">
+<meta property="og:type" content="book">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Chapter 4 Spectral shape descriptors | The pavo handbook: studying biological colouration in R">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.7.0/transition.js"></script><script src="libs/bs3compat-0.7.0/tabs.js"></script><script src="libs/bs3compat-0.7.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+<style type="text/css">
+    /* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+    div.csl-bib-body { }
+    div.csl-entry {
+      clear: both;
+          margin-bottom: 0em;
+        }
+    .hanging div.csl-entry {
+      margin-left:2em;
+      text-indent:-2em;
+    }
+    div.csl-left-margin {
+      min-width:2em;
+      float:left;
+    }
+    div.csl-right-inline {
+      margin-left:2em;
+      padding-left:1em;
+    }
+    div.csl-indent {
+      margin-left: 2em;
+    }
+  </style>
+<link rel="stylesheet" href="style.css">
+<meta name="description" content="tr:hover {  background-color: #eee; } This table is adapted from Montgomerie (2006) and lists all spectral descriptors that are computed by the summary function in pavo. Color variable Names used...">
+<meta property="og:description" content="tr:hover {  background-color: #eee; } This table is adapted from Montgomerie (2006) and lists all spectral descriptors that are computed by the summary function in pavo. Color variable Names used...">
+<meta name="twitter:description" content="tr:hover {  background-color: #eee; } This table is adapted from Montgomerie (2006) and lists all spectral descriptors that are computed by the summary function in pavo. Color variable Names used...">
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">The pavo handbook: studying biological colouration in R</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html"><span class="header-section-number">1</span> Package Overview</a></li>
+<li><a class="" href="importing-processing-and-visualising-data.html"><span class="header-section-number">2</span> Importing, Processing, and Visualising Data</a></li>
+<li><a class="" href="analysing-data.html"><span class="header-section-number">3</span> Analysing Data</a></li>
+<li><a class="active" href="spectral-shape-descriptors.html"><span class="header-section-number">4</span> Spectral shape descriptors</a></li>
+<li><a class="" href="references.html">References</a></li>
+</ul>
+
+        <div class="book-extra">
+          <p><a id="book-repo" href="https://github.com/colrverse/colsci-book">View book source <i class="fab fa-github"></i></a></p>
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="spectral-shape-descriptors" class="section level1" number="4">
+<h1>
+<span class="header-section-number">4</span> Spectral shape descriptors<a class="anchor" aria-label="anchor" href="#spectral-shape-descriptors"><i class="fas fa-link"></i></a>
+</h1>
+<style>
+tr:hover {
+  background-color: #eee;
+}
+</style>
+<p>This table is adapted from <span class="citation">Montgomerie (<a href="references.html#ref-Montgomerie2006">2006</a>)</span> and lists all spectral descriptors
+that are computed by the <code>summary</code> function in <code>pavo</code>.</p>
+<div class="inline-table"><table style="width:100%;" class="table table-sm">
+<colgroup>
+<col width="33%">
+<col width="25%">
+<col width="18%">
+<col width="22%">
+</colgroup>
+<thead><tr class="header">
+<th align="left">Color variable</th>
+<th align="left">Names used</th>
+<th align="center">Formula</th>
+<th align="center">Reference</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">Brightness</td>
+<td align="left">Total brightness, total reflectance, spectral intensity</td>
+<td align="center"><span class="math display">\[B_1=B_T=\int_{\lambda_{min}}^{\lambda_{max}} R_i = \sum_{\lambda_{min}}^{\lambda_{max}} R_i\]</span></td>
+<td align="center">
+<span class="citation">Andersson (<a href="references.html#ref-Andersson1999">1999</a>)</span>,<span class="citation">Andersson et al. (<a href="references.html#ref-Andersson2002">2002</a>)</span>,<span class="citation">Örnborg et al. (<a href="references.html#ref-Ornborg2002">2002</a>)</span>,<span class="citation">Andersson, Örnborg, and Andersson (<a href="references.html#ref-Andersson1998">1998</a>)</span>,<span class="citation">Smiseth et al. (<a href="references.html#ref-Smiseth2001">2001</a>)</span>,<span class="citation">Saks, McGraw, and Horak (<a href="references.html#ref-Saks2003">2003</a>)</span>,<span class="citation">Pryke, Lawes, and Andersson (<a href="references.html#ref-Pryke2001">2001</a>)</span>,<span class="citation">Shawkey et al. (<a href="references.html#ref-Shawkey2003">2003</a>)</span>
+</td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td align="left">Mean brightness</td>
+<td align="center"><span class="math display">\[B_2=\frac{\sum_{\lambda_{min}}^{\lambda_{max}} R_i}{n_w}=\frac{B_1}{n_w}\]</span></td>
+<td align="center">
+<span class="citation">Delhey et al. (<a href="references.html#ref-Delhey2003">2003</a>)</span>,<span class="citation">Siefferman and Hill (<a href="references.html#ref-Siefferman2005">2005</a>)</span>
+</td>
+</tr>
+<tr class="odd">
+<td align="left"></td>
+<td align="left">Intensity</td>
+<td align="center"><span class="math display">\[B_3=R_{max}\]</span></td>
+<td align="center">
+<span class="citation">Andersson (<a href="references.html#ref-Andersson1999">1999</a>)</span>,<span class="citation">Keyser and Hill (<a href="references.html#ref-Keyser2000">2000</a>)</span>,<span class="citation">Keyser and Hill (<a href="references.html#ref-Keyser1999">1999</a>)</span>
+</td>
+</tr>
+<tr class="even">
+<td align="left">Saturation</td>
+<td align="left">Chroma, reflectance ratio, spectral purity</td>
+<td align="center"><span class="math display">\[S_1= \frac{\sum_{\lambda_a}^{\lambda_b} R_i}{\sum_{\lambda_{min}}^{\lambda_{max}} R_i} = \frac{\sum_{\lambda_a}^{\lambda_b} R_i}{B_1}\]</span></td>
+<td align="center">
+<span class="citation">Örnborg et al. (<a href="references.html#ref-Ornborg2002">2002</a>)</span>,<span class="citation">Andersson, Örnborg, and Andersson (<a href="references.html#ref-Andersson1998">1998</a>)</span>,<span class="citation">Smiseth et al. (<a href="references.html#ref-Smiseth2001">2001</a>)</span>,<span class="citation">Siefferman and Hill (<a href="references.html#ref-Siefferman2005">2005</a>)</span>,<span class="citation">Peters et al. (<a href="references.html#ref-Peters2004">2004</a>)</span>,<span class="citation">Shawkey et al. (<a href="references.html#ref-Shawkey2003">2003</a>)</span>
+</td>
+</tr>
+<tr class="odd">
+<td align="left"></td>
+<td align="left">Spectral saturation</td>
+<td align="center"><span class="math display">\[S_2 = \frac{R_{max}}{R_{min}}\]</span></td>
+<td align="center"><span class="citation">Andersson (<a href="references.html#ref-Andersson1999">1999</a>)</span></td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td align="left">Chroma</td>
+<td align="center"><span class="math display">\[S_3 = \frac{\sum_{\lambda_{R_{max}}-50}^{\lambda_{R_{max}}+50} R_i}{B_1}\]</span></td>
+<td align="center"><span class="citation">Shawkey et al. (<a href="references.html#ref-Shawkey2003">2003</a>)</span></td>
+</tr>
+<tr class="odd">
+<td align="left"></td>
+<td align="left">Spectral purity</td>
+<td align="center"><span class="math display">\[S_4 = \lvert b\text{max}_{neg}\lvert\]</span></td>
+<td align="center"><span class="citation">Andersson (<a href="references.html#ref-Andersson1999">1999</a>)</span></td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td align="left">Chroma</td>
+<td align="center"><span class="math display">\[S_5=\sqrt{(B_r-B_g)^2+(B_y-B_b)^2}\]</span></td>
+<td align="center"><span class="citation">Saks, McGraw, and Horak (<a href="references.html#ref-Saks2003">2003</a>)</span></td>
+</tr>
+<tr class="odd">
+<td align="left"></td>
+<td align="left">Constrast, amplitude</td>
+<td align="center"><span class="math display">\[S_6 = R_{max} - R_{min}\]</span></td>
+<td align="center">
+<span class="citation">Keyser and Hill (<a href="references.html#ref-Keyser2000">2000</a>)</span>,<span class="citation">Keyser and Hill (<a href="references.html#ref-Keyser1999">1999</a>)</span>
+</td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td align="left">Spectral saturation</td>
+<td align="center"><span class="math display">\[S_7 = \frac{\left(\sum_{\lambda_{320}}^{\lambda_{R_{mid}}} R_i - \sum_{\lambda_{R_{mid}}}^{\lambda_{700}} R_i\right)}{B_1}\]</span></td>
+<td align="center">
+<span class="citation">Andersson et al. (<a href="references.html#ref-Andersson2002">2002</a>)</span>,<span class="citation">Pryke, Lawes, and Andersson (<a href="references.html#ref-Pryke2001">2001</a>)</span>
+</td>
+</tr>
+<tr class="odd">
+<td align="left"></td>
+<td align="left">Chroma</td>
+<td align="center"><span class="math display">\[S_8=\frac{R_{max}-R_{min}}{B_2}\]</span></td>
+<td align="center">
+<span class="citation">Andersson et al. (<a href="references.html#ref-Andersson2002">2002</a>)</span>,<span class="citation">Smiseth et al. (<a href="references.html#ref-Smiseth2001">2001</a>)</span>
+</td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td align="left">Carotenoid chroma</td>
+<td align="center"><span class="math display">\[S_9=\frac{R_{\lambda_{700}}-R_{\lambda_{450}}}{R_{\lambda_{700}}}\]</span></td>
+<td align="center"><span class="citation">Peters et al. (<a href="references.html#ref-Peters2004">2004</a>)</span></td>
+</tr>
+<tr class="odd">
+<td align="left"></td>
+<td align="left">Peaky chroma</td>
+<td align="center"><span class="math display">\[S_{10}=\lvert b\text{max}_{neg} \lvert\frac{R_{max}-R_{min}}{B_2}\]</span></td>
+<td align="center"><span class="citation">Örnborg et al. (<a href="references.html#ref-Ornborg2002">2002</a>)</span></td>
+</tr>
+<tr class="even">
+<td align="left">Hue</td>
+<td align="left">Hue, peak wavelength, spectral location</td>
+<td align="center"><span class="math display">\[H_1=\lambda_{R_{max}}\]</span></td>
+<td align="center">
+<span class="citation">Andersson (<a href="references.html#ref-Andersson1999">1999</a>)</span>,<span class="citation">Örnborg et al. (<a href="references.html#ref-Ornborg2002">2002</a>)</span>,<span class="citation">Andersson, Örnborg, and Andersson (<a href="references.html#ref-Andersson1998">1998</a>)</span>,<span class="citation">Delhey et al. (<a href="references.html#ref-Delhey2003">2003</a>)</span>,<span class="citation">Smiseth et al. (<a href="references.html#ref-Smiseth2001">2001</a>)</span>,<span class="citation">Keyser and Hill (<a href="references.html#ref-Keyser2000">2000</a>)</span>,<span class="citation">Siefferman and Hill (<a href="references.html#ref-Siefferman2005">2005</a>)</span>,<span class="citation">Shawkey et al. (<a href="references.html#ref-Shawkey2003">2003</a>)</span>
+</td>
+</tr>
+<tr class="odd">
+<td align="left"></td>
+<td align="left">Hue</td>
+<td align="center"><span class="math display">\[H_2 = \lambda_{b\text{max}_{neg}}\]</span></td>
+<td align="center">
+<span class="citation">Andersson, Örnborg, and Andersson (<a href="references.html#ref-Andersson1998">1998</a>)</span>,<span class="citation">Smiseth et al. (<a href="references.html#ref-Smiseth2001">2001</a>)</span>
+</td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td align="left">Hue</td>
+<td align="center"><span class="math display">\[H_3 = \lambda_{R_{mid}}\]</span></td>
+<td align="center">
+<span class="citation">Andersson et al. (<a href="references.html#ref-Andersson2002">2002</a>)</span>,<span class="citation">Smiseth et al. (<a href="references.html#ref-Smiseth2001">2001</a>)</span>,<span class="citation">Pryke, Lawes, and Andersson (<a href="references.html#ref-Pryke2001">2001</a>)</span>
+</td>
+</tr>
+<tr class="odd">
+<td align="left"></td>
+<td align="left">Hue</td>
+<td align="center"><span class="math display">\[H_4 = \arctan\left(\frac{B_y-B_b}{B_r-B_g}\right)\]</span></td>
+<td align="center"><span class="citation">Saks, McGraw, and Horak (<a href="references.html#ref-Saks2003">2003</a>)</span></td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td align="left">Hue</td>
+<td align="center"><span class="math display">\[H_5 = \lambda_{b\text{max}_{pos}}\]</span></td>
+<td align="center"><span class="citation">Keyser and Hill (<a href="references.html#ref-Keyser1999">1999</a>)</span></td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li>
+<span class="math inline">\(R_i\)</span>: percentage (or proportional) reflectance at the <span class="math inline">\(i\)</span>th wavelength</li>
+<li>
+<span class="math inline">\(\lambda_{max}\)</span>, <span class="math inline">\(\lambda_{min}\)</span>: upper and lower (respectively) limits of
+wavelengths</li>
+<li>
+<span class="math inline">\(n_w\)</span>: number of wavelength intervals used to calculate <span class="math inline">\(B_T\)</span>
+</li>
+<li>
+<span class="math inline">\(R_{max}\)</span>, <span class="math inline">\(R_{min}\)</span>: maximum and minimum percent reflectances, respectively</li>
+<li>
+<span class="math inline">\(\lambda_{R_{max}}\)</span>: wavelength at maximum reflectance</li>
+<li>
+<span class="math inline">\(b\text{max}_{neg}\)</span>, <span class="math inline">\(b\text{max}_{pos}\)</span>: maximum negative and positive slopes
+of reflectance curve in a region of interest</li>
+<li>
+<span class="math inline">\(B_r\)</span>, <span class="math inline">\(B_y\)</span>, <span class="math inline">\(B_g\)</span>, <span class="math inline">\(B_b\)</span>: total brightness in red (<span class="math inline">\(r=625-700\,nm\)</span>), yellow
+(<span class="math inline">\(y=550-625\,nm\)</span>), green (<span class="math inline">\(g=475-550\,nm\)</span>) and blue (<span class="math inline">\(b=400-475\,nm\)</span>) segments
+of the spectrum</li>
+<li>
+<span class="math inline">\(\lambda_{R_{mid}}\)</span>: wavelength at the reflectance midpoint between <span class="math inline">\(R_{max}\)</span>
+and <span class="math inline">\(R_{min}\)</span> (i.e., <span class="math inline">\(\frac{R_{max}+R_{min}}{2}\)</span>)</li>
+</ul>
+</div>
+  <div class="chapter-nav">
+<div class="prev"><a href="analysing-data.html"><span class="header-section-number">3</span> Analysing Data</a></div>
+<div class="next"><a href="references.html">References</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav"><li><a class="nav-link" href="#spectral-shape-descriptors"><span class="header-section-number">4</span> Spectral shape descriptors</a></li></ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+<li><a id="book-source" href="https://github.com/colrverse/colsci-book/blob/master/03-spectraldesc.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/colrverse/colsci-book/edit/master/03-spectraldesc.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>The pavo handbook: studying biological colouration in R</strong>" was written by . It was last built on 2024-06-07.</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
+</body>
+</html>
