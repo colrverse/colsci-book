@@ -19,17 +19,12 @@ jobs:
 
       - uses: r-lib/actions/setup-pandoc@v2
 
-      - name: Config git actor
-        run: |
-          git config --local user.email "actions@github.com"
-          git config --local user.name "GitHub Actions"
-
       - uses: r-lib/actions/setup-r-dependencies@v2
 
       - name: Cache bookdown results
         uses: actions/cache@v4
         with:
-          path: _bookdown_files
+          path: _book
           key: bookdown-${{ hashFiles('**/*Rmd') }}
           restore-keys: bookdown-
 
@@ -38,11 +33,10 @@ jobs:
           bookdown::render_book('index.Rmd', 'bookdown::bs4_book')
         shell: Rscript {0}
 
-      - name: Publish manual
-        run: |
-          git clone -b gh-pages https://${{github.actor}}:${{secrets.GITHUB_TOKEN}}@github.com/${{github.repository}}.git book-output
-          cd book-output
-          cp -r ../_book/* ./
-          git add --all *
-          git commit -m "Update the book" || true
-          git push https://${{github.actor}}:${{secrets.GITHUB_TOKEN}}@github.com/${{github.repository}}.git gh-pages
+      - name: Deploy to GitHub pages 🚀
+        if: github.event_name != 'pull_request'
+        uses: JamesIves/github-pages-deploy-action@v4.5.0
+        with:
+          clean: false
+          branch: gh-pages
+          folder: _book
