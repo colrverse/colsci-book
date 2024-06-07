@@ -17,6 +17,8 @@ jobs:
         with:
           use-public-rspm: true
 
+      - uses: r-lib/actions/setup-pandoc@v2
+
       - name: Config git actor
         run: |
           git config --local user.email "actions@github.com"
