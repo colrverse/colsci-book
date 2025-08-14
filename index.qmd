@@ -1,6 +1,8 @@
 # Package Overview {.unnumbered}
 
-```{r setup, echo = FALSE}
+```{r}
+#| label: setup
+#| echo: false
 knitr::opts_chunk$set(
   class.warning = "cw",
   class.message = "cm",
@@ -18,7 +20,8 @@ options(
 [pavo_repo]: https://github.com/rmaia/pavo
 [data_location]: https://github.com/rmaia/pavo/tree/master/data_external/vignette
 
-```{r, echo = FALSE}
+```{r}
+#| echo: false
 book_repo <- "https://github.com/Bisaloo/colsci-book"
 book_site <- "https://bisaloo.github.io/colsci-book"
 ```
@@ -31,7 +34,12 @@ book_site <- "https://bisaloo.github.io/colsci-book"
 2. **Analyse** the resulting files, using spectral analyses of shape (hue, saturation, brightness), visual models based on perceptual data, and/or spatial adjacency and boundary strength analyses.
 3. **Visualise** the output, with multiple options provided for exploration and analysis.
 
-```{r, echo = FALSE, fig.cap = "A non-exhaustive overview of the colour-pattern analysis workflow in pavo, as of version 2.0, displaying some key functions at each stage.", out.width = '100%', dpi = 72}
+```{r}
+#| echo: false
+#| fig-cap: A non-exhaustive overview of the colour-pattern analysis workflow in pavo,
+#|   as of version 2.0, displaying some key functions at each stage.
+#| out-width: 100%
+#| fig-dpi: 72
 knitr::include_graphics(file.path(book_repo, "blob/main/fig/workflow.png?raw=TRUE"))
 ```
 
@@ -49,7 +57,8 @@ For suggestions, assistance and/or bug reports, we suggest getting in touch via 
 
 Most of the methods implemented in `pavo` have been thoroughly described in their original publications, to which users should refer for details and interpretation. For reflectance shape variables ("objective colourimetrics") and their particular relation to signal production and perception, see @Andersson2006 and @Montgomerie2006. Visual models based on photon catches and receptor noise are detailed in @Vorobyev1998 and @Vorobyev1998, and photoreceptor sensitivity curve estimation in @Govardovskii2000 and @Hart2005. For tetrahedral colourspace model implementations and variable calculations, see @Endler2005 and @Stoddard2008, and for colour volume overlap see @Stoddard2008 and @Stoddard2011. Adjacency and boundary strength analyses are described in @Endler2012 and @Endler2018, while overall pattern contrast is detailed in @Endler2005. Users of the functions that apply these methods must cite the original sources as appropriate, along with `pavo` itself:
 
-```{r, comment=""}
+```{r}
+#| comment: ''
 citation(package = "pavo")
 ```
 
