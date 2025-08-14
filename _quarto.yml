@@ -1,0 +1,35 @@
+project:
+  type: book
+  output-dir: _book
+
+book:
+  title: "The pavo handbook: studying biological colouration in R"
+  date: last-modified
+  repo-url: https://github.com/colrverse/colsci-book
+  site-url: https://bisaloo.github.io/colsci-book
+  chapters:
+    - index.qmd
+    - 01-importing_processing.qmd
+    - 02-analysing.qmd
+    - 03-spectraldesc.qmd
+    - 04-references.qmd
+
+bibliography:
+  - book.bib
+  - packages.bib
+
+format:
+  html:
+    theme: cosmo
+    css: style.css
+    code-copy: true
+    code-overflow: wrap
+  pdf:
+    documentclass: book
+    include-in-header: preamble.tex
+    cite-method: natbib
+    keep-tex: true
+  epub: default
+
+execute:
+  freeze: auto
