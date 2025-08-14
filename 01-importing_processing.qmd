@@ -4,7 +4,10 @@
 
 Let's begin by loading the package.
 
-```{r, warning=FALSE, results='hide', message=FALSE}
+```{r}
+#| warning: false
+#| results: hide
+#| message: false
 # Load the package, and set a global 
 # random-number seed for the reproducible
 # generation of fake data later on.
@@ -26,7 +29,11 @@ The first thing we need to do is import spectral data into R using the function 
 
 If, for example, the raw spectral files were downloaded and placed in a directory called `/pavo/data_external/vignette`, you might execute the following command and see this output:
 
-```{r, echo=TRUE, eval=FALSE, results='hide', include=TRUE}
+```{r}
+#| echo: true
+#| eval: false
+#| results: hide
+#| include: true
 specs <- getspec("~/pavo/data_external/vignette", 
                  ext = "ttt", 
                  decimal = ",", 
@@ -88,7 +95,11 @@ head(as.rspec(fakedat, whichwl = 'wavelength'))
 
 Finally, the `lim` argument allows you to specify the range of wavelengths contained in the input dataset. This is useful either in the case that the dataset doesn't contain this information (and hence you cannot specify the column with `whichwl` or automatically find the column with `as.rspec()`). Additionally, it may be useful to focus on a subset of wavelengths. In our example, the wavelengths ranged from 300 to 700 nm, however you could also specify a restricted range of wavelengths with `lim`:
 
-```{r, fig.height=4, fig.width=5, fig.align = 'center', fig=TRUE}
+```{r}
+#| fig: true
+#| fig-height: 4
+#| fig-width: 5
+#| fig-align: center
 fakedat.new2 <- as.rspec(fakedat, lim = c(300, 500))
 
 plot(refl1 ~ wl, type = "l", data = fakedat.new2)
@@ -96,7 +107,11 @@ plot(refl1 ~ wl, type = "l", data = fakedat.new2)
 
 We want to stress that it is important to check the actual wavelengths contained in the data before setting this argument (`as.rspec()` will warn you when wavelengths in the data are not present in the range specified with `lim`), otherwise `as.rspec()` will assume that wavelengths exist when in fact they may not. For example, if we set `lim = c(300, 1000)` and plot the results, the reflectance values between 700 and 1000 nm are set to be equal since there is no information at these wavelengths in the original dataset:
 
-```{r, fig.height=4, fig.width=5, fig.aligh = 'center', fig = TRUE}
+```{r}
+#| fig.aligh: center
+#| fig: true
+#| fig-height: 4
+#| fig-width: 5
 fakedat.new2 <- as.rspec(fakedat, lim = c(300, 1000))
 
 plot(fakedat.new2[, 2] ~ fakedat.new2[, 1], type = "l")
@@ -108,21 +123,36 @@ In version 2.9.0 of `pavo` we also introduced the function `simulate_spec()`, wh
 
 For example, we might simulate a spectrum with a single Gaussian peak at 500 nm, which might be seen as in various structural colours, or even the absorbance of visual pigments.
 
-```{r, fig=TRUE, include=TRUE, fig.width=6, fig.height=4.5, fig.align='center'}
+```{r}
+#| fig: true
+#| include: true
+#| fig-width: 6
+#| fig-height: 4.5
+#| fig-align: center
 spec_gauss <- simulate_spec(wl_peak = 400)
 plot(spec_gauss)
 ```
 
 Or a more complex example could include a single sigmoidal peak, with multiple Gaussian peaks, in the one spectrum.
 
-```{r, fig=TRUE, include=TRUE, fig.width=6, fig.height=4.5, fig.align='center'}
+```{r}
+#| fig: true
+#| include: true
+#| fig-width: 6
+#| fig-height: 4.5
+#| fig-align: center
 spec_multi <- simulate_spec(wl_inflect = 575, wl_peak = c(340, 430), width_gauss = c(20, 60))
 plot(spec_multi)
 ```
 
 Finally, we might simulate a set of Gaussian reflectance curves with peaks varying between 400-600 nm. Such an approach could be useful for various simulation-based studies which seek, for example, to explore optimal receptor sets, or the constraints on colour signal production and perception.
 
-```{r, fig=TRUE, include=TRUE, fig.width=6, fig.height=4.5, fig.align='center'}
+```{r}
+#| fig: true
+#| include: true
+#| fig-width: 6
+#| fig-height: 4.5
+#| fig-align: center
 peaks <- seq(400, 600, 10)  # Peak locations
 specs_varying <- lapply(seq_along(peaks), function(x) simulate_spec(wl_peak = peaks[x]))  # Simulate spectra
 specs_varying <- Reduce(merge, specs_varying)  # Combine
@@ -172,7 +202,14 @@ Note that this re-combined file (`specs.new`) has only a single `wl` column with
 
 As previously described, our data (contained in the `specs` object) consists of multiple individuals, and each was measured three times, as is common to avoid measurement bias. A good way to visualize the repeatability of our measurements is to plot the spectra of each individual separately. The function `explorespec()` provides an easy way of doing so. You may specify the number of spectra to be plotted in the same panel using the argument `specreps`, and the function will adjust the number of panels per page accordingly. We will exemplify this function using only the 12 cardinal individuals measured:
 
-```{r, label=explorespecfig, fig=TRUE, include=TRUE, fig.width=6, fig.height=4.5, fig.cap="Result from `explorespec`, showing the three measurements for each individual cardinal in separate panels"}
+```{r}
+#| label: explorespecfig
+#| fig: true
+#| include: true
+#| fig-width: 6
+#| fig-height: 4.5
+#| fig-cap: Result from `explorespec`, showing the three measurements for each individual
+#|   cardinal in separate panels
 # 36 spectra plus the first (wl) column
 explorespec(specs[, 1:37], by = 3, lwd = 2)
 ```
@@ -200,7 +237,13 @@ table(spp)
 
 Instead, we are going to use the `spp` vector we created to tell the `aggspec()` function how to average the spectra in `mspecs`:
 
-```{r, label=exploresppmeans, fig=TRUE, include=TRUE, fig.width=5, fig.height=3.5, fig.cap="Result from `explorespec` for species means"}
+```{r}
+#| label: exploresppmeans
+#| fig: true
+#| include: true
+#| fig-width: 5
+#| fig-height: 3.5
+#| fig-cap: Result from `explorespec` for species means
 sppspec <- aggspec(mspecs, by = spp, FUN = mean)
 round(sppspec[1:5, ], 2)
 ```
@@ -211,7 +254,12 @@ Data obtained from spectrometers often requires further processing before analys
 
 But first, let's use the `plotsmooth()` function to determine a suitable smoothing parameter (`span`). This function allows you to set a minimum and maximum smoothing parameter to try and plots the resulting curves against the unsmoothed (raw) data in a convenient multipanel figure.
 
-```{r, fig=TRUE, include=TRUE, fig.width=6, fig.height=4.5, fig.align='center'}
+```{r}
+#| fig: true
+#| include: true
+#| fig-width: 6
+#| fig-height: 4.5
+#| fig-align: center
 plotsmooth(sppspec, 
            minsmooth = 0.05, 
            maxsmooth = 0.5, 
@@ -221,7 +269,13 @@ plotsmooth(sppspec,
 
 From the resulting plot, we can see that `span = 0.2` is the minimum amount of smoothing to remove spectral noise while preserving the original spectral shape. Based on this value, we will now use the `opt` argument in `procspec()` to smooth data for further plotting and analysis.
 
-```{r, fig=TRUE, include=TRUE, fig.width=5, fig.height=4, fig.cap="Result for raw (grey line) and smoothed (red line) reflectance data for the parakeet"}
+```{r}
+#| fig: true
+#| include: true
+#| fig-width: 5
+#| fig-height: 4
+#| fig-cap: Result for raw (grey line) and smoothed (red line) reflectance data for the
+#|   parakeet
 spec.sm <- procspec(sppspec, opt = "smooth", span = 0.2)
 plot(sppspec[, 5] ~ sppspec[, 1],
   type = "l", lwd = 10, col = "grey",
@@ -239,7 +293,13 @@ specs.min <- procspec(sppspec, opt = "min")
 specs.str <- procspec(sppspec, opt = c("min", "max")) # multiple options
 ```
 
-```{r, fig=TRUE, include=TRUE, fig.cap="Results for min (left), max (centre), and both normalisations (right)", fig.show="hold", out.width="50%", fig.align='center'}
+```{r}
+#| fig: true
+#| include: true
+#| fig-cap: Results for min (left), max (centre), and both normalisations (right)
+#| fig-show: hold
+#| out-width: 50%
+#| fig-align: center
 # Plot results
 plot(specs.min[, 5] ~ c(300:700), 
      xlab = "", 
@@ -288,7 +348,14 @@ summary(pca1)
 
 As can be seen by the summary, PC1 explains approximately 64% of the variation in spectral shape and describes the ratio of short to long wavelengths reflected. The flexibility of `R` and `pavo`'s plotting capabilities allows you to sort spectra by another variable (e.g., PC1 loading) and then plot in a stacked format using the `plot` function.
 
-```{r, fig=TRUE, include=TRUE, fig.cap="Plot of PC1 loading versus wavelength (left) and species mean spectra sorted vertically from lowest to highest PC1 value (right; values on right hand axis are column identities).", fig.show="hold", out.width="45%"}
+```{r}
+#| fig: true
+#| include: true
+#| fig-cap: Plot of PC1 loading versus wavelength (left) and species mean spectra sorted
+#|   vertically from lowest to highest PC1 value (right; values on right hand axis are
+#|   column identities).
+#| fig-show: hold
+#| out-width: 45%
 # Generate colours from spectra
 colr <- spec2rgb(sppspec)
 wls <- as.numeric(colnames(spec.bin))
@@ -322,7 +389,15 @@ testspecs.fix1 <- procspec(testspecs, fixneg = "addmin")
 testspecs.fix2 <- procspec(testspecs, fixneg = "zero")
 ```
 
-```{r, fig=TRUE, include=TRUE, fig.width=6, fig.height=4.5, fig.cap="Plots showing original reflectance curve including negative values (left) and two processed curves using `fixneg = addmin` (center) and `fixneg = zero` (right).", fig.show="hold", out.width="50%"}
+```{r}
+#| fig: true
+#| include: true
+#| fig-width: 6
+#| fig-height: 4.5
+#| fig-cap: Plots showing original reflectance curve including negative values (left)
+#|   and two processed curves using `fixneg = addmin` (center) and `fixneg = zero` (right).
+#| fig-show: hold
+#| out-width: 50%
 # Plot it
 plot(testspecs, select = 2, ylim = c(-10, 30))
 abline(h = 0, lty = 3)
@@ -355,7 +430,10 @@ We have implemented three methods of visualizing spectral data using `plot`:
 
 These options are in addition to the exploratory plotting offered by `explorespec()`, as seen in the figures in section 1. To showcase the capabilities of `plot.rspec()`, we will use the `teal` dataset included in `pavo`. This dataset consists of reflectance spectra from the iridescent wing patch of a green-winged teal (_Anas carolinensis_). Reflectance measurements were taken between 300 and 700 nm at different incident angles, ranging from 15° to 70° (in 5° increments) [@Eliason2012].
 
-```{r, echo = FALSE, fig.cap = "Anas carolinensis, by pixabay user Cock-Robin, CC0", out.width='100%'}
+```{r}
+#| echo: false
+#| fig-cap: Anas carolinensis, by pixabay user Cock-Robin, CC0
+#| out-width: 100%
 # Source: https://pixabay.com/es/photos/animal-estanque-agua-ave-4646309/
 knitr::include_graphics("fig/anas-carolinensis.jpg")
 ```
@@ -364,7 +442,13 @@ knitr::include_graphics("fig/anas-carolinensis.jpg")
 
 We can start out by visualizing these spectra with the `overlay` option in plot. Another neat option `pavo` offers is to convert reflectance spectra to their approximate perceived colour, by using the function `spec2rgb()`. This can make for some very interesting plots and even exploratory data analysis, as shown above.
 
-```{r, fig=TRUE, include=TRUE, fig.width=5, fig.height=4, fig.cap="Overlay plot of the teal angle-dependent reflectance with colours of each curve being an approximation of the perceived colour."}
+```{r}
+#| fig: true
+#| include: true
+#| fig-width: 5
+#| fig-height: 4
+#| fig-cap: Overlay plot of the teal angle-dependent reflectance with colours of each
+#|   curve being an approximation of the perceived colour.
 data(teal)
 plot(teal, type = "o", col = spec2rgb(teal))
 ```
@@ -373,7 +457,13 @@ plot(teal, type = "o", col = spec2rgb(teal))
 
 Another option is the `stack` plot (again, with human vision approximations of the colour produced by the spectra using `spec2rgb()`).
 
-```{r, fig=TRUE, include=TRUE, fig.cap="Stacked plot of the raw (left) and normalized (right) teal angle-dependent reflectance", fig.show="hold", out.width="45%"}
+```{r}
+#| fig: true
+#| include: true
+#| fig-cap: Stacked plot of the raw (left) and normalized (right) teal angle-dependent
+#|   reflectance
+#| fig-show: hold
+#| out-width: 45%
 teal.norm <- procspec(teal, opt = c("min", "max"))
 
 plot(teal, type = "s", col = spec2rgb(teal))
@@ -395,7 +485,13 @@ angles <- seq(15, 70, by = 5)
 
 Next, we will smooth the data with `procspec()` and plot as a false colour map (heatmap):
 
-```{r, fig=TRUE, include=TRUE, fig.width=5, fig.height=4, fig.cap="Heatmap plot for angle-resolved reflectance measurements of the green-winged teal."}
+```{r}
+#| fig: true
+#| include: true
+#| fig-width: 5
+#| fig-height: 4
+#| fig-cap: Heatmap plot for angle-resolved reflectance measurements of the green-winged
+#|   teal.
 
 # Smooth the spectral data
 teal.sm <- procspec(teal, opt = c("smooth"))
@@ -414,7 +510,15 @@ These plots can be very useful to observe changes over time, for example, or any
 
 `aggplot()` has a very similar interface to `aggspec()`, allowing for quick plotting of aggregated spectra combined by a factor, such as species, sex, experimental treatment, and so on. Its main output is a plot with lines of group mean spectra outlined by a shaded area indicating some measure of variability, such as the standard deviation of the group. Note that functions that aren't already implemented in R must be passed like they would be to functions such as `apply` (e.g., `function(x) sd(x)/sqrt(length(x))` in the example below).
 
-```{r, fig=TRUE, include=TRUE, fig.width=7, fig.height=6, fig.cap="Example plots created using `aggplot`. Left: using median, standard deviation, and coloured lines. Right: using mean, standard error, and greyscale", fig.show="hold", out.width="45%"}
+```{r}
+#| fig: true
+#| include: true
+#| fig-width: 7
+#| fig-height: 6
+#| fig-cap: 'Example plots created using `aggplot`. Left: using median, standard deviation,
+#|   and coloured lines. Right: using mean, standard error, and greyscale'
+#| fig-show: hold
+#| out-width: 45%
 # Plot using median and standard deviation, default colours
 aggplot(mspecs, spp, 
         FUN.center = median, 
@@ -465,7 +569,13 @@ str(fake_rimg)
 
 Thanks to the underlying class system of `pavo`, the generic functions `plot` and `summary` recognise and respond to image-data in an appropriate manner, as is the case with spectral data. A quick call to `plot`, for example, prints our images. Note that while we call an image individually below (for convenient printing in the vignette), we could simply feed the entire list of images to `plot` and it would automatically step through each image in the list upon user input.
 
-```{r, fig=TRUE, include=TRUE, fig.width=7, fig.height=6, out.width='100%', fig.cap="Raw images of our butterflies"}
+```{r}
+#| fig: true
+#| include: true
+#| fig-width: 7
+#| fig-height: 6
+#| out-width: 100%
+#| fig-cap: Raw images of our butterflies
 
 # Note the plot titles are taken 
 # from the file names, and can be overridden.
@@ -488,7 +598,15 @@ The resolving power of animals is in large part defined by their visual acuity, 
 
 To run the procedure, `procimg()` requires three arguments: `obj_dist`,  the real-world distance between the viewer and the focal object in the image, `obj_width`, the real-world width of the entire image, and `eye_res`, the resolution of the viewer in degrees. Any units of measurement are suitable for `obj_dist` and `obj_width`, but they must match. Here we'll run our butterfly images through the process assuming a conspecific viewer at a distance of 60 cm, an image width of 10 cm, and visual acuity 0.2 CPD. 
 
-```{r, fig=TRUE, message=FALSE, include=TRUE, fig.width=7, fig.height=6, out.width='100%', fig.cap="Images of our butterflies after modelling for the acuity of a conspecific viewer"}
+```{r}
+#| fig: true
+#| message: false
+#| include: true
+#| fig-width: 7
+#| fig-height: 6
+#| out-width: 100%
+#| fig-cap: Images of our butterflies after modelling for the acuity of a conspecific
+#|   viewer
 
 # Model the appearance of our butterflies given the reduced 
 # visual acuity of another animal viewer as per the 
@@ -516,7 +634,8 @@ Note there are some important considerations and caveats to the method. The core
 
 The other central purpose of `procimg()` is centres on rotating and resizing images, setting a real-world image scale, and/or distinguishing the focal object from its background. Rotating an image simply requires inputting an angle, in degrees, by which the image is rotated about its centre, while resizing requires a scaling factor by which the size of image(s) are to be decreased or increased. Setting scales and distinguishing backgrounds, in contrast, are both interactive procedures, meaning that we are presented with the focal image and must select points on it using the mouse (either a line, when setting a scale, or a polygon when identifying the focus). If setting a scale, we specify a scale in our preferred units via `scaledist`, and then click the endpoints of the scale within the image (which could be a 'formal' scale, or simply the length of a wing or another known reference object). This information, as usual, is attached to the image as an attribute.
 
-```{r, eval = FALSE}
+```{r}
+#| eval: false
 # Interactively specify the real-world scale of the image.
 # Here 100 mm.
 butterflies <- procimg(butterflies, scaledist = 100)
@@ -524,7 +643,8 @@ butterflies <- procimg(butterflies, scaledist = 100)
 
 Distinguishing a focal object from its background is important in cases where we are analysing a broader visual scene, particularly when the background is highly heterogeneous, such as an animal in nature, and cannot be classified into a homogeneous block and identified more simply (see below). To define the object and background we specify `outline = TRUE`, which will result in being asked to click around the outline of the focal object in each image, which is then converted to a polygon --- the xy coordinates of which are saved as an attribute. It is often useful to slightly smooth the resulting polygon, which can be done with Chaikin's corner-cutting algorithm by specifying a number of `refinements`. Chaikin's algorithm works by iteratively replacing every point by two new points 1/4 of the way to the next. The argument `iterations` specifies the number of corner cutting iterations to apply, and the default value of 1 offers a subtle smoothing effect.
 
-```{r, eval=FALSE}
+```{r}
+#| eval: false
 # Interactively specify a smoothed polygon 
 # around the focal objects
 butterflies <- procimg(butterflies, 
