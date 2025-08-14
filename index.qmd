@@ -1,17 +1,4 @@
---- 
-title: "The pavo handbook: studying biological colouration in R"
-# author: "Yihui Xie"
-date: "`r Sys.Date()`"
-site: bookdown::bookdown_site
-output: bookdown::gitbook
-documentclass: book
-bibliography: [book.bib, packages.bib]
-css: "style.css"
-biblio-style: apalike
-link-citations: yes
-github-repo: bisaloo/colsci-book
-# description: "This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook."
----
+# Package Overview {.unnumbered}
 
 ```{r setup, echo = FALSE}
 knitr::opts_chunk$set(
@@ -35,8 +22,6 @@ options(
 book_repo <- "https://github.com/Bisaloo/colsci-book"
 book_site <- "https://bisaloo.github.io/colsci-book"
 ```
-
-# Package Overview
 
 `pavo` is an `R` package developed with the goal of establishing a flexible and integrated workflow for working with spectral and spatial colour data. It includes functions that take advantage of new data classes to work seamlessly from importing raw spectra and images, to visualisation and analysis. It provides flexible ways to input spectral data from a variety of equipment manufacturers, process these data, extract variables, and produce publication-quality figures.
 
@@ -71,4 +56,3 @@ citation(package = "pavo")
 ## Acknowledgements
 
 We would like to thank Matthew D. Shawkey and Stephanie M. Doucet for insights and support, and Jarrod D. Hadfield and Mary Caswell Stoddard for sharing code that helped us develop some of `pavo`'s capabilities.
-
