@@ -17,9 +17,6 @@ options(
 )
 ```
 
-[pavo_repo]: https://github.com/rmaia/pavo
-[data_location]: https://github.com/rmaia/pavo/tree/master/data_external/vignette
-
 ```{r}
 #| echo: false
 book_repo <- "https://github.com/Bisaloo/colsci-book"
@@ -43,7 +40,7 @@ book_site <- "https://bisaloo.github.io/colsci-book"
 knitr::include_graphics(file.path(book_repo, "blob/main/fig/workflow.png?raw=TRUE"))
 ```
 
-In the remaining chapters we begin by detailing the importing, processing and visualisation of spectral and image data, before moving on to discussion of the many analyses that `pavo` allows. Our hope is to demonstrate the flexibility of `pavo`, and to provide a cohesive, reproducible workflow for colour pattern analysis within `R`. As always, the development version of `pavo` can be found on [github][pavo_repo], while the stable release is available via CRAN.
+In the remaining chapters we begin by detailing the importing, processing and visualisation of spectral and image data, before moving on to discussion of the many analyses that `pavo` allows. Our hope is to demonstrate the flexibility of `pavo`, and to provide a cohesive, reproducible workflow for colour pattern analysis within `R`. As always, the development version of `pavo` can be found on {{< var links.pavo_repo >}}, while the stable release is available via CRAN.
 
 ## Classes and Attributes
 
@@ -51,7 +48,7 @@ To enable the comprehensive workflow of `pavo`, we've implemented an expanded cl
 
 ## Suggestions and Assistance
 
-For suggestions, assistance and/or bug reports, we suggest getting in touch via the [colRverse discussion board](https://github.com/thomased/colRverse/discussions). It requires a github account, however, so if you don't have and/or want one the feel free to just [email Tom](mailto:thomas.white026@gmail.com) and we'll get back to you as soon as possible. If you have a bug to report, we'd appreciate it if you could also include a reproducible example when possible. Users familiar with GitHub may prefer to open an issue on the project's [github page][pavo_repo], or to make a pull-request directly.
+For suggestions, assistance and/or bug reports, we suggest getting in touch via the [colRverse discussion board](https://github.com/thomased/colRverse/discussions). It requires a github account, however, so if you don't have and/or want one the feel free to just [email Tom](mailto:thomas.white026@gmail.com) and we'll get back to you as soon as possible. If you have a bug to report, we'd appreciate it if you could also include a reproducible example when possible. Users familiar with GitHub may prefer to open an issue on the project's {{< var links.pavo_repo >}}, or to make a pull-request directly.
 
 ## Citation of methods implemented in `pavo`
 
