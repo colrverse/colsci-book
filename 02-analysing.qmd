@@ -69,8 +69,7 @@ If this all sounds too esoteric, fear not: `peakshape()` has the option of retur
 #| fig: true
 #| include: true
 #| fig-cap: Plots from `peakshape`
-#| fig-show: hold
-#| out-width: 30%
+#| layout-ncol: 3
 peakshape(spec.sm, plot = TRUE)
 ```
 
@@ -557,8 +556,7 @@ Two additional functions may help with tetrahedral colourspace plotting:
 #| include: true
 #| fig-cap: Flowers in a tetrahedral colourspace, with varied orientations and perspectives,
 #|   modelled using the visual phenotype of the blue tit.
-#| fig-show: hold
-#| out-width: 45%
+#| layout-ncol: 2
 plot(tetra.flowers,
      pch = 21,
      bg = spec2rgb(flowers))
@@ -594,8 +592,7 @@ We will use this dataset to test for the overlap between the volume determined b
 
 ```{r}
 #| plot: true
-#| fig-show: hold
-#| out-width: 40%
+#| layout-ncol: 2
 tcs.sicalis.C <- subset(colspace(vismodel(sicalis)), "C")
 tcs.sicalis.T <- subset(colspace(vismodel(sicalis)), "T")
 tcs.sicalis.B <- subset(colspace(vismodel(sicalis)), "B")
