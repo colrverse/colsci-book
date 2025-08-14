@@ -297,8 +297,7 @@ specs.str <- procspec(sppspec, opt = c("min", "max")) # multiple options
 #| fig: true
 #| include: true
 #| fig-cap: Results for min (left), max (centre), and both normalisations (right)
-#| fig-show: hold
-#| out-width: 50%
+#| layout-ncol: 2
 #| fig-align: center
 # Plot results
 plot(specs.min[, 5] ~ c(300:700), 
@@ -354,8 +353,7 @@ As can be seen by the summary, PC1 explains approximately 64% of the variation i
 #| fig-cap: Plot of PC1 loading versus wavelength (left) and species mean spectra sorted
 #|   vertically from lowest to highest PC1 value (right; values on right hand axis are
 #|   column identities).
-#| fig-show: hold
-#| out-width: 45%
+#| layout-ncol: 2
 # Generate colours from spectra
 colr <- spec2rgb(sppspec)
 wls <- as.numeric(colnames(spec.bin))
@@ -396,8 +394,7 @@ testspecs.fix2 <- procspec(testspecs, fixneg = "zero")
 #| fig-height: 4.5
 #| fig-cap: Plots showing original reflectance curve including negative values (left)
 #|   and two processed curves using `fixneg = addmin` (center) and `fixneg = zero` (right).
-#| fig-show: hold
-#| out-width: 50%
+#| layout-ncol: 2
 # Plot it
 plot(testspecs, select = 2, ylim = c(-10, 30))
 abline(h = 0, lty = 3)
@@ -462,8 +459,7 @@ Another option is the `stack` plot (again, with human vision approximations of t
 #| include: true
 #| fig-cap: Stacked plot of the raw (left) and normalized (right) teal angle-dependent
 #|   reflectance
-#| fig-show: hold
-#| out-width: 45%
+#| layout-ncol: 2
 teal.norm <- procspec(teal, opt = c("min", "max"))
 
 plot(teal, type = "s", col = spec2rgb(teal))
@@ -515,10 +511,9 @@ These plots can be very useful to observe changes over time, for example, or any
 #| include: true
 #| fig-width: 7
 #| fig-height: 6
+#| layout-ncol: 2
 #| fig-cap: 'Example plots created using `aggplot`. Left: using median, standard deviation,
 #|   and coloured lines. Right: using mean, standard error, and greyscale'
-#| fig-show: hold
-#| out-width: 45%
 # Plot using median and standard deviation, default colours
 aggplot(mspecs, spp, 
         FUN.center = median, 
