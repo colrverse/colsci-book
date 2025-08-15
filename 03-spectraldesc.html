@@ -6,9 +6,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2025-08-15">
 
-<title>The pavo handbook: studying biological colouration in R</title>
+<title>3&nbsp; Spectral shape descriptors – The pavo handbook: studying biological colouration in R</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,41 +19,6 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
-}
-/* CSS for syntax highlighting */
-html { -webkit-text-size-adjust: 100%; }
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 /* CSS for citations */
 div.csl-bib-body { }
@@ -86,7 +50,8 @@ div.csl-indent {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./01-importing_processing.html" rel="next">
+<link href="./04-references.html" rel="next">
+<link href="./02-analysing.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -125,6 +90,35 @@ div.csl-indent {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="style.css">
 </head>
@@ -138,7 +132,7 @@ div.csl-indent {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html">Package Overview</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./03-spectraldesc.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Spectral shape descriptors</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -168,7 +162,7 @@ div.csl-indent {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link active">
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Package Overview</span></a>
   </div>
 </li>
@@ -186,7 +180,7 @@ div.csl-indent {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./03-spectraldesc.html" class="sidebar-item-text sidebar-link">
+  <a href="./03-spectraldesc.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Spectral shape descriptors</span></span></a>
   </div>
 </li>
@@ -201,27 +195,15 @@ div.csl-indent {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Table of contents</h2>
-   
-  <ul>
-  <li><a href="#package-overview" id="toc-package-overview" class="nav-link active" data-scroll-target="#package-overview">Package Overview</a>
-  <ul class="collapse">
-  <li><a href="#classes-and-attributes" id="toc-classes-and-attributes" class="nav-link" data-scroll-target="#classes-and-attributes">Classes and Attributes</a></li>
-  <li><a href="#suggestions-and-assistance" id="toc-suggestions-and-assistance" class="nav-link" data-scroll-target="#suggestions-and-assistance">Suggestions and Assistance</a></li>
-  <li><a href="#citation-of-methods-implemented-in-pavo" id="toc-citation-of-methods-implemented-in-pavo" class="nav-link" data-scroll-target="#citation-of-methods-implemented-in-pavo">Citation of methods implemented in <code>pavo</code></a></li>
-  <li><a href="#acknowledgements" id="toc-acknowledgements" class="nav-link" data-scroll-target="#acknowledgements">Acknowledgements</a></li>
-  </ul></li>
-  </ul>
-</nav>
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+        
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">The pavo handbook: studying biological colouration in R</h1>
+<h1 class="title"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Spectral shape descriptors</span></h1>
 </div>
 
 
@@ -229,12 +211,6 @@ div.csl-indent {
 <div class="quarto-title-meta">
 
     
-    <div>
-    <div class="quarto-title-meta-heading">Published</div>
-    <div class="quarto-title-meta-contents">
-      <p class="date">August 15, 2025</p>
-    </div>
-  </div>
   
     
   </div>
@@ -244,102 +220,194 @@ div.csl-indent {
 </header>
 
 
-<section id="package-overview" class="level1 unnumbered">
-<h1 class="unnumbered">Package Overview</h1>
-<p><code>pavo</code> is an <code>R</code> package developed with the goal of establishing a flexible and integrated workflow for working with spectral and spatial colour data. It includes functions that take advantage of new data classes to work seamlessly from importing raw spectra and images, to visualisation and analysis. It provides flexible ways to input spectral data from a variety of equipment manufacturers, process these data, extract variables, and produce publication-quality figures.</p>
-<p><code>pavo</code> was written with the following workflow in mind:</p>
-<ol type="1">
-<li><strong>Organise</strong> data by importing and processing spectral and image data (e.g., to remove noise, negative values, smooth curves, etc.).</li>
-<li><strong>Analyse</strong> the resulting files, using spectral analyses of shape (hue, saturation, brightness), visual models based on perceptual data, and/or spatial adjacency and boundary strength analyses.</li>
-<li><strong>Visualise</strong> the output, with multiple options provided for exploration and analysis.</li>
-</ol>
-<div class="cell" data-layout-align="center">
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://github.com/Bisaloo/colsci-book/blob/main/fig/workflow.png?raw=TRUE" class="img-fluid figure-img" style="width:100.0%"></p>
-<figcaption>A non-exhaustive overview of the colour-pattern analysis workflow in pavo, as of version 2.0, displaying some key functions at each stage.</figcaption>
-</figure>
-</div>
-</div>
-</div>
-<p>In the remaining chapters we begin by detailing the importing, processing and visualisation of spectral and image data, before moving on to discussion of the many analyses that <code>pavo</code> allows. Our hope is to demonstrate the flexibility of <code>pavo</code>, and to provide a cohesive, reproducible workflow for colour pattern analysis within <code>R</code>. As always, the development version of <code>pavo</code> can be found on <a href="https://github.com/rmaia/pavo">GitHub</a>, while the stable release is available via CRAN.</p>
-<section id="classes-and-attributes" class="level2">
-<h2 class="anchored" data-anchor-id="classes-and-attributes">Classes and Attributes</h2>
-<p>To enable the comprehensive workflow of <code>pavo</code>, we’ve implemented an expanded class system. Spectra will be of class <code>rspec</code> as long as we use one of <code>pavo</code>’s spectral import or processing functions, or explicitly convert an object using <code>as.rspec()</code>. Similarly, images will be of class <code>rimg</code> when imported via <code>getimg()</code>, or if converted using <code>as.rimg()</code>. The results of <code>vismodel()</code> are objects of class <code>vismodel</code> and the results of <code>colspace()</code> are, unsurprisingly, objects of class <code>colspace</code>. Most of these classes inherit from <code>data.frame</code>, and contain a suite of attributes that describe the object’s characteristics (e.g.&nbsp;options used in visual modelling such as the selected visual system and illuminant, and properties of the modelled colourspace). These are easily viewed using the <code>summary</code> function (on any <code>rspec</code>, <code>rimg</code>, <code>vismodel</code>, or <code>colspace</code> object), which will return the attributes and summary data (where appropriate) in a readable format.</p>
-</section>
-<section id="suggestions-and-assistance" class="level2">
-<h2 class="anchored" data-anchor-id="suggestions-and-assistance">Suggestions and Assistance</h2>
-<p>For suggestions, assistance and/or bug reports, we suggest getting in touch via the <a href="https://github.com/thomased/colRverse/discussions">colRverse discussion board</a>. It requires a github account, however, so if you don’t have and/or want one the feel free to just <a href="mailto:thomas.white026@gmail.com">email Tom</a> and we’ll get back to you as soon as possible. If you have a bug to report, we’d appreciate it if you could also include a reproducible example when possible. Users familiar with GitHub may prefer to open an issue on the project’s <a href="https://github.com/rmaia/pavo">GitHub</a>, or to make a pull-request directly.</p>
-</section>
-<section id="citation-of-methods-implemented-in-pavo" class="level2">
-<h2 class="anchored" data-anchor-id="citation-of-methods-implemented-in-pavo">Citation of methods implemented in <code>pavo</code></h2>
-<p>Most of the methods implemented in <code>pavo</code> have been thoroughly described in their original publications, to which users should refer for details and interpretation. For reflectance shape variables (“objective colourimetrics”) and their particular relation to signal production and perception, see <span class="citation" data-cites="Andersson2006">Andersson and Prager (<a href="04-references.html#ref-Andersson2006" role="doc-biblioref">2006</a>)</span> and <span class="citation" data-cites="Montgomerie2006">Montgomerie (<a href="04-references.html#ref-Montgomerie2006" role="doc-biblioref">2006</a>)</span>. Visual models based on photon catches and receptor noise are detailed in <span class="citation" data-cites="Vorobyev1998">Vorobyev et al. (<a href="04-references.html#ref-Vorobyev1998" role="doc-biblioref">1998</a>)</span> and <span class="citation" data-cites="Vorobyev1998">Vorobyev et al. (<a href="04-references.html#ref-Vorobyev1998" role="doc-biblioref">1998</a>)</span>, and photoreceptor sensitivity curve estimation in <span class="citation" data-cites="Govardovskii2000">Govardovskii et al. (<a href="04-references.html#ref-Govardovskii2000" role="doc-biblioref">2000</a>)</span> and <span class="citation" data-cites="Hart2005">Hart and Vorobyev (<a href="04-references.html#ref-Hart2005" role="doc-biblioref">2005</a>)</span>. For tetrahedral colourspace model implementations and variable calculations, see <span class="citation" data-cites="Endler2005">Endler and Mielke (<a href="04-references.html#ref-Endler2005" role="doc-biblioref">2005</a>)</span> and <span class="citation" data-cites="Stoddard2008">Stoddard and Prum (<a href="04-references.html#ref-Stoddard2008" role="doc-biblioref">2008</a>)</span>, and for colour volume overlap see <span class="citation" data-cites="Stoddard2008">Stoddard and Prum (<a href="04-references.html#ref-Stoddard2008" role="doc-biblioref">2008</a>)</span> and <span class="citation" data-cites="Stoddard2011">Stoddard and Stevens (<a href="04-references.html#ref-Stoddard2011" role="doc-biblioref">2011</a>)</span>. Adjacency and boundary strength analyses are described in <span class="citation" data-cites="Endler2012">Endler (<a href="04-references.html#ref-Endler2012" role="doc-biblioref">2012</a>)</span> and <span class="citation" data-cites="Endler2018">Endler, Cole, and Kranz (<a href="04-references.html#ref-Endler2018" role="doc-biblioref">2018</a>)</span>, while overall pattern contrast is detailed in <span class="citation" data-cites="Endler2005">Endler and Mielke (<a href="04-references.html#ref-Endler2005" role="doc-biblioref">2005</a>)</span>. Users of the functions that apply these methods must cite the original sources as appropriate, along with <code>pavo</code> itself:</p>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">citation</span>(<span class="at">package =</span> <span class="st">"pavo"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>To cite the package pavo in publications please use:
-
-  Maia R, Gruson H, Endler JA, White TE (2019). "pavo 2: new
-  tools for the spectral and spatial analysis of colour in
-  R." _Methods in Ecology and Evolution_, *10*(7).
-  doi:10.1111/2041-210X.13174
-  &lt;https://doi.org/10.1111/2041-210X.13174&gt;.
-
-A BibTeX entry for LaTeX users is
-
-  @Article{,
-    title = {pavo 2: new tools for the spectral and spatial analysis of colour in R},
-    author = {Rafael Maia and Hugo Gruson and John A. Endler and Thomas E. White},
-    journal = {Methods in Ecology and Evolution},
-    year = {2019},
-    volume = {10},
-    number = {7},
-    page = {1097-1107},
-    doi = {10.1111/2041-210X.13174},
-  }</code></pre>
-</div>
-</div>
-</section>
-<section id="acknowledgements" class="level2">
-<h2 class="anchored" data-anchor-id="acknowledgements">Acknowledgements</h2>
-<p>We would like to thank Matthew D. Shawkey and Stephanie M. Doucet for insights and support, and Jarrod D. Hadfield and Mary Caswell Stoddard for sharing code that helped us develop some of <code>pavo</code>’s capabilities.</p>
+<style>
+tr:hover {
+  background-color: #eee;
+}
+</style>
+<p>This table is adapted from <span class="citation" data-cites="Montgomerie2006">Montgomerie (<a href="04-references.html#ref-Montgomerie2006" role="doc-biblioref">2006</a>)</span> and lists all spectral descriptors that are computed by the <code>summary</code> function in <code>pavo</code>.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 25%">
+<col style="width: 18%">
+<col style="width: 22%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Color variable</th>
+<th style="text-align: left;">Names used</th>
+<th style="text-align: center;">Formula</th>
+<th style="text-align: center;">Reference</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Brightness</td>
+<td style="text-align: left;">Total brightness, total reflectance, spectral intensity</td>
+<td style="text-align: center;"><span class="math display">\[B_1=B_T=\int_{\lambda_{min}}^{\lambda_{max}} R_i = \sum_{\lambda_{min}}^{\lambda_{max}} R_i\]</span></td>
+<td style="text-align: center;"><span class="citation" data-cites="Andersson1999">Andersson (<a href="04-references.html#ref-Andersson1999" role="doc-biblioref">1999</a>)</span>,<span class="citation" data-cites="Andersson2002">Andersson et al. (<a href="04-references.html#ref-Andersson2002" role="doc-biblioref">2002</a>)</span>,<span class="citation" data-cites="Ornborg2002">Örnborg et al. (<a href="04-references.html#ref-Ornborg2002" role="doc-biblioref">2002</a>)</span>,<span class="citation" data-cites="Andersson1998">Andersson, Örnborg, and Andersson (<a href="04-references.html#ref-Andersson1998" role="doc-biblioref">1998</a>)</span>,<span class="citation" data-cites="Smiseth2001">Smiseth et al. (<a href="04-references.html#ref-Smiseth2001" role="doc-biblioref">2001</a>)</span>,<span class="citation" data-cites="Saks2003">Saks, McGraw, and Horak (<a href="04-references.html#ref-Saks2003" role="doc-biblioref">2003</a>)</span>,<span class="citation" data-cites="Pryke2001">Pryke, Lawes, and Andersson (<a href="04-references.html#ref-Pryke2001" role="doc-biblioref">2001</a>)</span>,<span class="citation" data-cites="Shawkey2003">Shawkey et al. (<a href="04-references.html#ref-Shawkey2003" role="doc-biblioref">2003</a>)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Mean brightness</td>
+<td style="text-align: center;"><span class="math display">\[B_2=\frac{\sum_{\lambda_{min}}^{\lambda_{max}} R_i}{n_w}=\frac{B_1}{n_w}\]</span></td>
+<td style="text-align: center;"><span class="citation" data-cites="Delhey2003">Delhey et al. (<a href="04-references.html#ref-Delhey2003" role="doc-biblioref">2003</a>)</span>,<span class="citation" data-cites="Siefferman2005">Siefferman and Hill (<a href="04-references.html#ref-Siefferman2005" role="doc-biblioref">2005</a>)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Intensity</td>
+<td style="text-align: center;"><span class="math display">\[B_3=R_{max}\]</span></td>
+<td style="text-align: center;"><span class="citation" data-cites="Andersson1999">Andersson (<a href="04-references.html#ref-Andersson1999" role="doc-biblioref">1999</a>)</span>,<span class="citation" data-cites="Keyser2000">Keyser and Hill (<a href="04-references.html#ref-Keyser2000" role="doc-biblioref">2000</a>)</span>,<span class="citation" data-cites="Keyser1999">Keyser and Hill (<a href="04-references.html#ref-Keyser1999" role="doc-biblioref">1999</a>)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Saturation</td>
+<td style="text-align: left;">Chroma, reflectance ratio, spectral purity</td>
+<td style="text-align: center;"><span class="math display">\[S_1= \frac{\sum_{\lambda_a}^{\lambda_b} R_i}{\sum_{\lambda_{min}}^{\lambda_{max}} R_i} = \frac{\sum_{\lambda_a}^{\lambda_b} R_i}{B_1}\]</span></td>
+<td style="text-align: center;"><span class="citation" data-cites="Ornborg2002">Örnborg et al. (<a href="04-references.html#ref-Ornborg2002" role="doc-biblioref">2002</a>)</span>,<span class="citation" data-cites="Andersson1998">Andersson, Örnborg, and Andersson (<a href="04-references.html#ref-Andersson1998" role="doc-biblioref">1998</a>)</span>,<span class="citation" data-cites="Smiseth2001">Smiseth et al. (<a href="04-references.html#ref-Smiseth2001" role="doc-biblioref">2001</a>)</span>,<span class="citation" data-cites="Siefferman2005">Siefferman and Hill (<a href="04-references.html#ref-Siefferman2005" role="doc-biblioref">2005</a>)</span>,<span class="citation" data-cites="Peters2004">Peters et al. (<a href="04-references.html#ref-Peters2004" role="doc-biblioref">2004</a>)</span>,<span class="citation" data-cites="Shawkey2003">Shawkey et al. (<a href="04-references.html#ref-Shawkey2003" role="doc-biblioref">2003</a>)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Spectral saturation</td>
+<td style="text-align: center;"><span class="math display">\[S_2 = \frac{R_{max}}{R_{min}}\]</span></td>
+<td style="text-align: center;"><span class="citation" data-cites="Andersson1999">Andersson (<a href="04-references.html#ref-Andersson1999" role="doc-biblioref">1999</a>)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Chroma</td>
+<td style="text-align: center;"><span class="math display">\[S_3 = \frac{\sum_{\lambda_{R_{max}}-50}^{\lambda_{R_{max}}+50} R_i}{B_1}\]</span></td>
+<td style="text-align: center;"><span class="citation" data-cites="Shawkey2003">Shawkey et al. (<a href="04-references.html#ref-Shawkey2003" role="doc-biblioref">2003</a>)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Spectral purity</td>
+<td style="text-align: center;"><span class="math display">\[S_4 = \lvert b\text{max}_{neg}\lvert\]</span></td>
+<td style="text-align: center;"><span class="citation" data-cites="Andersson1999">Andersson (<a href="04-references.html#ref-Andersson1999" role="doc-biblioref">1999</a>)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Chroma</td>
+<td style="text-align: center;"><span class="math display">\[S_5=\sqrt{(B_r-B_g)^2+(B_y-B_b)^2}\]</span></td>
+<td style="text-align: center;"><span class="citation" data-cites="Saks2003">Saks, McGraw, and Horak (<a href="04-references.html#ref-Saks2003" role="doc-biblioref">2003</a>)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Constrast, amplitude</td>
+<td style="text-align: center;"><span class="math display">\[S_6 = R_{max} - R_{min}\]</span></td>
+<td style="text-align: center;"><span class="citation" data-cites="Keyser2000">Keyser and Hill (<a href="04-references.html#ref-Keyser2000" role="doc-biblioref">2000</a>)</span>,<span class="citation" data-cites="Keyser1999">Keyser and Hill (<a href="04-references.html#ref-Keyser1999" role="doc-biblioref">1999</a>)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Spectral saturation</td>
+<td style="text-align: center;"><span class="math display">\[S_7 = \frac{\left(\sum_{\lambda_{320}}^{\lambda_{R_{mid}}} R_i - \sum_{\lambda_{R_{mid}}}^{\lambda_{700}} R_i\right)}{B_1}\]</span></td>
+<td style="text-align: center;"><span class="citation" data-cites="Andersson2002">Andersson et al. (<a href="04-references.html#ref-Andersson2002" role="doc-biblioref">2002</a>)</span>,<span class="citation" data-cites="Pryke2001">Pryke, Lawes, and Andersson (<a href="04-references.html#ref-Pryke2001" role="doc-biblioref">2001</a>)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Chroma</td>
+<td style="text-align: center;"><span class="math display">\[S_8=\frac{R_{max}-R_{min}}{B_2}\]</span></td>
+<td style="text-align: center;"><span class="citation" data-cites="Andersson2002">Andersson et al. (<a href="04-references.html#ref-Andersson2002" role="doc-biblioref">2002</a>)</span>,<span class="citation" data-cites="Smiseth2001">Smiseth et al. (<a href="04-references.html#ref-Smiseth2001" role="doc-biblioref">2001</a>)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Carotenoid chroma</td>
+<td style="text-align: center;"><span class="math display">\[S_9=\frac{R_{\lambda_{700}}-R_{\lambda_{450}}}{R_{\lambda_{700}}}\]</span></td>
+<td style="text-align: center;"><span class="citation" data-cites="Peters2004">Peters et al. (<a href="04-references.html#ref-Peters2004" role="doc-biblioref">2004</a>)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Peaky chroma</td>
+<td style="text-align: center;"><span class="math display">\[S_{10}=\lvert b\text{max}_{neg} \lvert\frac{R_{max}-R_{min}}{B_2}\]</span></td>
+<td style="text-align: center;"><span class="citation" data-cites="Ornborg2002">Örnborg et al. (<a href="04-references.html#ref-Ornborg2002" role="doc-biblioref">2002</a>)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Hue</td>
+<td style="text-align: left;">Hue, peak wavelength, spectral location</td>
+<td style="text-align: center;"><span class="math display">\[H_1=\lambda_{R_{max}}\]</span></td>
+<td style="text-align: center;"><span class="citation" data-cites="Andersson1999">Andersson (<a href="04-references.html#ref-Andersson1999" role="doc-biblioref">1999</a>)</span>,<span class="citation" data-cites="Ornborg2002">Örnborg et al. (<a href="04-references.html#ref-Ornborg2002" role="doc-biblioref">2002</a>)</span>,<span class="citation" data-cites="Andersson1998">Andersson, Örnborg, and Andersson (<a href="04-references.html#ref-Andersson1998" role="doc-biblioref">1998</a>)</span>,<span class="citation" data-cites="Delhey2003">Delhey et al. (<a href="04-references.html#ref-Delhey2003" role="doc-biblioref">2003</a>)</span>,<span class="citation" data-cites="Smiseth2001">Smiseth et al. (<a href="04-references.html#ref-Smiseth2001" role="doc-biblioref">2001</a>)</span>,<span class="citation" data-cites="Keyser2000">Keyser and Hill (<a href="04-references.html#ref-Keyser2000" role="doc-biblioref">2000</a>)</span>,<span class="citation" data-cites="Siefferman2005">Siefferman and Hill (<a href="04-references.html#ref-Siefferman2005" role="doc-biblioref">2005</a>)</span>,<span class="citation" data-cites="Shawkey2003">Shawkey et al. (<a href="04-references.html#ref-Shawkey2003" role="doc-biblioref">2003</a>)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Hue</td>
+<td style="text-align: center;"><span class="math display">\[H_2 = \lambda_{b\text{max}_{neg}}\]</span></td>
+<td style="text-align: center;"><span class="citation" data-cites="Andersson1998">Andersson, Örnborg, and Andersson (<a href="04-references.html#ref-Andersson1998" role="doc-biblioref">1998</a>)</span>,<span class="citation" data-cites="Smiseth2001">Smiseth et al. (<a href="04-references.html#ref-Smiseth2001" role="doc-biblioref">2001</a>)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Hue</td>
+<td style="text-align: center;"><span class="math display">\[H_3 = \lambda_{R_{mid}}\]</span></td>
+<td style="text-align: center;"><span class="citation" data-cites="Andersson2002">Andersson et al. (<a href="04-references.html#ref-Andersson2002" role="doc-biblioref">2002</a>)</span>,<span class="citation" data-cites="Smiseth2001">Smiseth et al. (<a href="04-references.html#ref-Smiseth2001" role="doc-biblioref">2001</a>)</span>,<span class="citation" data-cites="Pryke2001">Pryke, Lawes, and Andersson (<a href="04-references.html#ref-Pryke2001" role="doc-biblioref">2001</a>)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Hue</td>
+<td style="text-align: center;"><span class="math display">\[H_4 = \arctan\left(\frac{B_y-B_b}{B_r-B_g}\right)\]</span></td>
+<td style="text-align: center;"><span class="citation" data-cites="Saks2003">Saks, McGraw, and Horak (<a href="04-references.html#ref-Saks2003" role="doc-biblioref">2003</a>)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Hue</td>
+<td style="text-align: center;"><span class="math display">\[H_5 = \lambda_{b\text{max}_{pos}}\]</span></td>
+<td style="text-align: center;"><span class="citation" data-cites="Keyser1999">Keyser and Hill (<a href="04-references.html#ref-Keyser1999" role="doc-biblioref">1999</a>)</span></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><span class="math inline">\(R_i\)</span>: percentage (or proportional) reflectance at the <span class="math inline">\(i\)</span>th wavelength</li>
+<li><span class="math inline">\(\lambda_{max}\)</span>, <span class="math inline">\(\lambda_{min}\)</span>: upper and lower (respectively) limits of wavelengths</li>
+<li><span class="math inline">\(n_w\)</span>: number of wavelength intervals used to calculate <span class="math inline">\(B_T\)</span></li>
+<li><span class="math inline">\(R_{max}\)</span>, <span class="math inline">\(R_{min}\)</span>: maximum and minimum percent reflectances, respectively</li>
+<li><span class="math inline">\(\lambda_{R_{max}}\)</span>: wavelength at maximum reflectance</li>
+<li><span class="math inline">\(b\text{max}_{neg}\)</span>, <span class="math inline">\(b\text{max}_{pos}\)</span>: maximum negative and positive slopes of reflectance curve in a region of interest</li>
+<li><span class="math inline">\(B_r\)</span>, <span class="math inline">\(B_y\)</span>, <span class="math inline">\(B_g\)</span>, <span class="math inline">\(B_b\)</span>: total brightness in red (<span class="math inline">\(r=625-700\,nm\)</span>), yellow (<span class="math inline">\(y=550-625\,nm\)</span>), green (<span class="math inline">\(g=475-550\,nm\)</span>) and blue (<span class="math inline">\(b=400-475\,nm\)</span>) segments of the spectrum</li>
+<li><span class="math inline">\(\lambda_{R_{mid}}\)</span>: wavelength at the reflectance midpoint between <span class="math inline">\(R_{max}\)</span> and <span class="math inline">\(R_{min}\)</span> (i.e., <span class="math inline">\(\frac{R_{max}+R_{min}}{2}\)</span>)</li>
+</ul>
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
-<div id="ref-Andersson2006" class="csl-entry" role="listitem">
-Andersson, Staffan, and Maria Prager. 2006. <span>“Quantification of <span>Coloration</span>.”</span> In <em>Bird <span>Coloration</span>, <span>Volume</span> 1: <span>Mechanisms</span> and <span>Measurements</span></em>, edited by Geoffrey E. Hill and Kevin J. McGraw, 1:640. Bird Coloration. Harvard University Press.
+<div id="ref-Andersson1999" class="csl-entry" role="listitem">
+Andersson, Staffan. 1999. <span>“Morphology of <span>UV</span> Reflectance in a Whistling-Thrush: Implications for the Study of Structural Colour Signalling in Birds.”</span> <em>Journal of Avian Biology</em> 30 (2): 193–204. <a href="https://doi.org/10.2307/3677129">https://doi.org/10.2307/3677129</a>.
 </div>
-<div id="ref-Endler2012" class="csl-entry" role="listitem">
-Endler, John A. 2012. <span>“A Framework for Analysing Colour Pattern Geometry: Adjacent Colours.”</span> <em>Biological Journal of the Linnean Society</em> 107 (2): 233–53. <a href="https://doi.org/10.1111/j.1095-8312.2012.01937.x">https://doi.org/10.1111/j.1095-8312.2012.01937.x</a>.
+<div id="ref-Andersson1998" class="csl-entry" role="listitem">
+Andersson, Staffan, Jonas Örnborg, and Malte Andersson. 1998. <span>“Ultraviolet Sexual Dimorphism and Assortative Mating in Blue Tits.”</span> <em>Proceedings of the Royal Society of London B: Biological Sciences</em> 265 (1395): 445–50. <a href="https://doi.org/10.1098/rspb.1998.0315">https://doi.org/10.1098/rspb.1998.0315</a>.
 </div>
-<div id="ref-Endler2018" class="csl-entry" role="listitem">
-Endler, John A., Gemma L. Cole, and Alexandrea M. Kranz. 2018. <span>“Boundary Strength Analysis: <span>Combining</span> Colour Pattern Geometry and Coloured Patch Visual Properties for Use in Predicting Behaviour and Fitness.”</span> Edited by Simon Blomberg. <em>Methods in Ecology and Evolution</em>, August. <a href="https://doi.org/10.1111/2041-210X.13073">https://doi.org/10.1111/2041-210X.13073</a>.
+<div id="ref-Andersson2002" class="csl-entry" role="listitem">
+Andersson, Staffan, Sarah R. Pryke, Jonas Örnborg, Michael J. Lawes, and Malte Andersson. 2002. <span>“Multiple Receivers, Multiple Ornaments, and a Trade‐off Between Agonistic and Epigamic Signaling in a Widowbird.”</span> <em>The American Naturalist</em> 160 (5): 683–91. <a href="https://doi.org/10.1086/342817">https://doi.org/10.1086/342817</a>.
 </div>
-<div id="ref-Endler2005" class="csl-entry" role="listitem">
-Endler, John A., and Paul W. Mielke. 2005. <span>“Comparing Entire Colour Patterns as Birds See Them.”</span> <em>Biological Journal of the Linnean Society</em> 86 (4): 405–31. <a href="https://doi.org/10.1111/j.1095-8312.2005.00540.x">https://doi.org/10.1111/j.1095-8312.2005.00540.x</a>.
+<div id="ref-Delhey2003" class="csl-entry" role="listitem">
+Delhey, Kaspar, Arild Johnsen, Anne Peters, Staffan Andersson, and Bart Kempenaers. 2003. <span>“Paternity Analysis Reveals Opposing Selection Pressures on Crown Coloration in the Blue Tit (<span>Parus</span> Caeruleus).”</span> <em>Proceedings of the Royal Society of London B: Biological Sciences</em> 270 (1528): 2057–63. <a href="https://doi.org/10.1098/rspb.2003.2460">https://doi.org/10.1098/rspb.2003.2460</a>.
 </div>
-<div id="ref-Govardovskii2000" class="csl-entry" role="listitem">
-Govardovskii, Victor I., Nanna Fyhrquist, Tom Reuter, Dmitry G. Kuzmin, and Kristian Donner. 2000. <span>“In Search of the Visual Pigment Template.”</span> <em>Visual Neuroscience</em> 17 (4): 509–28. <a href="https://doi.org/10.1017/S0952523800174036">https://doi.org/10.1017/S0952523800174036</a>.
+<div id="ref-Keyser1999" class="csl-entry" role="listitem">
+Keyser, Amber J., and Geoffrey E. Hill. 1999. <span>“Condition–Dependent Variation in the Blue–Ultraviolet Coloration of a Structurally Based Plumage Ornament.”</span> <em>Proceedings of the Royal Society of London B: Biological Sciences</em> 266 (1421): 771–77. <a href="https://doi.org/10.1098/rspb.1999.0704">https://doi.org/10.1098/rspb.1999.0704</a>.
 </div>
-<div id="ref-Hart2005" class="csl-entry" role="listitem">
-Hart, Nathan S., and Misha Vorobyev. 2005. <span>“Modelling Oil Droplet Absorption Spectra and Spectral Sensitivities of Bird Cone Photoreceptors.”</span> <em>Journal of Comparative Physiology A</em> 191 (4): 381–92. <a href="https://doi.org/10.1007/s00359-004-0595-3">https://doi.org/10.1007/s00359-004-0595-3</a>.
+<div id="ref-Keyser2000" class="csl-entry" role="listitem">
+———. 2000. <span>“Structurally Based Plumage Coloration Is an Honest Signal of Quality in Male Blue Grosbeaks.”</span> <em>Behavioral Ecology</em> 11 (2): 202–9. <a href="https://doi.org/10.1093/beheco/11.2.202">https://doi.org/10.1093/beheco/11.2.202</a>.
 </div>
 <div id="ref-Montgomerie2006" class="csl-entry" role="listitem">
 Montgomerie, Robert. 2006. <span>“Analyzing <span>Colors</span>.”</span> In <em>Bird <span>Coloration</span>, <span>Volume</span> 1: <span>Mechanisms</span> and <span>Measurements</span></em>, edited by Geoffrey E. Hill and Kevin J. McGraw, 1:640. Bird Coloration. Harvard University Press.
 </div>
-<div id="ref-Stoddard2008" class="csl-entry" role="listitem">
-Stoddard, Mary Caswell, and Richard O. Prum. 2008. <span>“Evolution of Avian Plumage Color in a Tetrahedral Color Space: A Phylogenetic Analysis of <span>New World</span> Buntings.”</span> <em>The American Naturalist</em> 171 (6): 755–76. <a href="https://doi.org/10.1086/587526">https://doi.org/10.1086/587526</a>.
+<div id="ref-Ornborg2002" class="csl-entry" role="listitem">
+Örnborg, Jonas, Staffan Andersson, Simon C. Griffith, and Ben C. Sheldon. 2002. <span>“Seasonal Changes in a Ultraviolet Structural Colour Signal in Blue Tits, <span>Parus</span> Caeruleus.”</span> <em>Biological Journal of the Linnean Society</em> 76 (2): 237–45. <a href="https://doi.org/10.1111/j.1095-8312.2002.tb02085.x">https://doi.org/10.1111/j.1095-8312.2002.tb02085.x</a>.
 </div>
-<div id="ref-Stoddard2011" class="csl-entry" role="listitem">
-Stoddard, Mary Caswell, and Martin Stevens. 2011. <span>“Avian Vision and the Evolution of Egg Color Mimicry in the Common Cuckoo.”</span> <em>Evolution</em> 65 (7): 2004–13. <a href="https://doi.org/10.1111/j.1558-5646.2011.01262.x">https://doi.org/10.1111/j.1558-5646.2011.01262.x</a>.
+<div id="ref-Peters2004" class="csl-entry" role="listitem">
+Peters, A., A. G. Denk, K. Delhey, and B. Kempenaers. 2004. <span>“Carotenoid-Based Bill Colour as an Indicator of Immunocompetence and Sperm Performance in Male Mallards.”</span> <em>Journal of Evolutionary Biology</em> 17 (5): 1111–20. <a href="https://doi.org/10.1111/j.1420-9101.2004.00743.x">https://doi.org/10.1111/j.1420-9101.2004.00743.x</a>.
 </div>
-<div id="ref-Vorobyev1998" class="csl-entry" role="listitem">
-Vorobyev, Misha, Daniel Colaco Osorio, Andrew T. D. Bennett, N. Justin Marshall, and Innes C. Cuthill. 1998. <span>“Tetrachromacy, Oil Droplets and Bird Plumage Colours.”</span> <em>Journal of Comparative Physiology A</em> 183 (5): 621–33. <a href="https://doi.org/10.1007/s003590050286">https://doi.org/10.1007/s003590050286</a>.
+<div id="ref-Pryke2001" class="csl-entry" role="listitem">
+Pryke, Sarah R., Michael J. Lawes, and Staffan Andersson. 2001. <span>“Agonistic Carotenoid Signalling in Male Red-Collared Widowbirds: Aggression Related to the Colour Signal of Both the Territory Owner and Model Intruder.”</span> <em>Animal Behaviour</em> 62 (4): 695–704. <a href="https://doi.org/10.1006/anbe.2001.1804">https://doi.org/10.1006/anbe.2001.1804</a>.
+</div>
+<div id="ref-Saks2003" class="csl-entry" role="listitem">
+Saks, Lauri, Kevin McGraw, and Peeter Horak. 2003. <span>“How Feather Colour Reflects Its Carotenoid Content.”</span> <em>Functional Ecology</em> 17 (4): 555–61. <a href="https://doi.org/10.1046/j.1365-2435.2003.00765.x">https://doi.org/10.1046/j.1365-2435.2003.00765.x</a>.
+</div>
+<div id="ref-Shawkey2003" class="csl-entry" role="listitem">
+Shawkey, Matthew D., Anne M. Estes, Lynn M. Siefferman, and Geoffrey E. Hill. 2003. <span>“Nanostructure Predicts Intraspecific Variation in Ultraviolet–Blue Plumage Colour.”</span> <em>Proceedings of the Royal Society of London B: Biological Sciences</em> 270 (1523): 1455–60. <a href="https://doi.org/10.1098/rspb.2003.2390">https://doi.org/10.1098/rspb.2003.2390</a>.
+</div>
+<div id="ref-Siefferman2005" class="csl-entry" role="listitem">
+Siefferman, Lynn, and Geoffrey E. Hill. 2005. <span>“<span>UV</span>-Blue Structural Coloration and Competition for Nestboxes in Male Eastern Bluebirds.”</span> <em>Animal Behaviour</em> 69 (1): 67–72. <a href="https://doi.org/10.1016/j.anbehav.2003.12.026">https://doi.org/10.1016/j.anbehav.2003.12.026</a>.
+</div>
+<div id="ref-Smiseth2001" class="csl-entry" role="listitem">
+Smiseth, Per T., Jonas Örnborg, Staffan Andersson, and Trond Amundsen. 2001. <span>“Is Male Plumage Reflectance Correlated with Paternal Care in Bluethroats?”</span> <em>Behavioral Ecology</em> 12 (2): 164–70. <a href="https://doi.org/10.1093/beheco/12.2.164">https://doi.org/10.1093/beheco/12.2.164</a>.
 </div>
 </div>
-</section>
-</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -743,10 +811,13 @@ Vorobyev, Misha, Daniel Colaco Osorio, Andrew T. D. Bennett, N. Justin Marshall,
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
+      <a href="./02-analysing.html" class="pagination-link" aria-label="Analysing Data">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Analysing Data</span></span>
+      </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./01-importing_processing.html" class="pagination-link" aria-label="Importing, Processing, and Visualising Data">
-        <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Importing, Processing, and Visualising Data</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./04-references.html" class="pagination-link" aria-label="References">
+        <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">References</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
