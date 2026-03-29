@@ -24,6 +24,7 @@ format:
     css: style.css
     code-copy: true
     code-overflow: wrap
+    code-link: true
   pdf:
     documentclass: book
     include-in-header: preamble.tex
