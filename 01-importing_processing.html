@@ -212,7 +212,7 @@ div.csl-indent {
   <li>
 <a href="#visualizing-spectral-data" id="toc-visualizing-spectral-data" class="nav-link" data-scroll-target="#visualizing-spectral-data"><span class="header-section-number">1.3</span> Visualizing Spectral Data</a>
   <ul class="collapse">
-<li><a href="#the-plot-function-options" id="toc-the-plot-function-options" class="nav-link" data-scroll-target="#the-plot-function-options"><span class="header-section-number">1.3.1</span> The <code>plot</code> Function Options</a></li>
+<li><a href="#the-plot-function-options" id="toc-the-plot-function-options" class="nav-link" data-scroll-target="#the-plot-function-options"><span class="header-section-number">1.3.1</span> The <code>plot()</code> Function Options</a></li>
   <li><a href="#the-aggplot-function" id="toc-the-aggplot-function" class="nav-link" data-scroll-target="#the-aggplot-function"><span class="header-section-number">1.3.2</span> The <code>aggplot()</code> Function</a></li>
   </ul>
 </li>
@@ -220,7 +220,7 @@ div.csl-indent {
   <li>
 <a href="#visualising-image-data" id="toc-visualising-image-data" class="nav-link" data-scroll-target="#visualising-image-data"><span class="header-section-number">1.5</span> Visualising Image Data</a>
   <ul class="collapse">
-<li><a href="#the-plot-and-summary-functions" id="toc-the-plot-and-summary-functions" class="nav-link" data-scroll-target="#the-plot-and-summary-functions"><span class="header-section-number">1.5.1</span> The <code>plot</code> and <code>summary</code> Functions</a></li>
+<li><a href="#the-plot-and-summary-functions" id="toc-the-plot-and-summary-functions" class="nav-link" data-scroll-target="#the-plot-and-summary-functions"><span class="header-section-number">1.5.1</span> The <code>plot()</code> and <code>summary()</code> Functions</a></li>
   </ul>
 </li>
   <li>
@@ -462,7 +462,7 @@ Consider using procspec() to correct them.</code></pre>
 </div>
 </section><section id="subsetting-and-merging-spectral-data" class="level3" data-number="1.1.4"><h3 data-number="1.1.4" class="anchored" data-anchor-id="subsetting-and-merging-spectral-data">
 <span class="header-section-number">1.1.4</span> Subsetting and Merging Spectral Data</h3>
-<p>Once an <code>rspec</code> object has been created, either by importing raw spectral data, converting a dataset with the <code><a href="https://pavo.colrverse.com/reference/as.rspec.html">as.rspec()</a></code> function, or simulation, you can subset the spectra based on their names using a modified version of <code>R</code>’s built-in <code>subset</code> function. For example, the following code illustrates how to create an <code>rspec</code> object containing only tanagers:</p>
+<p>Once an <code>rspec</code> object has been created, either by importing raw spectral data, converting a dataset with the <code><a href="https://pavo.colrverse.com/reference/as.rspec.html">as.rspec()</a></code> function, or simulation, you can subset the spectra based on their names using a modified version of <code>R</code>’s built-in <code><a href="https://rdrr.io/r/base/subset.html">subset()</a></code> function. For example, the following code illustrates how to create an <code>rspec</code> object containing only tanagers:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb36"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">specs.tanager1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html">subset</a></span><span class="op">(</span><span class="va">specs</span>, <span class="st">"tanager"</span><span class="op">)</span></span>
 <span></span>
@@ -477,8 +477,8 @@ Consider using procspec() to correct them.</code></pre>
 6 305      11.5664      11.6135      10.8659      15.6445</code></pre>
 </div>
 </div>
-<p>The <code>subset</code> function here is using partial matching to find all spectra with the string “tanager” in their name. To fully benefit from this flexible subsetting functionality, it is important that you follow a consistent file naming scheme. For example, <code>tanager.14423.belly.001.ttt</code> would indicate the species (tanager), individual ID (14423), body patch (belly) and measurement number (001). Additionally, we suggest that labels used should have the same number of characters, which simplifies character string manipulation and subsetting based on partial matching.</p>
-<p>If you prefer not to use partial matching, <code>subset</code> will also work if you provide a logical condition, similar to the default <code>subset</code> behaviour in <code>R</code>. For example:</p>
+<p>The <code><a href="https://rdrr.io/r/base/subset.html">subset()</a></code> function here is using partial matching to find all spectra with the string “tanager” in their name. To fully benefit from this flexible subsetting functionality, it is important that you follow a consistent file naming scheme. For example, <code>tanager.14423.belly.001.ttt</code> would indicate the species (tanager), individual ID (14423), body patch (belly) and measurement number (001). Additionally, we suggest that labels used should have the same number of characters, which simplifies character string manipulation and subsetting based on partial matching.</p>
+<p>If you prefer not to use partial matching, <code><a href="https://rdrr.io/r/base/subset.html">subset()</a></code> will also work if you provide a logical condition, similar to the default <code><a href="https://rdrr.io/r/base/subset.html">subset()</a></code> behaviour in <code>R</code>. For example:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb38"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># extract first component of filenames containing species names</span></span>
 <span><span class="va">spp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/do.call.html">do.call</a></span><span class="op">(</span><span class="va">rbind</span>, <span class="fu"><a href="https://rdrr.io/r/base/strsplit.html">strsplit</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">specs</span><span class="op">)</span>, <span class="st">"\\."</span><span class="op">)</span><span class="op">)</span><span class="op">[</span>, <span class="fl">1</span><span class="op">]</span></span>
@@ -492,14 +492,14 @@ Consider using procspec() to correct them.</code></pre>
 <pre><code>[1] TRUE</code></pre>
 </div>
 </div>
-<p>Note that <code>subset</code> will also work with visual model (class <code>vismodel</code>) and colspace (class <code>colspace</code>) objects, as described below.</p>
-<p>Another useful function is <code>merge</code>. Let’s say that you have subsetted spectra for tanagers and parakeets, and you would like to re-combine them for an analysis. The following lines of code show how to do this:</p>
+<p>Note that <code><a href="https://rdrr.io/r/base/subset.html">subset()</a></code> will also work with visual model (class <code>vismodel</code>) and colspace (class <code>colspace</code>) objects, as described below.</p>
+<p>Another useful function is <code><a href="https://rdrr.io/r/base/merge.html">merge()</a></code>. Let’s say that you have subsetted spectra for tanagers and parakeets, and you would like to re-combine them for an analysis. The following lines of code show how to do this:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb40"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">specs.tanager</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html">subset</a></span><span class="op">(</span><span class="va">specs</span>, <span class="st">"tanager"</span><span class="op">)</span></span>
 <span><span class="va">specs.parakeet</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html">subset</a></span><span class="op">(</span><span class="va">specs</span>, <span class="st">"parakeet"</span><span class="op">)</span></span>
 <span><span class="va">specs.new</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/merge.html">merge</a></span><span class="op">(</span><span class="va">specs.tanager</span>, <span class="va">specs.parakeet</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>Note that this re-combined file (<code>specs.new</code>) has only a single <code>wl</code> column with the merged spectra as columns. Keep in mind that the order of objects in <code>merge</code> will determine the order of columns in the final merged object (i.e.&nbsp;tanagers will be before parakeets).</p>
+<p>Note that this re-combined file (<code>specs.new</code>) has only a single <code>wl</code> column with the merged spectra as columns. Keep in mind that the order of objects in <code><a href="https://rdrr.io/r/base/merge.html">merge()</a></code> will determine the order of columns in the final merged object (i.e.&nbsp;tanagers will be before parakeets).</p>
 </section></section><section id="processing-spectral-data" class="level2" data-number="1.2"><h2 data-number="1.2" class="anchored" data-anchor-id="processing-spectral-data">
 <span class="header-section-number">1.2</span> Processing Spectral Data</h2>
 <section id="averaging-spectra" class="level3" data-number="1.2.1"><h3 data-number="1.2.1" class="anchored" data-anchor-id="averaging-spectra">
@@ -511,7 +511,7 @@ Consider using procspec() to correct them.</code></pre>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure"><p><img src="01-importing_processing_files/figure-html/explorespecfig-1.png" class="img-fluid figure-img" width="576"></p>
-<figcaption>Result from <code>explorespec</code>, showing the three measurements for each individual cardinal in separate panels</figcaption></figure>
+<figcaption>Result from <code><a href="https://pavo.colrverse.com/reference/explorespec.html">explorespec()</a></code>, showing the three measurements for each individual cardinal in separate panels</figcaption></figure>
 </div>
 </div>
 </div>
@@ -698,7 +698,7 @@ Proportion of Variance 0.6486 0.1977 0.1247 0.0223 0.00672 0.00e+00
 Cumulative Proportion  0.6486 0.8463 0.9710 0.9933 1.00000 1.00e+00</code></pre>
 </div>
 </div>
-<p>As can be seen by the summary, PC1 explains approximately 64% of the variation in spectral shape and describes the ratio of short to long wavelengths reflected. The flexibility of <code>R</code> and <code>pavo</code>’s plotting capabilities allows you to sort spectra by another variable (e.g., PC1 loading) and then plot in a stacked format using the <code>plot</code> function.</p>
+<p>As can be seen by the summary, PC1 explains approximately 64% of the variation in spectral shape and describes the ratio of short to long wavelengths reflected. The flexibility of <code>R</code> and <code>pavo</code>’s plotting capabilities allows you to sort spectra by another variable (e.g., PC1 loading) and then plot in a stacked format using the <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code> function.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb68"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Generate colours from spectra</span></span>
 <span><span class="va">colr</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://pavo.colrverse.com/reference/spec2rgb.html">spec2rgb</a></span><span class="op">(</span><span class="va">sppspec</span><span class="op">)</span></span>
 <span><span class="va">wls</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">spec.bin</span><span class="op">)</span><span class="op">)</span></span>
@@ -796,11 +796,11 @@ Negative value correction: converted negative values to zero</code></pre>
 <p>These manipultions may have different effects on the final spectra, which the user should keep in mind and use according to the final goal of the analysis. For example, by adding the minimum reflectance to all other wavelength, the shape of the curve is preserved, but the maximum reflectance is much higher. On the other hand, substituting negative values with zero preserves absolute reflectance values, but may cause the spectral shape to be lost. The “best” transformation will depend on the severity of the problem of negative values and the goal of the analysis (e.g.&nbsp;will reflectance intensity be used? What is more important, to preserve reflectance values or the total shape of the curve?). Which correction to use would also depend on the source of the negative values. If they are thought to originate from improper calibration of the spectrophotometer, <code>fixneg = addmin</code> would be appropriate. However, if they are thought to originate from electric noise, <code>fixneg = zero</code> would be more appropriate.</p>
 </section></section><section id="visualizing-spectral-data" class="level2" data-number="1.3"><h2 data-number="1.3" class="anchored" data-anchor-id="visualizing-spectral-data">
 <span class="header-section-number">1.3</span> Visualizing Spectral Data</h2>
-<p><code>pavo</code> offers three main plotting functions. The main one is <code>plot</code>, which combines several different options in a flexible framework for most commonly used purposes. The <code><a href="https://pavo.colrverse.com/reference/explorespec.html">explorespec()</a></code> function aims at providing initial exploratory analysis, as demonstrated in Section 1. Finally, <code><a href="https://pavo.colrverse.com/reference/aggplot.html">aggplot()</a></code> provides a simple framework for publication-quality plots of aggregated spectral data.</p>
+<p><code>pavo</code> offers three main plotting functions. The main one is <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code>, which combines several different options in a flexible framework for most commonly used purposes. The <code><a href="https://pavo.colrverse.com/reference/explorespec.html">explorespec()</a></code> function aims at providing initial exploratory analysis, as demonstrated in Section 1. Finally, <code><a href="https://pavo.colrverse.com/reference/aggplot.html">aggplot()</a></code> provides a simple framework for publication-quality plots of aggregated spectral data.</p>
 <section id="the-plot-function-options" class="level3" data-number="1.3.1"><h3 data-number="1.3.1" class="anchored" data-anchor-id="the-plot-function-options">
-<span class="header-section-number">1.3.1</span> The <code>plot</code> Function Options</h3>
+<span class="header-section-number">1.3.1</span> The <code>plot()</code> Function Options</h3>
 <p>Since <code>pavo</code> uses the class <code>rspec</code> to identify spectral data, the function <code>plot.rspec()</code> can be called simply by calling <code>plot(data)</code>. If the object is not of class <code>rspec</code> the multivariate visualisation methods will not work as expected, so it might be useful to check the data using <code><a href="https://pavo.colrverse.com/reference/as.rspec.html">is.rspec()</a></code> and convert with <code><a href="https://pavo.colrverse.com/reference/as.rspec.html">as.rspec()</a></code> if necessary.</p>
-<p>We have implemented three methods of visualizing spectral data using <code>plot</code>:</p>
+<p>We have implemented three methods of visualizing spectral data using <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code>:</p>
 <ol type="1">
 <li>
 <strong>Overlay</strong>: all spectra plotted with same x- and y-axis</li>
@@ -989,8 +989,8 @@ smoothing spectra with a span of 0.25</code></pre>
 </section><section id="visualising-image-data" class="level2" data-number="1.5"><h2 data-number="1.5" class="anchored" data-anchor-id="visualising-image-data">
 <span class="header-section-number">1.5</span> Visualising Image Data</h2>
 <section id="the-plot-and-summary-functions" class="level3" data-number="1.5.1"><h3 data-number="1.5.1" class="anchored" data-anchor-id="the-plot-and-summary-functions">
-<span class="header-section-number">1.5.1</span> The <code>plot</code> and <code>summary</code> Functions</h3>
-<p>Thanks to the underlying class system of <code>pavo</code>, the generic functions <code>plot</code> and <code>summary</code> recognise and respond to image-data in an appropriate manner, as is the case with spectral data. A quick call to <code>plot</code>, for example, prints our images. Note that while we call an image individually below (for convenient printing in the vignette), we could simply feed the entire list of images to <code>plot</code> and it would automatically step through each image in the list upon user input.</p>
+<span class="header-section-number">1.5.1</span> The <code>plot()</code> and <code>summary()</code> Functions</h3>
+<p>Thanks to the underlying class system of <code>pavo</code>, the generic functions <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code> and <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code> recognise and respond to image-data in an appropriate manner, as is the case with spectral data. A quick call to <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code>, for example, prints our images. Note that while we call an image individually below (for convenient printing in the vignette), we could simply feed the entire list of images to <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code> and it would automatically step through each image in the list upon user input.</p>
 <div class="cell" data-fig="true">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb98"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Note the plot titles are taken </span></span>
 <span><span class="co"># from the file names, and can be overridden.</span></span>
@@ -1004,7 +1004,7 @@ smoothing spectra with a span of 0.25</code></pre>
 </div>
 </div>
 </div>
-<p>The <code>summary</code> function offers some summary information about images or lists of images as we might expect. If we specify <code>plot = TRUE</code> however, the function instead plots the image. When such images have been colour-classified this also plots the images’ colour palette alongside (see below). This is an extremely useful diagnostic tool when classifying images, as it allows us to see how well the classification algorithm has performed in clustering colour pattern elements into discrete colour categories. As with all plots, the function takes all standard plot arguments (see <code><a href="https://rdrr.io/r/graphics/par.html">?par</a></code>), such as custom colours, which again can be diagnostically useful.</p>
+<p>The <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code> function offers some summary information about images or lists of images as we might expect. If we specify <code>plot = TRUE</code> however, the function instead plots the image. When such images have been colour-classified this also plots the images’ colour palette alongside (see below). This is an extremely useful diagnostic tool when classifying images, as it allows us to see how well the classification algorithm has performed in clustering colour pattern elements into discrete colour categories. As with all plots, the function takes all standard plot arguments (see <code><a href="https://rdrr.io/r/graphics/par.html">?par</a></code>), such as custom colours, which again can be diagnostically useful.</p>
 </section></section><section id="processing-image-data" class="level2" data-number="1.6"><h2 data-number="1.6" class="anchored" data-anchor-id="processing-image-data">
 <span class="header-section-number">1.6</span> Processing Image Data</h2>
 <section id="overview" class="level3" data-number="1.6.1"><h3 data-number="1.6.1" class="anchored" data-anchor-id="overview">
