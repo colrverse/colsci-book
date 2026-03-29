@@ -2,13 +2,16 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.33">
+<meta name="generator" content="quarto-1.9.36">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
 <title>3&nbsp; Spectral shape descriptors – The pavo handbook: studying biological colouration in R</title>
 <style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
 div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -24,7 +27,6 @@ ul.task-list li input[type="checkbox"] {
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
-  margin-bottom: 0em;
 }
 .hanging-indent div.csl-entry {
   margin-left:2em;
@@ -58,10 +60,10 @@ div.csl-indent {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-845c23b38eaddc0f92fda52bfe77a8c8.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-33aec4fe58015f671fa7d5ef914b1e53.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-097a25868bcbdc9d144951d9b302b648.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -91,7 +93,7 @@ div.csl-indent {
 }</script>
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <script type="text/javascript">
 const typesetMath = (el) => {
@@ -104,7 +106,7 @@ const typesetMath = (el) => {
     var macros = [];
     for (var i = 0; i < mathElements.length; i++) {
       var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
         window.katex.render(texText.data, mathElements[i], {
           displayMode: mathElements[i].classList.contains('display'),
           throwOnError: false,
@@ -246,7 +248,7 @@ tr:hover {
 <td style="text-align: left;">Brightness</td>
 <td style="text-align: left;">Total brightness, total reflectance, spectral intensity</td>
 <td style="text-align: center;"><span class="math display">\[B_1=B_T=\int_{\lambda_{min}}^{\lambda_{max}} R_i = \sum_{\lambda_{min}}^{\lambda_{max}} R_i\]</span></td>
-<td style="text-align: center;"><span class="citation" data-cites="Andersson1999">Andersson (<a href="04-references.html#ref-Andersson1999" role="doc-biblioref">1999</a>)</span>,<span class="citation" data-cites="Andersson2002">Andersson et al. (<a href="04-references.html#ref-Andersson2002" role="doc-biblioref">2002</a>)</span>,<span class="citation" data-cites="Ornborg2002">Örnborg et al. (<a href="04-references.html#ref-Ornborg2002" role="doc-biblioref">2002</a>)</span>,<span class="citation" data-cites="Andersson1998">Andersson, Örnborg, and Andersson (<a href="04-references.html#ref-Andersson1998" role="doc-biblioref">1998</a>)</span>,<span class="citation" data-cites="Smiseth2001">Smiseth et al. (<a href="04-references.html#ref-Smiseth2001" role="doc-biblioref">2001</a>)</span>,<span class="citation" data-cites="Saks2003">Saks, McGraw, and Horak (<a href="04-references.html#ref-Saks2003" role="doc-biblioref">2003</a>)</span>,<span class="citation" data-cites="Pryke2001">Pryke, Lawes, and Andersson (<a href="04-references.html#ref-Pryke2001" role="doc-biblioref">2001</a>)</span>,<span class="citation" data-cites="Shawkey2003">Shawkey et al. (<a href="04-references.html#ref-Shawkey2003" role="doc-biblioref">2003</a>)</span></td>
+<td style="text-align: center;"><span class="citation" data-cites="Andersson1999">Andersson (<a href="04-references.html#ref-Andersson1999" role="doc-biblioref">1999</a>)</span>,<span class="citation" data-cites="Andersson2002">Andersson et al. (<a href="04-references.html#ref-Andersson2002" role="doc-biblioref">2002</a>)</span>,<span class="citation" data-cites="Ornborg2002">Örnborg et al. (<a href="04-references.html#ref-Ornborg2002" role="doc-biblioref">2002</a>)</span>,<span class="citation" data-cites="Andersson1998">Andersson et al. (<a href="04-references.html#ref-Andersson1998" role="doc-biblioref">1998</a>)</span>,<span class="citation" data-cites="Smiseth2001">Smiseth et al. (<a href="04-references.html#ref-Smiseth2001" role="doc-biblioref">2001</a>)</span>,<span class="citation" data-cites="Saks2003">Saks et al. (<a href="04-references.html#ref-Saks2003" role="doc-biblioref">2003</a>)</span>,<span class="citation" data-cites="Pryke2001">Pryke et al. (<a href="04-references.html#ref-Pryke2001" role="doc-biblioref">2001</a>)</span>,<span class="citation" data-cites="Shawkey2003">Shawkey et al. (<a href="04-references.html#ref-Shawkey2003" role="doc-biblioref">2003</a>)</span></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"></td>
@@ -264,7 +266,7 @@ tr:hover {
 <td style="text-align: left;">Saturation</td>
 <td style="text-align: left;">Chroma, reflectance ratio, spectral purity</td>
 <td style="text-align: center;"><span class="math display">\[S_1= \frac{\sum_{\lambda_a}^{\lambda_b} R_i}{\sum_{\lambda_{min}}^{\lambda_{max}} R_i} = \frac{\sum_{\lambda_a}^{\lambda_b} R_i}{B_1}\]</span></td>
-<td style="text-align: center;"><span class="citation" data-cites="Ornborg2002">Örnborg et al. (<a href="04-references.html#ref-Ornborg2002" role="doc-biblioref">2002</a>)</span>,<span class="citation" data-cites="Andersson1998">Andersson, Örnborg, and Andersson (<a href="04-references.html#ref-Andersson1998" role="doc-biblioref">1998</a>)</span>,<span class="citation" data-cites="Smiseth2001">Smiseth et al. (<a href="04-references.html#ref-Smiseth2001" role="doc-biblioref">2001</a>)</span>,<span class="citation" data-cites="Siefferman2005">Siefferman and Hill (<a href="04-references.html#ref-Siefferman2005" role="doc-biblioref">2005</a>)</span>,<span class="citation" data-cites="Peters2004">Peters et al. (<a href="04-references.html#ref-Peters2004" role="doc-biblioref">2004</a>)</span>,<span class="citation" data-cites="Shawkey2003">Shawkey et al. (<a href="04-references.html#ref-Shawkey2003" role="doc-biblioref">2003</a>)</span></td>
+<td style="text-align: center;"><span class="citation" data-cites="Ornborg2002">Örnborg et al. (<a href="04-references.html#ref-Ornborg2002" role="doc-biblioref">2002</a>)</span>,<span class="citation" data-cites="Andersson1998">Andersson et al. (<a href="04-references.html#ref-Andersson1998" role="doc-biblioref">1998</a>)</span>,<span class="citation" data-cites="Smiseth2001">Smiseth et al. (<a href="04-references.html#ref-Smiseth2001" role="doc-biblioref">2001</a>)</span>,<span class="citation" data-cites="Siefferman2005">Siefferman and Hill (<a href="04-references.html#ref-Siefferman2005" role="doc-biblioref">2005</a>)</span>,<span class="citation" data-cites="Peters2004">Peters et al. (<a href="04-references.html#ref-Peters2004" role="doc-biblioref">2004</a>)</span>,<span class="citation" data-cites="Shawkey2003">Shawkey et al. (<a href="04-references.html#ref-Shawkey2003" role="doc-biblioref">2003</a>)</span></td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;"></td>
@@ -288,7 +290,7 @@ tr:hover {
 <td style="text-align: left;"></td>
 <td style="text-align: left;">Chroma</td>
 <td style="text-align: center;"><span class="math display">\[S_5=\sqrt{(B_r-B_g)^2+(B_y-B_b)^2}\]</span></td>
-<td style="text-align: center;"><span class="citation" data-cites="Saks2003">Saks, McGraw, and Horak (<a href="04-references.html#ref-Saks2003" role="doc-biblioref">2003</a>)</span></td>
+<td style="text-align: center;"><span class="citation" data-cites="Saks2003">Saks et al. (<a href="04-references.html#ref-Saks2003" role="doc-biblioref">2003</a>)</span></td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;"></td>
@@ -300,7 +302,7 @@ tr:hover {
 <td style="text-align: left;"></td>
 <td style="text-align: left;">Spectral saturation</td>
 <td style="text-align: center;"><span class="math display">\[S_7 = \frac{\left(\sum_{\lambda_{320}}^{\lambda_{R_{mid}}} R_i - \sum_{\lambda_{R_{mid}}}^{\lambda_{700}} R_i\right)}{B_1}\]</span></td>
-<td style="text-align: center;"><span class="citation" data-cites="Andersson2002">Andersson et al. (<a href="04-references.html#ref-Andersson2002" role="doc-biblioref">2002</a>)</span>,<span class="citation" data-cites="Pryke2001">Pryke, Lawes, and Andersson (<a href="04-references.html#ref-Pryke2001" role="doc-biblioref">2001</a>)</span></td>
+<td style="text-align: center;"><span class="citation" data-cites="Andersson2002">Andersson et al. (<a href="04-references.html#ref-Andersson2002" role="doc-biblioref">2002</a>)</span>,<span class="citation" data-cites="Pryke2001">Pryke et al. (<a href="04-references.html#ref-Pryke2001" role="doc-biblioref">2001</a>)</span></td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;"></td>
@@ -324,25 +326,25 @@ tr:hover {
 <td style="text-align: left;">Hue</td>
 <td style="text-align: left;">Hue, peak wavelength, spectral location</td>
 <td style="text-align: center;"><span class="math display">\[H_1=\lambda_{R_{max}}\]</span></td>
-<td style="text-align: center;"><span class="citation" data-cites="Andersson1999">Andersson (<a href="04-references.html#ref-Andersson1999" role="doc-biblioref">1999</a>)</span>,<span class="citation" data-cites="Ornborg2002">Örnborg et al. (<a href="04-references.html#ref-Ornborg2002" role="doc-biblioref">2002</a>)</span>,<span class="citation" data-cites="Andersson1998">Andersson, Örnborg, and Andersson (<a href="04-references.html#ref-Andersson1998" role="doc-biblioref">1998</a>)</span>,<span class="citation" data-cites="Delhey2003">Delhey et al. (<a href="04-references.html#ref-Delhey2003" role="doc-biblioref">2003</a>)</span>,<span class="citation" data-cites="Smiseth2001">Smiseth et al. (<a href="04-references.html#ref-Smiseth2001" role="doc-biblioref">2001</a>)</span>,<span class="citation" data-cites="Keyser2000">Keyser and Hill (<a href="04-references.html#ref-Keyser2000" role="doc-biblioref">2000</a>)</span>,<span class="citation" data-cites="Siefferman2005">Siefferman and Hill (<a href="04-references.html#ref-Siefferman2005" role="doc-biblioref">2005</a>)</span>,<span class="citation" data-cites="Shawkey2003">Shawkey et al. (<a href="04-references.html#ref-Shawkey2003" role="doc-biblioref">2003</a>)</span></td>
+<td style="text-align: center;"><span class="citation" data-cites="Andersson1999">Andersson (<a href="04-references.html#ref-Andersson1999" role="doc-biblioref">1999</a>)</span>,<span class="citation" data-cites="Ornborg2002">Örnborg et al. (<a href="04-references.html#ref-Ornborg2002" role="doc-biblioref">2002</a>)</span>,<span class="citation" data-cites="Andersson1998">Andersson et al. (<a href="04-references.html#ref-Andersson1998" role="doc-biblioref">1998</a>)</span>,<span class="citation" data-cites="Delhey2003">Delhey et al. (<a href="04-references.html#ref-Delhey2003" role="doc-biblioref">2003</a>)</span>,<span class="citation" data-cites="Smiseth2001">Smiseth et al. (<a href="04-references.html#ref-Smiseth2001" role="doc-biblioref">2001</a>)</span>,<span class="citation" data-cites="Keyser2000">Keyser and Hill (<a href="04-references.html#ref-Keyser2000" role="doc-biblioref">2000</a>)</span>,<span class="citation" data-cites="Siefferman2005">Siefferman and Hill (<a href="04-references.html#ref-Siefferman2005" role="doc-biblioref">2005</a>)</span>,<span class="citation" data-cites="Shawkey2003">Shawkey et al. (<a href="04-references.html#ref-Shawkey2003" role="doc-biblioref">2003</a>)</span></td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">Hue</td>
 <td style="text-align: center;"><span class="math display">\[H_2 = \lambda_{b\text{max}_{neg}}\]</span></td>
-<td style="text-align: center;"><span class="citation" data-cites="Andersson1998">Andersson, Örnborg, and Andersson (<a href="04-references.html#ref-Andersson1998" role="doc-biblioref">1998</a>)</span>,<span class="citation" data-cites="Smiseth2001">Smiseth et al. (<a href="04-references.html#ref-Smiseth2001" role="doc-biblioref">2001</a>)</span></td>
+<td style="text-align: center;"><span class="citation" data-cites="Andersson1998">Andersson et al. (<a href="04-references.html#ref-Andersson1998" role="doc-biblioref">1998</a>)</span>,<span class="citation" data-cites="Smiseth2001">Smiseth et al. (<a href="04-references.html#ref-Smiseth2001" role="doc-biblioref">2001</a>)</span></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">Hue</td>
 <td style="text-align: center;"><span class="math display">\[H_3 = \lambda_{R_{mid}}\]</span></td>
-<td style="text-align: center;"><span class="citation" data-cites="Andersson2002">Andersson et al. (<a href="04-references.html#ref-Andersson2002" role="doc-biblioref">2002</a>)</span>,<span class="citation" data-cites="Smiseth2001">Smiseth et al. (<a href="04-references.html#ref-Smiseth2001" role="doc-biblioref">2001</a>)</span>,<span class="citation" data-cites="Pryke2001">Pryke, Lawes, and Andersson (<a href="04-references.html#ref-Pryke2001" role="doc-biblioref">2001</a>)</span></td>
+<td style="text-align: center;"><span class="citation" data-cites="Andersson2002">Andersson et al. (<a href="04-references.html#ref-Andersson2002" role="doc-biblioref">2002</a>)</span>,<span class="citation" data-cites="Smiseth2001">Smiseth et al. (<a href="04-references.html#ref-Smiseth2001" role="doc-biblioref">2001</a>)</span>,<span class="citation" data-cites="Pryke2001">Pryke et al. (<a href="04-references.html#ref-Pryke2001" role="doc-biblioref">2001</a>)</span></td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">Hue</td>
 <td style="text-align: center;"><span class="math display">\[H_4 = \arctan\left(\frac{B_y-B_b}{B_r-B_g}\right)\]</span></td>
-<td style="text-align: center;"><span class="citation" data-cites="Saks2003">Saks, McGraw, and Horak (<a href="04-references.html#ref-Saks2003" role="doc-biblioref">2003</a>)</span></td>
+<td style="text-align: center;"><span class="citation" data-cites="Saks2003">Saks et al. (<a href="04-references.html#ref-Saks2003" role="doc-biblioref">2003</a>)</span></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"></td>
@@ -364,7 +366,7 @@ tr:hover {
 </ul>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
 <div id="ref-Andersson1999" class="csl-entry" role="listitem">
 Andersson, Staffan. 1999. <span>“Morphology of <span>UV</span> Reflectance in a Whistling-Thrush: Implications for the Study of Structural Colour Signalling in Birds.”</span> <em>Journal of Avian Biology</em> 30 (2): 193–204. <a href="https://doi.org/10.2307/3677129">https://doi.org/10.2307/3677129</a>.
 </div>
@@ -381,10 +383,10 @@ Delhey, Kaspar, Arild Johnsen, Anne Peters, Staffan Andersson, and Bart Kempenae
 Keyser, Amber J., and Geoffrey E. Hill. 1999. <span>“Condition–Dependent Variation in the Blue–Ultraviolet Coloration of a Structurally Based Plumage Ornament.”</span> <em>Proceedings of the Royal Society of London B: Biological Sciences</em> 266 (1421): 771–77. <a href="https://doi.org/10.1098/rspb.1999.0704">https://doi.org/10.1098/rspb.1999.0704</a>.
 </div>
 <div id="ref-Keyser2000" class="csl-entry" role="listitem">
-———. 2000. <span>“Structurally Based Plumage Coloration Is an Honest Signal of Quality in Male Blue Grosbeaks.”</span> <em>Behavioral Ecology</em> 11 (2): 202–9. <a href="https://doi.org/10.1093/beheco/11.2.202">https://doi.org/10.1093/beheco/11.2.202</a>.
+Keyser, Amber J., and Geoffrey E. Hill. 2000. <span>“Structurally Based Plumage Coloration Is an Honest Signal of Quality in Male Blue Grosbeaks.”</span> <em>Behavioral Ecology</em> 11 (2): 202–9. <a href="https://doi.org/10.1093/beheco/11.2.202">https://doi.org/10.1093/beheco/11.2.202</a>.
 </div>
 <div id="ref-Montgomerie2006" class="csl-entry" role="listitem">
-Montgomerie, Robert. 2006. <span>“Analyzing <span>Colors</span>.”</span> In <em>Bird <span>Coloration</span>, <span>Volume</span> 1: <span>Mechanisms</span> and <span>Measurements</span></em>, edited by Geoffrey E. Hill and Kevin J. McGraw, 1:640. Bird Coloration. Harvard University Press.
+Montgomerie, Robert. 2006. <span>“Analyzing <span>Colors</span>.”</span> In <em>Bird <span>Coloration</span>, <span>Volume</span> 1: <span>Mechanisms</span> and <span>Measurements</span></em>, edited by Geoffrey E. Hill and Kevin J. McGraw, vol. 1. Bird Coloration. Harvard University Press.
 </div>
 <div id="ref-Ornborg2002" class="csl-entry" role="listitem">
 Örnborg, Jonas, Staffan Andersson, Simon C. Griffith, and Ben C. Sheldon. 2002. <span>“Seasonal Changes in a Ultraviolet Structural Colour Signal in Blue Tits, <span>Parus</span> Caeruleus.”</span> <em>Biological Journal of the Linnean Society</em> 76 (2): 237–45. <a href="https://doi.org/10.1111/j.1095-8312.2002.tb02085.x">https://doi.org/10.1111/j.1095-8312.2002.tb02085.x</a>.
@@ -461,13 +463,14 @@ Smiseth, Per T., Jonas Örnborg, Staffan Andersson, and Trond Amundsen. 2001. <s
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy

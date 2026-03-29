@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
-
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.33">
-
+<meta name="generator" content="quarto-1.9.36">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-
-<meta name="dcterms.date" content="2025-08-15">
-
+<meta name="dcterms.date" content="2026-03-29">
 <title>The pavo handbook: studying biological colouration in R</title>
 <style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
 div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -60,7 +60,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
-  margin-bottom: 0em;
 }
 .hanging-indent div.csl-entry {
   margin-left:2em;
@@ -78,7 +77,6 @@ div.csl-indent {
   margin-left: 2em;
 }</style>
 
-
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="site_libs/quarto-nav/headroom.min.js"></script>
 <script src="site_libs/clipboard/clipboard.min.js"></script>
@@ -93,11 +91,10 @@ div.csl-indent {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-845c23b38eaddc0f92fda52bfe77a8c8.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-33aec4fe58015f671fa7d5ef914b1e53.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
-<script id="quarto-search-options" type="application/json">{
+<link href="site_libs/bootstrap/bootstrap-097a25868bcbdc9d144951d9b302b648.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
   "collapse-after": 3,
@@ -123,18 +120,12 @@ div.csl-indent {
     "search-submit-button-title": "Submit",
     "search-label": "Search"
   }
-}</script>
-
-
-<link rel="stylesheet" href="style.css">
+}</script><link rel="stylesheet" href="style.css">
 </head>
-
 <body class="nav-sidebar floating quarto-light">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
-  <nav class="quarto-secondary-nav">
-    <div class="container-fluid d-flex">
+  <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav"><div class="container-fluid d-flex">
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
@@ -145,13 +136,9 @@ div.csl-indent {
         <i class="bi bi-search"></i>
       </button>
     </div>
-  </nav>
-</header>
-<!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+  </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
-    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">The pavo handbook: studying biological colouration in R</a> 
         <div class="sidebar-tools-main">
@@ -166,7 +153,7 @@ div.csl-indent {
         </div>
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
-        <li class="sidebar-item">
+<li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./index.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Package Overview</span></a>
@@ -197,30 +184,26 @@ div.csl-indent {
   </div>
 </li>
     </ul>
-    </div>
-</nav>
-<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+</div>
+</nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Table of contents</h2>
+        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#package-overview" id="toc-package-overview" class="nav-link active" data-scroll-target="#package-overview">Package Overview</a>
+<li>
+<a href="#package-overview" id="toc-package-overview" class="nav-link active" data-scroll-target="#package-overview">Package Overview</a>
   <ul class="collapse">
-  <li><a href="#classes-and-attributes" id="toc-classes-and-attributes" class="nav-link" data-scroll-target="#classes-and-attributes">Classes and Attributes</a></li>
+<li><a href="#classes-and-attributes" id="toc-classes-and-attributes" class="nav-link" data-scroll-target="#classes-and-attributes">Classes and Attributes</a></li>
   <li><a href="#suggestions-and-assistance" id="toc-suggestions-and-assistance" class="nav-link" data-scroll-target="#suggestions-and-assistance">Suggestions and Assistance</a></li>
   <li><a href="#citation-of-methods-implemented-in-pavo" id="toc-citation-of-methods-implemented-in-pavo" class="nav-link" data-scroll-target="#citation-of-methods-implemented-in-pavo">Citation of methods implemented in <code>pavo</code></a></li>
   <li><a href="#acknowledgements" id="toc-acknowledgements" class="nav-link" data-scroll-target="#acknowledgements">Acknowledgements</a></li>
-  </ul></li>
   </ul>
-</nav>
+</li>
+  </ul></nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
-
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
 <h1 class="title">The pavo handbook: studying biological colouration in R</h1>
 </div>
 
@@ -232,7 +215,7 @@ div.csl-indent {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">August 15, 2025</p>
+      <p class="date">March 29, 2026</p>
     </div>
   </div>
   
@@ -241,42 +224,35 @@ div.csl-indent {
   
 
 
-</header>
-
-
-<section id="package-overview" class="level1 unnumbered">
-<h1 class="unnumbered">Package Overview</h1>
+</header><section id="package-overview" class="level1 unnumbered"><h1 class="unnumbered">Package Overview</h1>
 <p><code>pavo</code> is an <code>R</code> package developed with the goal of establishing a flexible and integrated workflow for working with spectral and spatial colour data. It includes functions that take advantage of new data classes to work seamlessly from importing raw spectra and images, to visualisation and analysis. It provides flexible ways to input spectral data from a variety of equipment manufacturers, process these data, extract variables, and produce publication-quality figures.</p>
 <p><code>pavo</code> was written with the following workflow in mind:</p>
 <ol type="1">
-<li><strong>Organise</strong> data by importing and processing spectral and image data (e.g., to remove noise, negative values, smooth curves, etc.).</li>
-<li><strong>Analyse</strong> the resulting files, using spectral analyses of shape (hue, saturation, brightness), visual models based on perceptual data, and/or spatial adjacency and boundary strength analyses.</li>
-<li><strong>Visualise</strong> the output, with multiple options provided for exploration and analysis.</li>
+<li>
+<strong>Organise</strong> data by importing and processing spectral and image data (e.g., to remove noise, negative values, smooth curves, etc.).</li>
+<li>
+<strong>Analyse</strong> the resulting files, using spectral analyses of shape (hue, saturation, brightness), visual models based on perceptual data, and/or spatial adjacency and boundary strength analyses.</li>
+<li>
+<strong>Visualise</strong> the output, with multiple options provided for exploration and analysis.</li>
 </ol>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://github.com/Bisaloo/colsci-book/blob/main/fig/workflow.png?raw=TRUE" class="img-fluid figure-img" style="width:100.0%"></p>
-<figcaption>A non-exhaustive overview of the colour-pattern analysis workflow in pavo, as of version 2.0, displaying some key functions at each stage.</figcaption>
-</figure>
+<figure class="figure"><p><img src="https://github.com/Bisaloo/colsci-book/blob/main/fig/workflow.png?raw=TRUE" class="img-fluid figure-img" style="width:100.0%"></p>
+<figcaption>A non-exhaustive overview of the colour-pattern analysis workflow in pavo, as of version 2.0, displaying some key functions at each stage.</figcaption></figure>
 </div>
 </div>
 </div>
 <p>In the remaining chapters we begin by detailing the importing, processing and visualisation of spectral and image data, before moving on to discussion of the many analyses that <code>pavo</code> allows. Our hope is to demonstrate the flexibility of <code>pavo</code>, and to provide a cohesive, reproducible workflow for colour pattern analysis within <code>R</code>. As always, the development version of <code>pavo</code> can be found on <a href="https://github.com/rmaia/pavo">GitHub</a>, while the stable release is available via CRAN.</p>
-<section id="classes-and-attributes" class="level2">
-<h2 class="anchored" data-anchor-id="classes-and-attributes">Classes and Attributes</h2>
+<section id="classes-and-attributes" class="level2"><h2 class="anchored" data-anchor-id="classes-and-attributes">Classes and Attributes</h2>
 <p>To enable the comprehensive workflow of <code>pavo</code>, we’ve implemented an expanded class system. Spectra will be of class <code>rspec</code> as long as we use one of <code>pavo</code>’s spectral import or processing functions, or explicitly convert an object using <code>as.rspec()</code>. Similarly, images will be of class <code>rimg</code> when imported via <code>getimg()</code>, or if converted using <code>as.rimg()</code>. The results of <code>vismodel()</code> are objects of class <code>vismodel</code> and the results of <code>colspace()</code> are, unsurprisingly, objects of class <code>colspace</code>. Most of these classes inherit from <code>data.frame</code>, and contain a suite of attributes that describe the object’s characteristics (e.g.&nbsp;options used in visual modelling such as the selected visual system and illuminant, and properties of the modelled colourspace). These are easily viewed using the <code>summary</code> function (on any <code>rspec</code>, <code>rimg</code>, <code>vismodel</code>, or <code>colspace</code> object), which will return the attributes and summary data (where appropriate) in a readable format.</p>
-</section>
-<section id="suggestions-and-assistance" class="level2">
-<h2 class="anchored" data-anchor-id="suggestions-and-assistance">Suggestions and Assistance</h2>
+</section><section id="suggestions-and-assistance" class="level2"><h2 class="anchored" data-anchor-id="suggestions-and-assistance">Suggestions and Assistance</h2>
 <p>For suggestions, assistance and/or bug reports, we suggest getting in touch via the <a href="https://github.com/thomased/colRverse/discussions">colRverse discussion board</a>. It requires a github account, however, so if you don’t have and/or want one the feel free to just <a href="mailto:thomas.white026@gmail.com">email Tom</a> and we’ll get back to you as soon as possible. If you have a bug to report, we’d appreciate it if you could also include a reproducible example when possible. Users familiar with GitHub may prefer to open an issue on the project’s <a href="https://github.com/rmaia/pavo">GitHub</a>, or to make a pull-request directly.</p>
-</section>
-<section id="citation-of-methods-implemented-in-pavo" class="level2">
-<h2 class="anchored" data-anchor-id="citation-of-methods-implemented-in-pavo">Citation of methods implemented in <code>pavo</code></h2>
-<p>Most of the methods implemented in <code>pavo</code> have been thoroughly described in their original publications, to which users should refer for details and interpretation. For reflectance shape variables (“objective colourimetrics”) and their particular relation to signal production and perception, see <span class="citation" data-cites="Andersson2006">Andersson and Prager (<a href="04-references.html#ref-Andersson2006" role="doc-biblioref">2006</a>)</span> and <span class="citation" data-cites="Montgomerie2006">Montgomerie (<a href="04-references.html#ref-Montgomerie2006" role="doc-biblioref">2006</a>)</span>. Visual models based on photon catches and receptor noise are detailed in <span class="citation" data-cites="Vorobyev1998">Vorobyev et al. (<a href="04-references.html#ref-Vorobyev1998" role="doc-biblioref">1998</a>)</span> and <span class="citation" data-cites="Vorobyev1998">Vorobyev et al. (<a href="04-references.html#ref-Vorobyev1998" role="doc-biblioref">1998</a>)</span>, and photoreceptor sensitivity curve estimation in <span class="citation" data-cites="Govardovskii2000">Govardovskii et al. (<a href="04-references.html#ref-Govardovskii2000" role="doc-biblioref">2000</a>)</span> and <span class="citation" data-cites="Hart2005">Hart and Vorobyev (<a href="04-references.html#ref-Hart2005" role="doc-biblioref">2005</a>)</span>. For tetrahedral colourspace model implementations and variable calculations, see <span class="citation" data-cites="Endler2005">Endler and Mielke (<a href="04-references.html#ref-Endler2005" role="doc-biblioref">2005</a>)</span> and <span class="citation" data-cites="Stoddard2008">Stoddard and Prum (<a href="04-references.html#ref-Stoddard2008" role="doc-biblioref">2008</a>)</span>, and for colour volume overlap see <span class="citation" data-cites="Stoddard2008">Stoddard and Prum (<a href="04-references.html#ref-Stoddard2008" role="doc-biblioref">2008</a>)</span> and <span class="citation" data-cites="Stoddard2011">Stoddard and Stevens (<a href="04-references.html#ref-Stoddard2011" role="doc-biblioref">2011</a>)</span>. Adjacency and boundary strength analyses are described in <span class="citation" data-cites="Endler2012">Endler (<a href="04-references.html#ref-Endler2012" role="doc-biblioref">2012</a>)</span> and <span class="citation" data-cites="Endler2018">Endler, Cole, and Kranz (<a href="04-references.html#ref-Endler2018" role="doc-biblioref">2018</a>)</span>, while overall pattern contrast is detailed in <span class="citation" data-cites="Endler2005">Endler and Mielke (<a href="04-references.html#ref-Endler2005" role="doc-biblioref">2005</a>)</span>. Users of the functions that apply these methods must cite the original sources as appropriate, along with <code>pavo</code> itself:</p>
+</section><section id="citation-of-methods-implemented-in-pavo" class="level2"><h2 class="anchored" data-anchor-id="citation-of-methods-implemented-in-pavo">Citation of methods implemented in <code>pavo</code>
+</h2>
+<p>Most of the methods implemented in <code>pavo</code> have been thoroughly described in their original publications, to which users should refer for details and interpretation. For reflectance shape variables (“objective colourimetrics”) and their particular relation to signal production and perception, see <span class="citation" data-cites="Andersson2006">Andersson and Prager (<a href="04-references.html#ref-Andersson2006" role="doc-biblioref">2006</a>)</span> and <span class="citation" data-cites="Montgomerie2006">Montgomerie (<a href="04-references.html#ref-Montgomerie2006" role="doc-biblioref">2006</a>)</span>. Visual models based on photon catches and receptor noise are detailed in <span class="citation" data-cites="Vorobyev1998">Vorobyev et al. (<a href="04-references.html#ref-Vorobyev1998" role="doc-biblioref">1998</a>)</span> and <span class="citation" data-cites="Vorobyev1998">Vorobyev et al. (<a href="04-references.html#ref-Vorobyev1998" role="doc-biblioref">1998</a>)</span>, and photoreceptor sensitivity curve estimation in <span class="citation" data-cites="Govardovskii2000">Govardovskii et al. (<a href="04-references.html#ref-Govardovskii2000" role="doc-biblioref">2000</a>)</span> and <span class="citation" data-cites="Hart2005">Hart and Vorobyev (<a href="04-references.html#ref-Hart2005" role="doc-biblioref">2005</a>)</span>. For tetrahedral colourspace model implementations and variable calculations, see <span class="citation" data-cites="Endler2005">Endler and Mielke (<a href="04-references.html#ref-Endler2005" role="doc-biblioref">2005</a>)</span> and <span class="citation" data-cites="Stoddard2008">Stoddard and Prum (<a href="04-references.html#ref-Stoddard2008" role="doc-biblioref">2008</a>)</span>, and for colour volume overlap see <span class="citation" data-cites="Stoddard2008">Stoddard and Prum (<a href="04-references.html#ref-Stoddard2008" role="doc-biblioref">2008</a>)</span> and <span class="citation" data-cites="Stoddard2011">Stoddard and Stevens (<a href="04-references.html#ref-Stoddard2011" role="doc-biblioref">2011</a>)</span>. Adjacency and boundary strength analyses are described in <span class="citation" data-cites="Endler2012">Endler (<a href="04-references.html#ref-Endler2012" role="doc-biblioref">2012</a>)</span> and <span class="citation" data-cites="Endler2018">Endler et al. (<a href="04-references.html#ref-Endler2018" role="doc-biblioref">2018</a>)</span>, while overall pattern contrast is detailed in <span class="citation" data-cites="Endler2005">Endler and Mielke (<a href="04-references.html#ref-Endler2005" role="doc-biblioref">2005</a>)</span>. Users of the functions that apply these methods must cite the original sources as appropriate, along with <code>pavo</code> itself:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">citation</span>(<span class="at">package =</span> <span class="st">"pavo"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/citation.html">citation</a></span><span class="op">(</span>package <span class="op">=</span> <span class="st">"pavo"</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>To cite the package pavo in publications please use:
 
@@ -300,21 +276,19 @@ A BibTeX entry for LaTeX users is
   }</code></pre>
 </div>
 </div>
-</section>
-<section id="acknowledgements" class="level2">
-<h2 class="anchored" data-anchor-id="acknowledgements">Acknowledgements</h2>
+</section><section id="acknowledgements" class="level2"><h2 class="anchored" data-anchor-id="acknowledgements">Acknowledgements</h2>
 <p>We would like to thank Matthew D. Shawkey and Stephanie M. Doucet for insights and support, and Jarrod D. Hadfield and Mary Caswell Stoddard for sharing code that helped us develop some of <code>pavo</code>’s capabilities.</p>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
 <div id="ref-Andersson2006" class="csl-entry" role="listitem">
-Andersson, Staffan, and Maria Prager. 2006. <span>“Quantification of <span>Coloration</span>.”</span> In <em>Bird <span>Coloration</span>, <span>Volume</span> 1: <span>Mechanisms</span> and <span>Measurements</span></em>, edited by Geoffrey E. Hill and Kevin J. McGraw, 1:640. Bird Coloration. Harvard University Press.
+Andersson, Staffan, and Maria Prager. 2006. <span>“Quantification of <span>Coloration</span>.”</span> In <em>Bird <span>Coloration</span>, <span>Volume</span> 1: <span>Mechanisms</span> and <span>Measurements</span></em>, edited by Geoffrey E. Hill and Kevin J. McGraw, vol. 1. Bird Coloration. Harvard University Press.
 </div>
 <div id="ref-Endler2012" class="csl-entry" role="listitem">
 Endler, John A. 2012. <span>“A Framework for Analysing Colour Pattern Geometry: Adjacent Colours.”</span> <em>Biological Journal of the Linnean Society</em> 107 (2): 233–53. <a href="https://doi.org/10.1111/j.1095-8312.2012.01937.x">https://doi.org/10.1111/j.1095-8312.2012.01937.x</a>.
 </div>
 <div id="ref-Endler2018" class="csl-entry" role="listitem">
-Endler, John A., Gemma L. Cole, and Alexandrea M. Kranz. 2018. <span>“Boundary Strength Analysis: <span>Combining</span> Colour Pattern Geometry and Coloured Patch Visual Properties for Use in Predicting Behaviour and Fitness.”</span> Edited by Simon Blomberg. <em>Methods in Ecology and Evolution</em>, August. <a href="https://doi.org/10.1111/2041-210X.13073">https://doi.org/10.1111/2041-210X.13073</a>.
+Endler, John A., Gemma L. Cole, and Alexandrea M. Kranz. 2018. <span>“Boundary Strength Analysis: <span>Combining</span> Colour Pattern Geometry and Coloured Patch Visual Properties for Use in Predicting Behaviour and Fitness.”</span> <em>Methods in Ecology and Evolution</em>, ahead of print, August 28. <a href="https://doi.org/10.1111/2041-210X.13073">https://doi.org/10.1111/2041-210X.13073</a>.
 </div>
 <div id="ref-Endler2005" class="csl-entry" role="listitem">
 Endler, John A., and Paul W. Mielke. 2005. <span>“Comparing Entire Colour Patterns as Birds See Them.”</span> <em>Biological Journal of the Linnean Society</em> 86 (4): 405–31. <a href="https://doi.org/10.1111/j.1095-8312.2005.00540.x">https://doi.org/10.1111/j.1095-8312.2005.00540.x</a>.
@@ -326,7 +300,7 @@ Govardovskii, Victor I., Nanna Fyhrquist, Tom Reuter, Dmitry G. Kuzmin, and Kris
 Hart, Nathan S., and Misha Vorobyev. 2005. <span>“Modelling Oil Droplet Absorption Spectra and Spectral Sensitivities of Bird Cone Photoreceptors.”</span> <em>Journal of Comparative Physiology A</em> 191 (4): 381–92. <a href="https://doi.org/10.1007/s00359-004-0595-3">https://doi.org/10.1007/s00359-004-0595-3</a>.
 </div>
 <div id="ref-Montgomerie2006" class="csl-entry" role="listitem">
-Montgomerie, Robert. 2006. <span>“Analyzing <span>Colors</span>.”</span> In <em>Bird <span>Coloration</span>, <span>Volume</span> 1: <span>Mechanisms</span> and <span>Measurements</span></em>, edited by Geoffrey E. Hill and Kevin J. McGraw, 1:640. Bird Coloration. Harvard University Press.
+Montgomerie, Robert. 2006. <span>“Analyzing <span>Colors</span>.”</span> In <em>Bird <span>Coloration</span>, <span>Volume</span> 1: <span>Mechanisms</span> and <span>Measurements</span></em>, edited by Geoffrey E. Hill and Kevin J. McGraw, vol. 1. Bird Coloration. Harvard University Press.
 </div>
 <div id="ref-Stoddard2008" class="csl-entry" role="listitem">
 Stoddard, Mary Caswell, and Richard O. Prum. 2008. <span>“Evolution of Avian Plumage Color in a Tetrahedral Color Space: A Phylogenetic Analysis of <span>New World</span> Buntings.”</span> <em>The American Naturalist</em> 171 (6): 755–76. <a href="https://doi.org/10.1086/587526">https://doi.org/10.1086/587526</a>.
@@ -338,11 +312,7 @@ Stoddard, Mary Caswell, and Martin Stevens. 2011. <span>“Avian Vision and the 
 Vorobyev, Misha, Daniel Colaco Osorio, Andrew T. D. Bennett, N. Justin Marshall, and Innes C. Cuthill. 1998. <span>“Tetrachromacy, Oil Droplets and Bird Plumage Colours.”</span> <em>Journal of Comparative Physiology A</em> 183 (5): 621–33. <a href="https://doi.org/10.1007/s003590050286">https://doi.org/10.1007/s003590050286</a>.
 </div>
 </div>
-</section>
-</section>
-
-</main> <!-- /main -->
-<script id="quarto-html-after-body" type="application/javascript">
+</section></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";
     const anchorJS = new window.AnchorJS();
@@ -393,13 +363,14 @@ Vorobyev, Misha, Daniel Colaco Osorio, Andrew T. D. Bennett, N. Justin Marshall,
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy
@@ -740,9 +711,7 @@ Vorobyev, Misha, Daniel Colaco Osorio, Andrew T. D. Bennett, N. Justin Marshall,
       }
     }
   });
-  </script>
-<nav class="page-navigation">
-  <div class="nav-page nav-page-previous">
+  </script><nav class="page-navigation"><div class="nav-page nav-page-previous">
   </div>
   <div class="nav-page nav-page-next">
       <a href="./01-importing_processing.html" class="pagination-link" aria-label="Importing, Processing, and Visualising Data">
@@ -751,7 +720,6 @@ Vorobyev, Misha, Daniel Colaco Osorio, Andrew T. D. Bennett, N. Justin Marshall,
   </div>
 </nav>
 </div> <!-- /content -->
-
 
 
 
