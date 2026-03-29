@@ -161,7 +161,7 @@ plot(specs_varying)  # Plot
 
 ### Subsetting and Merging Spectral Data
 
-Once an `rspec` object has been created, either by importing raw spectral data, converting a dataset with the `as.rspec()` function, or simulation, you can subset the spectra based on their names using a modified version of `R`'s built-in `subset` function. For example, the following code illustrates how to create an `rspec` object containing only tanagers:
+Once an `rspec` object has been created, either by importing raw spectral data, converting a dataset with the `as.rspec()` function, or simulation, you can subset the spectra based on their names using a modified version of `R`'s built-in `subset()` function. For example, the following code illustrates how to create an `rspec` object containing only tanagers:
 
 ```{r}
 specs.tanager1 <- subset(specs, "tanager")
@@ -169,9 +169,9 @@ specs.tanager1 <- subset(specs, "tanager")
 head(specs.tanager1)[1:5]
 ```
 
-The `subset` function here is using partial matching to find all spectra with the string "tanager" in their name. To fully benefit from this flexible subsetting functionality, it is important that you follow a consistent file naming scheme. For example, `tanager.14423.belly.001.ttt` would indicate the species (tanager), individual ID (14423), body patch (belly) and measurement number (001). Additionally, we suggest that labels used should have the same number of characters, which simplifies character string manipulation and subsetting based on partial matching.
+The `subset()` function here is using partial matching to find all spectra with the string "tanager" in their name. To fully benefit from this flexible subsetting functionality, it is important that you follow a consistent file naming scheme. For example, `tanager.14423.belly.001.ttt` would indicate the species (tanager), individual ID (14423), body patch (belly) and measurement number (001). Additionally, we suggest that labels used should have the same number of characters, which simplifies character string manipulation and subsetting based on partial matching.
 
-If you prefer not to use partial matching, `subset` will also work if you provide a logical condition, similar to the default `subset` behaviour in `R`. For example:
+If you prefer not to use partial matching, `subset()` will also work if you provide a logical condition, similar to the default `subset()` behaviour in `R`. For example:
 
 ```{r}
 # extract first component of filenames containing species names
@@ -184,9 +184,9 @@ specs.tanager2 <- subset(specs, subset = spp == "tanager")
 all.equal(specs.tanager1, specs.tanager2)
 ```
 
-Note that `subset` will also work with visual model (class `vismodel`) and colspace (class `colspace`) objects, as described below.
+Note that `subset()` will also work with visual model (class `vismodel`) and colspace (class `colspace`) objects, as described below.
 
-Another useful function is `merge`. Let's say that you have subsetted spectra for tanagers and parakeets, and you would like to re-combine them for an analysis. The following lines of code show how to do this:
+Another useful function is `merge()`. Let's say that you have subsetted spectra for tanagers and parakeets, and you would like to re-combine them for an analysis. The following lines of code show how to do this:
 
 ```{r}
 specs.tanager <- subset(specs, "tanager")
@@ -194,7 +194,7 @@ specs.parakeet <- subset(specs, "parakeet")
 specs.new <- merge(specs.tanager, specs.parakeet)
 ```
 
-Note that this re-combined file (`specs.new`) has only a single `wl` column with the merged spectra as columns. Keep in mind that the order of objects in `merge` will determine the order of columns in the final merged object (i.e. tanagers will be before parakeets).
+Note that this re-combined file (`specs.new`) has only a single `wl` column with the merged spectra as columns. Keep in mind that the order of objects in `merge()` will determine the order of columns in the final merged object (i.e. tanagers will be before parakeets).
 
 ## Processing Spectral Data
 
@@ -208,7 +208,7 @@ As previously described, our data (contained in the `specs` object) consists of 
 #| include: true
 #| fig-width: 6
 #| fig-height: 4.5
-#| fig-cap: Result from `explorespec`, showing the three measurements for each individual
+#| fig-cap: Result from `explorespec()`, showing the three measurements for each individual
 #|   cardinal in separate panels
 # 36 spectra plus the first (wl) column
 explorespec(specs[, 1:37], by = 3, lwd = 2)
@@ -243,7 +243,7 @@ Instead, we are going to use the `spp` vector we created to tell the `aggspec()`
 #| include: true
 #| fig-width: 5
 #| fig-height: 3.5
-#| fig-cap: Result from `explorespec` for species means
+#| fig-cap: Result from `explorespec()` for species means
 sppspec <- aggspec(mspecs, by = spp, FUN = mean)
 round(sppspec[1:5, ], 2)
 ```
@@ -345,7 +345,7 @@ pca1 <- prcomp(spec.bin, scale. = TRUE)
 summary(pca1)
 ```
 
-As can be seen by the summary, PC1 explains approximately 64% of the variation in spectral shape and describes the ratio of short to long wavelengths reflected. The flexibility of `R` and `pavo`'s plotting capabilities allows you to sort spectra by another variable (e.g., PC1 loading) and then plot in a stacked format using the `plot` function.
+As can be seen by the summary, PC1 explains approximately 64% of the variation in spectral shape and describes the ratio of short to long wavelengths reflected. The flexibility of `R` and `pavo`'s plotting capabilities allows you to sort spectra by another variable (e.g., PC1 loading) and then plot in a stacked format using the `plot()` function.
 
 ```{r}
 #| fig: true
@@ -413,13 +413,13 @@ These manipultions may have different effects on the final spectra, which the us
 
 ## Visualizing Spectral Data
 
-`pavo` offers three main plotting functions. The main one is `plot`, which combines several different options in a flexible framework for most commonly used purposes. The `explorespec()` function aims at providing initial exploratory analysis, as demonstrated in Section 1. Finally, `aggplot()` provides a simple framework for publication-quality plots of aggregated spectral data.
+`pavo` offers three main plotting functions. The main one is `plot()`, which combines several different options in a flexible framework for most commonly used purposes. The `explorespec()` function aims at providing initial exploratory analysis, as demonstrated in Section 1. Finally, `aggplot()` provides a simple framework for publication-quality plots of aggregated spectral data.
 
-### The `plot` Function Options
+### The `plot()` Function Options
 
 Since `pavo` uses the class `rspec` to identify spectral data, the function `plot.rspec()` can be called simply by calling `plot(data)`. If the object is not of class `rspec` the multivariate visualisation methods will not work as expected, so it might be useful to check the data using `is.rspec()` and convert with `as.rspec()` if necessary.
 
-We have implemented three methods of visualizing spectral data using `plot`:
+We have implemented three methods of visualizing spectral data using `plot()`:
 
 1. **Overlay**: all spectra plotted with same x- and y-axis
 2. **Stack**: spectra plotted with same x-axis but arranged vertically along y-axis
@@ -560,9 +560,9 @@ str(fake_rimg)
 
 ## Visualising Image Data
 
-### The `plot` and `summary` Functions
+### The `plot()` and `summary()` Functions
 
-Thanks to the underlying class system of `pavo`, the generic functions `plot` and `summary` recognise and respond to image-data in an appropriate manner, as is the case with spectral data. A quick call to `plot`, for example, prints our images. Note that while we call an image individually below (for convenient printing in the vignette), we could simply feed the entire list of images to `plot` and it would automatically step through each image in the list upon user input.
+Thanks to the underlying class system of `pavo`, the generic functions `plot()` and `summary()` recognise and respond to image-data in an appropriate manner, as is the case with spectral data. A quick call to `plot()`, for example, prints our images. Note that while we call an image individually below (for convenient printing in the vignette), we could simply feed the entire list of images to `plot()` and it would automatically step through each image in the list upon user input.
 
 ```{r}
 #| fig: true
@@ -579,7 +579,7 @@ plot(butterflies[[1]])
 plot(butterflies[[2]])
 ```
 
-The `summary` function offers some summary information about images or lists of images as we might expect. If we specify `plot = TRUE` however, the function instead plots the image. When such images have been colour-classified this also plots the images' colour palette alongside (see below). This is an extremely useful diagnostic tool when classifying images, as it allows us to see how well the classification algorithm has performed in clustering colour pattern elements into discrete colour categories. As with all plots, the function takes all standard plot arguments (see `?par`), such as custom colours, which again can be diagnostically useful.
+The `summary()` function offers some summary information about images or lists of images as we might expect. If we specify `plot = TRUE` however, the function instead plots the image. When such images have been colour-classified this also plots the images' colour palette alongside (see below). This is an extremely useful diagnostic tool when classifying images, as it allows us to see how well the classification algorithm has performed in clustering colour pattern elements into discrete colour categories. As with all plots, the function takes all standard plot arguments (see `?par`), such as custom colours, which again can be diagnostically useful.
 
 ## Processing Image Data
 

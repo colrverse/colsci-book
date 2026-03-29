@@ -7,7 +7,7 @@ tr:hover {
 </style>
 
 This table is adapted from @Montgomerie2006 and lists all spectral descriptors
-that are computed by the `summary` function in `pavo`.
+that are computed by the `summary()` function in `pavo`.
 
 | Color variable | Names used | Formula | Reference |
 |:---------------|:-----------|:-------:|:---------:|

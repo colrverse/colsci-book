@@ -19,7 +19,7 @@ The raw spectral data used in this example are available from the package reposi
 
 The data consist of reflectance spectra, obtained using Avantes equipment and software, from seven bird species: Northern Cardinal _Cardinalis cardinalis_, Wattled Jacana _Jacana jacana_, Baltimore Oriole _Icterus galbula_, Peach-fronted Parakeet _Aratinga aurea_, American Robin _Turdus migratorius_, and Sayaca Tanager _Thraupis sayaca_. Several individuals were measured (sample size varies by species), and 3 spectra were collected from each individual. However, the number of individuals measured per species is uneven and the data have additional peculiarities that should emphasize the flexibility `pavo` offers, as we'll see below.
 
-In addition, `pavo` includes three datasets that can be called with the `data` function. `data(teal)`, `data(sicalis)`, and `data(flowers)` will all be used in this vignette. See the help files for each dataset for more information; via `?teal`, `?sicalis`, and `?flowers`.
+In addition, `pavo` includes three datasets that can be called with the `data()` function. `data(teal)`, `data(sicalis)`, and `data(flowers)` will all be used in this vignette. See the help files for each dataset for more information; via `?teal`, `?sicalis`, and `?flowers`.
 
 ```{r}
 specs <- readRDS(system.file("extdata/specsdata.rds",
@@ -32,7 +32,7 @@ spec.sm <- procspec(sppspec, opt = "smooth", span = 0.2)
 
 ### Overview
 
-`pavo` offers two main approaches for spectral data analysis. First, colour variables can be calculated based on the shape of the reflectance spectra. By using special `R` classes for spectra data frame objects, this can easily be done using the `summary` function with an `rspec` object (see below). The function `peakshape()` also returns descriptors for individual peaks in spectral curves, as outlined below.
+`pavo` offers two main approaches for spectral data analysis. First, colour variables can be calculated based on the shape of the reflectance spectra. By using special `R` classes for spectra data frame objects, this can easily be done using the `summary()` function with an `rspec` object (see below). The function `peakshape()` also returns descriptors for individual peaks in spectral curves, as outlined below.
 
 Second, reflectance spectra can be analysed by accounting for the visual system receiving the colour signal, therefore representing reflectance spectra as perceived colours. To that end, we have implemented a suite of visual models and colourspaces including; the receptor-noise limited model of model of @Vorobyev1998, @Endler1990's segment classification method, flexible di- tri- and tetra-chromatic colourspaces, the Hexagon model of @Chittka1992, the colour-opponent coding space of @Backhaus1991, CIELAB and CIEXYZ spaces, and the categorical model of @Troje1993.
 
@@ -40,7 +40,7 @@ Second, reflectance spectra can be analysed by accounting for the visual system 
 
 #### Colourimetric Variables
 
-Obtaining colourimetric variables (pertaining to hue, saturation and brightness/value) is pretty straightforward in `pavo`. Since reflectance spectra is stored in an object of class `rspec`, the `summary` function recognizes the object as such and extracts 23 variables, as outlined in @Montgomerie2006 (and reproduced [here](spectral-shape-descriptors.html)). Though outlined in a book chapter on bird colouration, these variables are broadly applicable to any reflectance data, particularly if the taxon of interest has colour vision within the UV-human visible range.
+Obtaining colourimetric variables (pertaining to hue, saturation and brightness/value) is pretty straightforward in `pavo`. Since reflectance spectra is stored in an object of class `rspec`, the `summary()` function recognizes the object as such and extracts 23 variables, as outlined in @Montgomerie2006 (and reproduced [here](spectral-shape-descriptors.html)). Though outlined in a book chapter on bird colouration, these variables are broadly applicable to any reflectance data, particularly if the taxon of interest has colour vision within the UV-human visible range.
 
 The description and formulas for these variables can be found by running `?summary.rspec`.
 
@@ -48,7 +48,7 @@ The description and formulas for these variables can be found by running `?summa
 summary(spec.sm)
 ```
 
-`summary` also takes an additional argument `subset` which if changed from the default `FALSE` to `TRUE` will return only the most commonly used colourimetrics [@Andersson2006]. `summary` can also take a vector of colour variable names, which can be used to filter the results
+`summary()` also takes an additional argument `subset` which if changed from the default `FALSE` to `TRUE` will return only the most commonly used colourimetrics [@Andersson2006]. `summary()` can also take a vector of colour variable names, which can be used to filter the results
 
 ```{r}
 summary(spec.sm, subset = TRUE)
@@ -61,7 +61,7 @@ summary(spec.sm, subset = c('B1', 'B2', 'B3'))
 
 #### Peak Shape Descriptors
 
-Particularly in cases of reflectance spectra that have multiple discrete peaks (in which case the `summary` function will only return variables based on the tallest peak in the curve), it might be useful to obtain variables that describe individual peak's properties. The `peakshape()` function identifies the peak location (`H1`), returns the reflectance at that point (`B3`), and identifies the wavelengths at which the reflectance is half that at the peak, calculating the wavelength bandwidth of that interval (the Full Width at Half Maximum, or `FWHM`). The function also returns the half widths, which are useful when the peaks are located near the edge of the measurement limit and half maximum reflectance can only be reliably estimated from one of its sides.
+Particularly in cases of reflectance spectra that have multiple discrete peaks (in which case the `summary()` function will only return variables based on the tallest peak in the curve), it might be useful to obtain variables that describe individual peak's properties. The `peakshape()` function identifies the peak location (`H1`), returns the reflectance at that point (`B3`), and identifies the wavelengths at which the reflectance is half that at the peak, calculating the wavelength bandwidth of that interval (the Full Width at Half Maximum, or `FWHM`). The function also returns the half widths, which are useful when the peaks are located near the edge of the measurement limit and half maximum reflectance can only be reliably estimated from one of its sides.
 
 If this all sounds too esoteric, fear not: `peakshape()` has the option of returning plots indicating what it's calculating. The vertical continuous red line indicates the peak location, the horizontal continuous red line indicates the half-maximum reflectance, and the distance between the dashed lines (`HWHM.l` and `HWHM.r`) is the FWHM:
 
@@ -88,12 +88,12 @@ peakshape(spec.sm, select = 2, lim = c(300, 500), plot = TRUE)
 
 #### Overview
 
-All visual and colourspace modelling and plotting options are wrapped into four main function: `vismodel()`, `colspace()`, `coldist()` (or its bootstrap-based variant `bootcoldist()`), and `plot`. As detailed below, these functions cover the basic processes common to most modelling approaches. Namely, the estimation of quantum catches, their conversion to an appropriate space, estimating the distances between samples, and visualising the results. As a brief example, a typical workflow for modelling might use:
+All visual and colourspace modelling and plotting options are wrapped into four main function: `vismodel()`, `colspace()`, `coldist()` (or its bootstrap-based variant `bootcoldist()`), and `plot()`. As detailed below, these functions cover the basic processes common to most modelling approaches. Namely, the estimation of quantum catches, their conversion to an appropriate space, estimating the distances between samples, and visualising the results. As a brief example, a typical workflow for modelling might use:
 
 1. `vismodel()` to estimate photoreceptor quantum catches. The assumptions of visual models may differ dramatically, so be sure to select options that are appropriate for your intended use.
 2. `colspace()` to convert the results of `vismodel()` (or user-provided quantum catches) into points in a given colourspace, specified with the `space` argument. If no `space` argument is provided, `colspace()` will automatically select the di-, tri- or tetrahedral colourspace, depending on the nature of the input data. The result of `colspace()` will be an object of class `colspace` (that inherits from `data.frame`), and will contain the location of stimuli in the selected space along with any associated colour variables.
 3. `coldist()` or `bootcoldist()` to estimate the colour distances between points in a colourspace (if the input is from `colspace`), or the 'perceptual', noise-weighted distances in the receptor-noise limited model (if the input is from `vismodel()` where `relative = FALSE`).
-4. `plot` the output. `plot` will automatically select the appropriate visualisation based on the input `colspace` object, and will also accept various graphical parameters depending on the colourspace (see `?plot.colspace` and links therein for details).
+4. `plot()` the output. `plot()` will automatically select the appropriate visualisation based on the input `colspace` object, and will also accept various graphical parameters depending on the colourspace (see `?plot.colspace` and links therein for details).
 
 #### Accessing and Plotting In-built Spectral Data
 
@@ -164,7 +164,7 @@ vismod1 <- vismodel(sppspec,
 )
 ```
 
-Since there are multiple parameters that can be used to customize the output of `vismodel()`, as detailed above, for convenience these can be returned by using `summary` in a `vismodel` object:
+Since there are multiple parameters that can be used to customize the output of `vismodel()`, as detailed above, for convenience these can be returned by using `summary()` in a `vismodel()` object:
 
 ```{r}
 summary(vismod1)
@@ -207,7 +207,7 @@ mtext("Reflectance (%)", side = 2, outer = TRUE, line = 1)
 par(oldpar)
 ```
 
-As described above, `vismodel` also accepts user-defined visual systems, background and illuminants. We will illustrate this by showcasing the function `sensmodel`, which models spectral sensitivities of retinas based on their peak cone sensitivity, as described in @Govardovskii2000 and @Hart2005. `sensmodel` takes several optional arguments, but the main one is a vector containing the peak sensitivities for the cones being modelled. Let's model an idealized dichromat visual system, with cones peaking in sensitivity at 350 and 650 nm:
+As described above, `vismodel()` also accepts user-defined visual systems, background and illuminants. We will illustrate this by showcasing the function `sensmodel()`, which models spectral sensitivities of retinas based on their peak cone sensitivity, as described in @Govardovskii2000 and @Hart2005. `sensmodel()` takes several optional arguments, but the main one is a vector containing the peak sensitivities for the cones being modelled. Let's model an idealized dichromat visual system, with cones peaking in sensitivity at 350 and 650 nm:
 
 ```{r}
 #| fig: true
@@ -287,7 +287,7 @@ coldist(vismod.idi, n = c(1, 2), weber = 0.1)
 
 Where `dS` is the chromatic contrast ($\Delta S$) and `dL` is the achromatic contrast ($\Delta L$). Note that, by default, `achromatic = FALSE`, so `dL` isn't included in the second result (this is to maintain consistency since, in the `vismodel()` function, the `achromatic` argument defaults to `none`). As expected, values are really high under the avian colour vision, since the colours of these species are quite different and because of the enhanced discriminatory ability with four compared to two cones.
 
-`coldist()` also has a `subset` argument, which is useful if only certain comparisons are of interest (for example, of colour patches against a background, or only comparisons among a species or body patch). `subset` can be a vector of length one or two. If only one subsetting option is passed, all comparisons against the matching argument are returned (useful in the case of comparing to a background, for example). If two values are passed, comparisons will only be made between samples that match that rule (partial string matching and regular expressions are accepted). For example, compare:
+`coldist()` also has a `subset` argument, which is useful if only certain comparisons are of interest (for example, of colour patches against a background, or only comparisons among a species or body patch). `subset()` can be a vector of length one or two. If only one subsetting option is passed, all comparisons against the matching argument are returned (useful in the case of comparing to a background, for example). If two values are passed, comparisons will only be made between samples that match that rule (partial string matching and regular expressions are accepted). For example, compare:
 
 ```{r}
 #| message: false
@@ -569,7 +569,7 @@ plot(tetra.flowers,
 axistetra(x = 0, y = 1.8)
 ```
 
-For tetrahedral models, another plotting option available is `projplot`, which projects colour points in the surface of a sphere encompassing the tetrahedron. This plot is particularly useful to see differences in hue.
+For tetrahedral models, another plotting option available is `projplot()`, which projects colour points in the surface of a sphere encompassing the tetrahedron. This plot is particularly useful to see differences in hue.
 
 ```{r}
 #| fig: true
@@ -702,7 +702,7 @@ voloverlap(tcs.sicalis.C,
 
 **Summary variables for groups of points**
 
-Another advantage of colourspace models is that they allow for the calculation of useful summary statistics of groups of points, such as the centroid of the points, the total volume occupied (as above), the mean and variance of hue span and the mean saturation. In `pavo`, the result of a `colspace()` call is an object of class `colspace`, and thus these summary statistics can be calculated simply by calling `summary`. Note that the `summary` call can also take a `by` vector of group identities, so that the variables are calculated for each group separately:
+Another advantage of colourspace models is that they allow for the calculation of useful summary statistics of groups of points, such as the centroid of the points, the total volume occupied (as above), the mean and variance of hue span and the mean saturation. In `pavo`, the result of a `colspace()` call is an object of class `colspace`, and thus these summary statistics can be calculated simply by calling `summary()`. Note that the `summary()` call can also take a `by` vector of group identities, so that the variables are calculated for each group separately:
 
 ```{r}
 summary(tetra.flowers)
@@ -738,7 +738,7 @@ vis.flowers <- vismodel(flowers,
                         bkg = "green")
 ```
 
-We can then apply the hexagon model in `colspace`, which will convert our photoreceptor excitation values to coordinates in the hexagon according to:
+We can then apply the hexagon model in `colspace()`, which will convert our photoreceptor excitation values to coordinates in the hexagon according to:
 
 $$
 \begin{split}
@@ -753,7 +753,7 @@ hex.flowers <- colspace(vis.flowers, space = 'hexagon')
 head(hex.flowers)
 ```
 
-Again, the output includes the photoreceptor excitation values for short- medium- and long-wave sensitive photoreceptors, x and y coordinates, and measures of hue and saturation for each stimulus. The hexagon model also outputs two additional measures of of subjective 'bee-hue'; `sec.fine` and `sec.coarse`. `sec.fine` describes the location of stimuli within one of 36 'hue sectors' that are specified by radially dissecting the hexagon in 10-degree increments. `sec.coarse` follows a similar principle, though here the hexagon is divided into only five 'bee-hue' sectors: UV, UV-blue, blue, blue-green, green, and UV-green. These can easily be visualised by specifying `sectors = 'coarse` or `sectors = 'fine'` in a call to `plot` after modelling.
+Again, the output includes the photoreceptor excitation values for short- medium- and long-wave sensitive photoreceptors, x and y coordinates, and measures of hue and saturation for each stimulus. The hexagon model also outputs two additional measures of of subjective 'bee-hue'; `sec.fine` and `sec.coarse`. `sec.fine` describes the location of stimuli within one of 36 'hue sectors' that are specified by radially dissecting the hexagon in 10-degree increments. `sec.coarse` follows a similar principle, though here the hexagon is divided into only five 'bee-hue' sectors: UV, UV-blue, blue, blue-green, green, and UV-green. These can easily be visualised by specifying `sectors = 'coarse` or `sectors = 'fine'` in a call to `plot()` after modelling.
 
 ```{r}
 #| fig: true
@@ -823,7 +823,7 @@ Z &= k\int_{300}^{700}{R(\lambda)I(\lambda)\bar{z}(\lambda)\,d\lambda}
 \end{split}
 $$
 
-where _x_, _y_, and _z_ are the trichromatic colour matching functions for a 'standard colourimetric viewer'. These functions are designed to describe an average human's chromatic response within a specified viewing arc in the fovea (to account for the uneven distribution of cones across eye). `pavo` includes both the CIE 2-degree and the modern 10-degree standard observer, which can be selected in the `visual` option in the `vismodel` function. In these equations, k is the normalising factor
+where _x_, _y_, and _z_ are the trichromatic colour matching functions for a 'standard colourimetric viewer'. These functions are designed to describe an average human's chromatic response within a specified viewing arc in the fovea (to account for the uneven distribution of cones across eye). `pavo` includes both the CIE 2-degree and the modern 10-degree standard observer, which can be selected in the `visual` option in the `vismodel()` function. In these equations, k is the normalising factor
 
 $$
 k = \frac{100}{\int_{300}^{700}{I(\lambda)\bar{y}(\lambda)\,d\lambda}}
@@ -907,7 +907,7 @@ cielab.flowers <- colspace(vis.flowers, space = 'cielab')
 head(cielab.flowers)
 ```
 
-Our output now contains the tristimulus `XYZ` values, as well as their `Lab` counterparts, which are coordinates in the `Lab` space. These can also be visualised in three-dimensional `Lab` space by calling `plot`:
+Our output now contains the tristimulus `XYZ` values, as well as their `Lab` counterparts, which are coordinates in the `Lab` space. These can also be visualised in three-dimensional `Lab` space by calling `plot()`:
 
 ```{r}
 #| fig: true
@@ -1107,7 +1107,7 @@ butterflies <- getimg(system.file("testdata/images/butterflies", package = 'pavo
 
 The segmentation of RGB images into discrete colour-classes is an useful step on the road to several analyses, and this is carried out in `pavo` via `classify()`. The function currently implements k-means clustering which, and offers some flexibility in the way in which it is carried out. In the simplest case, we can specify an image or image(s) as well as the number of discrete colours in each, and allow the k-means clustering algorithm to do its work. **Note that the specification of _k_, the number of discrete colours in an image, is a crucial step to be estimated _a priori_ beforehand**, typically through the use of visual modelling to estimate the number of discriminable colours in an 'objective' manner. There are a suite of possible ways in which this may be achieved, though, with one detailed below as part of example 2.
 
-Since we have two images, with (arguably) four and three colours each, including the white background, we can specify this information using `kcols`, before visualising the results with `summary`. The `summary` function, with `plot = TRUE`, is also particularly useful for understanding the colour-class labels, or ID's, assigned to each colour, as well as visualising the accuracy of the classification process, which may be enhanced by specifying strongly-contrasting 'false' colours for plotting through the `col` argument.
+Since we have two images, with (arguably) four and three colours each, including the white background, we can specify this information using `kcols`, before visualising the results with `summary()`. The `summary()` function, with `plot = TRUE`, is also particularly useful for understanding the colour-class labels, or ID's, assigned to each colour, as well as visualising the accuracy of the classification process, which may be enhanced by specifying strongly-contrasting 'false' colours for plotting through the `col` argument.
 
 ```{r}
 butterflies_class <- classify(butterflies, kcols = c(4, 3))
