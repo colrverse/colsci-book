@@ -284,6 +284,14 @@ plot(sppspec[, 5] ~ sppspec[, 1],
 lines(spec.sm[, 5] ~ sppspec[, 1], col = "red", lwd = 2)
 ```
 
+::: {.callout-tip}
+
+#### Severe artifacts across all spectra
+
+Some lamps or spectrometers can produce severe artifacts at specific wavelengths across all spectra. When trying to smooth over such artifacts, the smoothing function may not be able to remove them, or it may distort the surrounding data. In such cases, it may be better to remove the affected wavelengths from all spectra using the `opt = "clip"` argument in `procspec()`. We will see an example of this later on the `teal` data in @sec-visualising-spectral-data.
+
+:::
+
 We can also try different normalisations. Options include subtracting the minimum reflectance of a spectrum at all wavelengths (effectively making the minimum reflectance equal to zero, `opt = "min"`, left panel, below) and making the reflectance at all wavelength proportional to the maximum reflectance (i.e. setting maximum reflectance to 1; `opt = "max"`, centre panel, below). Note that the user can specify multiple processing options that will be applied sequentially to the spectral data by `procspec()` (right panel, below).
 
 ```{r}
@@ -411,7 +419,7 @@ mtext("Reflectance (%)", side = 2, outer = TRUE, line = 1)
 
 These manipultions may have different effects on the final spectra, which the user should keep in mind and use according to the final goal of the analysis. For example, by adding the minimum reflectance to all other wavelength, the shape of the curve is preserved, but the maximum reflectance is much higher. On the other hand, substituting negative values with zero preserves absolute reflectance values, but may cause the spectral shape to be lost. The "best" transformation will depend on the severity of the problem of negative values and the goal of the analysis (e.g. will reflectance intensity be used? What is more important, to preserve reflectance values or the total shape of the curve?). Which correction to use would also depend on the source of the negative values. If they are thought to originate from improper calibration of the spectrophotometer, `fixneg = addmin` would be appropriate. However, if they are thought to originate from electric noise, `fixneg = zero` would be more appropriate.
 
-## Visualizing Spectral Data
+## Visualizing Spectral Data {#sec-visualising-spectral-data}
 
 `pavo` offers three main plotting functions. The main one is `plot()`, which combines several different options in a flexible framework for most commonly used purposes. The `explorespec()` function aims at providing initial exploratory analysis, as demonstrated in Section 1. Finally, `aggplot()` provides a simple framework for publication-quality plots of aggregated spectral data.
 
@@ -454,13 +462,15 @@ plot(teal, type = "o", col = spec2rgb(teal))
 
 Another option is the `stack` plot (again, with human vision approximations of the colour produced by the spectra using `spec2rgb()`).
 
+Here, we also remove the artifact between 600 and 650 nm using the `clip` option in `procspec()`.
+
 ```{r}
 #| fig: true
 #| include: true
 #| fig-cap: Stacked plot of the raw (left) and normalized (right) teal angle-dependent
 #|   reflectance
 #| layout-ncol: 2
-teal.norm <- procspec(teal, opt = c("min", "max"))
+teal.norm <- procspec(teal, opt = c("min", "max", "clip"), clip_range = c(600, 650))
 
 plot(teal, type = "s", col = spec2rgb(teal))
 plot(teal.norm, type = "s", col = spec2rgb(teal))
@@ -490,7 +500,7 @@ Next, we will smooth the data with `procspec()` and plot as a false colour map (
 #|   teal.
 
 # Smooth the spectral data
-teal.sm <- procspec(teal, opt = c("smooth"))
+teal.sm <- procspec(teal, opt = c("smooth", "clip"), span = 0.2, clip_range = c(600, 650))
 
 # Plot it as a heatmap
 plot(teal.sm,
