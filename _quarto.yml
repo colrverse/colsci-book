@@ -6,7 +6,7 @@ book:
   title: "The pavo handbook: studying biological colouration in R"
   date: last-modified
   repo-url: https://github.com/colrverse/colsci-book
-  site-url: https://bisaloo.github.io/colsci-book
+  site-url: https://book.colrverse.com
   chapters:
     - index.qmd
     - 01-importing_processing.qmd
