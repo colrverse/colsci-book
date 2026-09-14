@@ -2,18 +2,21 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.36">
+<meta name="generator" content="quarto-1.10.18">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-<meta name="dcterms.date" content="2026-03-29">
+<meta name="dcterms.date" content="2026-09-14">
 <title>The pavo handbook: studying biological colouration in R</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
 */
-code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: min(4vw, 1.5em);}
-div.column{flex: auto; overflow-x: auto;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -91,10 +94,10 @@ div.csl-indent {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-845c23b38eaddc0f92fda52bfe77a8c8.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-097a25868bcbdc9d144951d9b302b648.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+<link href="site_libs/bootstrap/bootstrap-aae1decb7c0a57a761683734fafe0f97.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
   "collapse-after": 3,
@@ -215,7 +218,7 @@ div.csl-indent {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">March 29, 2026</p>
+      <p class="date">September 14, 2026</p>
     </div>
   </div>
   
@@ -238,8 +241,8 @@ div.csl-indent {
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="https://github.com/Bisaloo/colsci-book/blob/main/fig/workflow.png?raw=TRUE" class="img-fluid figure-img" style="width:100.0%"></p>
-<figcaption>A non-exhaustive overview of the colour-pattern analysis workflow in pavo, as of version 2.0, displaying some key functions at each stage.</figcaption></figure>
+<figure class="figure"><p><img src="fig/workflow.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<figcaption>A non-exhaustive overview of the colour-pattern analysis workflow in pavo, displaying some key functions at each stage.</figcaption></figure>
 </div>
 </div>
 </div>
@@ -247,33 +250,31 @@ div.csl-indent {
 <section id="classes-and-attributes" class="level2"><h2 class="anchored" data-anchor-id="classes-and-attributes">Classes and Attributes</h2>
 <p>To enable the comprehensive workflow of <code>pavo</code>, we’ve implemented an expanded class system. Spectra will be of class <code>rspec</code> as long as we use one of <code>pavo</code>’s spectral import or processing functions, or explicitly convert an object using <code>as.rspec()</code>. Similarly, images will be of class <code>rimg</code> when imported via <code>getimg()</code>, or if converted using <code>as.rimg()</code>. The results of <code>vismodel()</code> are objects of class <code>vismodel</code> and the results of <code>colspace()</code> are, unsurprisingly, objects of class <code>colspace</code>. Most of these classes inherit from <code>data.frame</code>, and contain a suite of attributes that describe the object’s characteristics (e.g.&nbsp;options used in visual modelling such as the selected visual system and illuminant, and properties of the modelled colourspace). These are easily viewed using the <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code> function (on any <code>rspec</code>, <code>rimg</code>, <code>vismodel</code>, or <code>colspace</code> object), which will return the attributes and summary data (where appropriate) in a readable format.</p>
 </section><section id="suggestions-and-assistance" class="level2"><h2 class="anchored" data-anchor-id="suggestions-and-assistance">Suggestions and Assistance</h2>
-<p>For suggestions, assistance and/or bug reports, we suggest getting in touch via the <a href="https://github.com/thomased/colRverse/discussions">colRverse discussion board</a>. It requires a github account, however, so if you don’t have and/or want one the feel free to just <a href="mailto:thomas.white026@gmail.com">email Tom</a> and we’ll get back to you as soon as possible. If you have a bug to report, we’d appreciate it if you could also include a reproducible example when possible. Users familiar with GitHub may prefer to open an issue on the project’s <a href="https://github.com/rmaia/pavo">GitHub</a>, or to make a pull-request directly.</p>
+<p>For suggestions, assistance and/or bug reports, we suggest getting in touch via the <a href="https://github.com/colrverse/colRverse/discussions">colRverse discussion board</a>. It requires a github account, however, so if you don’t have and/or want one the feel free to just <a href="mailto:thomas.white026@gmail.com">email Tom</a> and we’ll get back to you as soon as possible. If you have a bug to report, we’d appreciate it if you could also include a reproducible example when possible. Users familiar with GitHub may prefer to open an issue on the project’s <a href="https://github.com/rmaia/pavo">GitHub</a>, or to make a pull-request directly.</p>
 </section><section id="citation-of-methods-implemented-in-pavo" class="level2"><h2 class="anchored" data-anchor-id="citation-of-methods-implemented-in-pavo">Citation of methods implemented in <code>pavo</code>
 </h2>
 <p>Most of the methods implemented in <code>pavo</code> have been thoroughly described in their original publications, to which users should refer for details and interpretation. For reflectance shape variables (“objective colourimetrics”) and their particular relation to signal production and perception, see <span class="citation" data-cites="Andersson2006">Andersson and Prager (<a href="04-references.html#ref-Andersson2006" role="doc-biblioref">2006</a>)</span> and <span class="citation" data-cites="Montgomerie2006">Montgomerie (<a href="04-references.html#ref-Montgomerie2006" role="doc-biblioref">2006</a>)</span>. Visual models based on photon catches and receptor noise are detailed in <span class="citation" data-cites="Vorobyev1998">Vorobyev et al. (<a href="04-references.html#ref-Vorobyev1998" role="doc-biblioref">1998</a>)</span> and <span class="citation" data-cites="Vorobyev1998">Vorobyev et al. (<a href="04-references.html#ref-Vorobyev1998" role="doc-biblioref">1998</a>)</span>, and photoreceptor sensitivity curve estimation in <span class="citation" data-cites="Govardovskii2000">Govardovskii et al. (<a href="04-references.html#ref-Govardovskii2000" role="doc-biblioref">2000</a>)</span> and <span class="citation" data-cites="Hart2005">Hart and Vorobyev (<a href="04-references.html#ref-Hart2005" role="doc-biblioref">2005</a>)</span>. For tetrahedral colourspace model implementations and variable calculations, see <span class="citation" data-cites="Endler2005">Endler and Mielke (<a href="04-references.html#ref-Endler2005" role="doc-biblioref">2005</a>)</span> and <span class="citation" data-cites="Stoddard2008">Stoddard and Prum (<a href="04-references.html#ref-Stoddard2008" role="doc-biblioref">2008</a>)</span>, and for colour volume overlap see <span class="citation" data-cites="Stoddard2008">Stoddard and Prum (<a href="04-references.html#ref-Stoddard2008" role="doc-biblioref">2008</a>)</span> and <span class="citation" data-cites="Stoddard2011">Stoddard and Stevens (<a href="04-references.html#ref-Stoddard2011" role="doc-biblioref">2011</a>)</span>. Adjacency and boundary strength analyses are described in <span class="citation" data-cites="Endler2012">Endler (<a href="04-references.html#ref-Endler2012" role="doc-biblioref">2012</a>)</span> and <span class="citation" data-cites="Endler2018">Endler et al. (<a href="04-references.html#ref-Endler2018" role="doc-biblioref">2018</a>)</span>, while overall pattern contrast is detailed in <span class="citation" data-cites="Endler2005">Endler and Mielke (<a href="04-references.html#ref-Endler2005" role="doc-biblioref">2005</a>)</span>. Users of the functions that apply these methods must cite the original sources as appropriate, along with <code>pavo</code> itself:</p>
 <div class="cell" data-layout-align="center">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/citation.html">citation</a></span><span class="op">(</span>package <span class="op">=</span> <span class="st">"pavo"</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>To cite the package pavo in publications please use:
+<pre><code>When citing the package pavo in publications, please include
+**both** citations:
 
-  Maia R, Gruson H, Endler JA, White TE (2019). "pavo 2: new
+  Maia R, Eliason C, Bitton P, Doucet S, Shawkey M (2013).
+  "pavo: an R Package for the analysis, visualization and
+  organization of spectral data." _Methods in Ecology and
+  Evolution_, *4*, 609-613. doi:10.1111/2041-210X.12069
+  &lt;https://doi.org/10.1111/2041-210X.12069&gt;.
+
+  Maia R, Gruson H, Endler J, White T (2019). "pavo 2: new
   tools for the spectral and spatial analysis of colour in
   R." _Methods in Ecology and Evolution_, *10*(7).
   doi:10.1111/2041-210X.13174
   &lt;https://doi.org/10.1111/2041-210X.13174&gt;.
 
-A BibTeX entry for LaTeX users is
-
-  @Article{,
-    title = {pavo 2: new tools for the spectral and spatial analysis of colour in R},
-    author = {Rafael Maia and Hugo Gruson and John A. Endler and Thomas E. White},
-    journal = {Methods in Ecology and Evolution},
-    year = {2019},
-    volume = {10},
-    number = {7},
-    page = {1097-1107},
-    doi = {10.1111/2041-210X.13174},
-  }</code></pre>
+To see these entries in BibTeX format, use
+'print(&lt;citation&gt;, bibtex=TRUE)', 'toBibtex(.)', or set
+'options(citation.bibtex.max=999)'.</code></pre>
 </div>
 </div>
 </section><section id="acknowledgements" class="level2"><h2 class="anchored" data-anchor-id="acknowledgements">Acknowledgements</h2>
@@ -385,7 +386,7 @@ Vorobyev, Misha, Daniel Colaco Osorio, Andrew T. D. Bennett, N. Justin Marshall,
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp("https:\/\/bisaloo\.github\.io\/colsci-book");
+        var filterRegex = new RegExp("https:\/\/book\.colrverse\.com");
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }

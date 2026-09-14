@@ -2,17 +2,20 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.36">
+<meta name="generator" content="quarto-1.10.18">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <title>1&nbsp; Importing, Processing, and Visualising Data – The pavo handbook: studying biological colouration in R</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
 */
-code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: min(4vw, 1.5em);}
-div.column{flex: auto; overflow-x: auto;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -91,10 +94,10 @@ div.csl-indent {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-845c23b38eaddc0f92fda52bfe77a8c8.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-097a25868bcbdc9d144951d9b302b648.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+<link href="site_libs/bootstrap/bootstrap-aae1decb7c0a57a761683734fafe0f97.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
   "collapse-after": 3,
@@ -635,7 +638,7 @@ Scaling spectra to a maximum value of 1</code></pre>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/mtext.html">mtext</a></span><span class="op">(</span><span class="st">"Wavelength (nm)"</span>, side <span class="op">=</span> <span class="fl">1</span>, outer <span class="op">=</span> <span class="cn">TRUE</span>, line <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/mtext.html">mtext</a></span><span class="op">(</span><span class="st">"Normalised reflectance (%)"</span>, side <span class="op">=</span> <span class="fl">2</span>, outer <span class="op">=</span> <span class="cn">TRUE</span>, line <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell quarto-layout-panel" data-layout-align="center" data-fig="true" data-layout-ncol="2">
+<div class="cell quarto-layout-panel" data-layout-align="center" data-layout-ncol="2" data-fig="true">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
 <div class="quarto-figure quarto-figure-center">
@@ -692,10 +695,10 @@ binned spectra to 21-nm intervals</code></pre>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb66"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">pca1</span><span class="op">)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Importance of components:
-                          PC1    PC2    PC3    PC4     PC5      PC6
-Standard deviation     3.6016 1.9885 1.5791 0.6678 0.36656 3.78e-16
-Proportion of Variance 0.6486 0.1977 0.1247 0.0223 0.00672 0.00e+00
-Cumulative Proportion  0.6486 0.8463 0.9710 0.9933 1.00000 1.00e+00</code></pre>
+                          PC1    PC2    PC3    PC4     PC5       PC6
+Standard deviation     3.6016 1.9885 1.5791 0.6678 0.36656 7.014e-16
+Proportion of Variance 0.6486 0.1977 0.1247 0.0223 0.00672 0.000e+00
+Cumulative Proportion  0.6486 0.8463 0.9710 0.9933 1.00000 1.000e+00</code></pre>
 </div>
 </div>
 <p>As can be seen by the summary, PC1 explains approximately 64% of the variation in spectral shape and describes the ratio of short to long wavelengths reflected. The flexibility of <code>R</code> and <code>pavo</code>’s plotting capabilities allows you to sort spectra by another variable (e.g., PC1 loading) and then plot in a stacked format using the <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code> function.</p>
@@ -1009,7 +1012,7 @@ smoothing spectra with a span of 0.25</code></pre>
 <span class="header-section-number">1.6</span> Processing Image Data</h2>
 <section id="overview" class="level3" data-number="1.6.1"><h3 data-number="1.6.1" class="anchored" data-anchor-id="overview">
 <span class="header-section-number">1.6.1</span> Overview</h3>
-<p>Images often require some post-capture processing, depending on the intended use, and <code>pavo</code> offers some useful options via <code><a href="https://pavo.colrverse.com/reference/procimg.html">procimg()</a></code>. The functionality of <code><a href="https://pavo.colrverse.com/reference/procimg.html">procimg()</a></code> is currently limited to only that which is closely relevant to the analyses currently implemented, as we assume any major processing and quality-checking (e.g.&nbsp;image rotation and colour correction) is undertaken by the user beforehand. However, should users with to keep their image processing within the R ecosystem, there now exist several excellent image-processing packages such as <code>imager</code> and <code>magick</code>, which <code>pavo</code> can seamlessly work with. Indeed, the functions <code>rimg2cimg()</code> and <code><a href="https://pavo.colrverse.com/reference/img_conversion.html">rimg2magick()</a></code> convert images from <code>pavo</code> preferred structure to that used by <code>imager</code> (with the reverse simply achieved via <code><a href="https://pavo.colrverse.com/reference/as.rimg.html">as.rimg()</a></code>), which simplifies the transitions between these packages.</p>
+<p>Images often require some post-capture processing, depending on the intended use, and <code>pavo</code> offers some useful options via <code><a href="https://pavo.colrverse.com/reference/procimg.html">procimg()</a></code>. The functionality of <code><a href="https://pavo.colrverse.com/reference/procimg.html">procimg()</a></code> is currently limited to only that which is closely relevant to the analyses currently implemented, as we assume any major processing and quality-checking (e.g.&nbsp;image rotation and colour correction) is undertaken by the user beforehand. However, should users wish to keep their image processing within the R ecosystem, there now exist several excellent image-processing packages such as <code>imager</code> and <code>magick</code>, which <code>pavo</code> can seamlessly work with. Indeed, an <code>as.cimg()</code> method and the function <code><a href="https://pavo.colrverse.com/reference/img_conversion.html">rimg2magick()</a></code> convert images from <code>pavo</code>’s preferred structure to those used by <code>imager</code> and <code>magick</code> respectively (with the reverse simply achieved via <code><a href="https://pavo.colrverse.com/reference/as.rimg.html">as.rimg()</a></code>), which simplifies the transitions between these packages. Since the former is an S3 method registered on <code>imager::as.cimg()</code>, it is called as <code>imager::as.cimg(img)</code> rather than through a <code>pavo</code>-specific name.</p>
 </section><section id="filtering-images-to-model-the-visual-acuity-of-animals" class="level3" data-number="1.6.2"><h3 data-number="1.6.2" class="anchored" data-anchor-id="filtering-images-to-model-the-visual-acuity-of-animals">
 <span class="header-section-number">1.6.2</span> Filtering images to model the visual acuity of animals</h3>
 <p>The resolving power of animals is in large part defined by their visual acuity, and this reality has has important consequences for questions of signal evolution and visual ecology. This process can can now be accounted for (in part) via <code><a href="https://pavo.colrverse.com/reference/procimg.html">procimg()</a></code> which implements the AcuityView algorithm of Caves and Johnson (2018). Note that for users familiar with the algorithm this is the 2.0 implementation, which now accepts any rectangular images (not only those which are square with dimensions a power of 2).</p>
@@ -1147,7 +1150,7 @@ Gruson, Hugo, Thomas White, and Rafael Maia. 2019. <span>“Lightr: Import Spect
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp("https:\/\/bisaloo\.github\.io\/colsci-book");
+        var filterRegex = new RegExp("https:\/\/book\.colrverse\.com");
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }
