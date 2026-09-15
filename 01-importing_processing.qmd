@@ -323,6 +323,25 @@ mtext("Wavelength (nm)", side = 1, outer = TRUE, line = 1)
 mtext("Normalised reflectance (%)", side = 2, outer = TRUE, line = 1)
 ```
 
+A different sort of processing is available through `opt = "clip"`, which removes a range of wavelengths and fills the gap by linear interpolation between the values either side of it. This is for regions that are unusable for reasons smoothing will not fix, such as a filter cut-off, a saturated detector, or a second-order artefact. The range is given through `clip_range`, and a list of ranges can be passed if more than one region needs removing. Where both are requested, clipping is applied before smoothing.
+
+```{r}
+#| message: false
+#| fig: true
+#| include: true
+#| fig-width: 5
+#| fig-height: 4
+#| fig-cap: A single spectrum before (black) and after (red) clipping 400-450 nm, with
+#|   the removed region replaced by linear interpolation.
+spec.clip <- procspec(sppspec, opt = "clip", clip_range = c(400, 450))
+
+plot(sppspec[, 5] ~ sppspec$wl,
+     type = "l",
+     xlab = "Wavelength (nm)",
+     ylab = "Reflectance (%)")
+lines(spec.clip[, 5] ~ spec.clip$wl, col = "red")
+```
+
 ### Binning and PCA Analysis of Spectral Shape
 
 Another intended usage of `procspec()` is preparation of spectral data for dimensionality reduction (for example, using Principal Component Analysis, or PCA). Following @Cuthill1999, we can use `opt = 'center'` to centre spectra to have a mean reflectance of zero (thus removing brightness as a dominant variable in the PCA) and then bin the spectra into user-defined bins (using the `opt = 'bin'` argument) to obtain a dataframe suitable for the PCA.
@@ -469,7 +488,22 @@ mtext("Wavelength (nm)", side = 1, outer = TRUE, line = 1)
 mtext("Cumulative reflectance (A.U.)", side = 2, outer = TRUE, line = 1)
 ```
 
-Note that in the above figure, the y axis to the right includes the index of each spectrum. This makes it easier to identify and subset specific spectra or groups of spectra using the `select` argument in `plot.rspec()`. Note also that the first index is actually 2, preserving the sequence in the original dataset (since the first column is wavelength). Though this may seem confusing at first ("why is my first spec number 2?") this preserves subsetting hierarchy: using `plot(teal, select = 2)` will show the same spectra that would be selected if you use `teal[ ,2]`.
+Labels identifying each spectrum can be added along the right-hand margin by passing `labels = TRUE`, which works for overlay and stacked plots alike. They default to the column names of the object, `labels.stack` substitutes a vector of your own, and `labels.cex` sets their size. The right margin usually needs widening through `par()` to make room for them.
+
+```{r}
+#| fig: true
+#| include: true
+#| fig-width: 5
+#| fig-height: 4
+#| fig-cap: Stacked teal spectra with each curve labelled by its incident angle.
+oldpar <- par(mar = c(4, 4, 2, 4))
+
+plot(teal, type = "s", col = spec2rgb(teal), labels = TRUE, labels.cex = 0.7)
+
+par(oldpar)
+```
+
+Spectra can also be identified and subset by index, using the `select` argument in `plot.rspec()`. Note that the first index is actually 2, preserving the sequence in the original dataset (since the first column is wavelength). Though this may seem confusing at first ("why is my first spec number 2?") this preserves subsetting hierarchy: using `plot(teal, select = 2)` will show the same spectra that would be selected if you use `teal[ ,2]`.
 
 #### The `heatmap` Option
 
