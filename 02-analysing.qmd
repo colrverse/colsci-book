@@ -291,6 +291,27 @@ coldist(vismod.idi, n = c(1, 2), weber = 0.1)
 
 Where `dS` is the chromatic contrast ($\Delta S$) and `dL` is the achromatic contrast ($\Delta L$). Note that, by default, `achromatic = FALSE`, so `dL` isn't included in the second result (this is to maintain consistency since, in the `vismodel()` function, the `achromatic` argument defaults to `none`). As expected, values are really high under the avian colour vision, since the colours of these species are quite different and because of the enhanced discriminatory ability with four compared to two cones.
 
+The two noise models can be compared directly. Recall that `vismod1` was built with an unscaled `D65` illuminant, so its quantum catches are small and the photon-noise term $2/(Q_a+Q_b)$ is correspondingly large:
+
+```{r}
+#| message: false
+coldist(vismod1, noise = "quantum", n = c(1, 2, 2, 4), weber = 0.1)
+```
+
+The distances are a good deal smaller than their neural equivalents above. That reflects the photon catch the model assumes, rather than anything about the birds themselves. If we rebuild the same model with the illuminant scaled to approximate bright conditions, the photon-noise term shrinks and the two models converge:
+
+```{r}
+#| message: false
+vismod1_bright <- vismodel(sppspec,
+  visual = "avg.uv", achromatic = "bt.dc",
+  illum = "D65", relative = FALSE, scale = 10000
+)
+
+coldist(vismod1_bright, noise = "quantum", n = c(1, 2, 2, 4), weber = 0.1)
+```
+
+This is why the units of the illuminant matter so much under the quantum model, as flagged in the `scale` section above. The absolute magnitude of the catches enters the calculation, not just the shape of the illuminant curve, so spectra measured proportional to a white standard will give misleading distances unless `scale` is used to bring them to roughly the right order.
+
 `coldist()` also has a `subset` argument, which is useful if only certain comparisons are of interest (for example, of colour patches against a background, or only comparisons among a species or body patch). `subset()` can be a vector of length one or two. If only one subsetting option is passed, all comparisons against the matching argument are returned (useful in the case of comparing to a background, for example). If two values are passed, comparisons will only be made between samples that match that rule (partial string matching and regular expressions are accepted). For example, compare:
 
 ```{r}
