@@ -4,17 +4,13 @@ Title: "The pavo handbook: studying biological colouration in R"
 Version: 0.0.1
 Imports:
   alphashape3d,
-  bookdown,
   bslib,
   downlit,
   jsonlite,
   mapproj,
   NbClust,
-  pavo,
+  pavo (>= 2.10.0),
   rgl,
   styler,
   xml2
-Remotes: 
-  rmaia/pavo,
-  rstudio/bookdown
 License: CC BY 4.0
