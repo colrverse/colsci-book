@@ -408,13 +408,27 @@ Three further arguments refine this. All of them follow `...` in the function de
 
 The seven males each contribute a crown, throat and breast measurement, so the rows are not independent: the three measurements from one bird share whatever makes that bird distinctive. `cluster` identifies the unit that resampling should work over, and replicates then draw whole birds rather than individual rows. `nesting` describes how those clusters relate to the grouping variable, and defaults to `"auto"`, which checks whether any cluster appears under more than one level of `by`. Here every bird appears under all three regions, so the design is crossed, and a single draw of birds is shared across the groups to preserve their pairing.
 
-`correct` addresses a different problem. The distance between two group means is biased upwards, because each mean is estimated with error and distance is a convex function of that error. Two samples drawn from a single population will therefore sit an apparently non-zero distance apart. The bias is worst for groups that are small and internally variable, and it does not fall away as the true separation approaches zero, so it is largest exactly where discriminability is in question. Setting `correct = TRUE` subtracts it from the empirical distance and from every bootstrap replicate, using in each case the observations that replicate drew.
-
 ```{r}
 #| message: false
 #| warning: false
 individuals <- substr(rownames(sicmod), 1, 4)
 
+sicdist_cl <- bootcoldist(sicmod,
+                          by = regions,
+                          n = c(1, 2, 2, 4),
+                          weber = 0.05,
+                          cluster = individuals)
+
+sicdist_cl
+```
+
+The estimates are identical to the unclustered table above, since the empirical distance between group means does not depend on how the bootstrap resamples. What changes is the interval, which now reflects seven independent birds rather than twenty-one exchangeable rows.
+
+`correct` addresses a different problem. The distance between two group means is biased upwards, because each mean is estimated with error and distance is a convex function of that error. Two samples drawn from a single population will therefore sit an apparently non-zero distance apart. The bias is worst for groups that are small and internally variable, and it does not fall away as the true separation approaches zero, so it is largest exactly where discriminability is in question. Setting `correct = TRUE` subtracts it from the empirical distance and from every bootstrap replicate, using in each case the observations that replicate drew.
+
+```{r}
+#| message: false
+#| warning: false
 sicdist_corr <- bootcoldist(sicmod,
                             by = regions,
                             n = c(1, 2, 2, 4),
@@ -425,7 +439,11 @@ sicdist_corr <- bootcoldist(sicmod,
 sicdist_corr
 ```
 
-Both the estimate and its limits move downward. The interval is if anything slightly wider, since the correction is itself estimated and the bootstrap carries that uncertainty along with everything else. The correction relies on the distance arising from an inner product, so it is unavailable under quantum noise, in the `CIELAB`, `CIELCh` and `coc` spaces, and for achromatic contrast in a colourspace model, where luminance contrast is a ratio rather than a distance.
+Every estimate falls, and the breast-throat interval now reaches zero. The limits shift as well, though not uniformly: the correction is itself estimated, and the bootstrap carries that uncertainty along with everything else, so how far each limit moves depends on the contrast.
+
+The result also carries a `"dS.sq"` attribute, holding the signed corrected square for each contrast. That is the quantity the correction is unbiased for. Flooring at zero is a presentation choice, since a negative squared distance cannot be reported as a distance, so a contrast whose corrected square is negative appears as zero in the table while `"dS.sq"` retains the sign. Carry `"dS.sq"` rather than the tabulated distance into any further calculation or meta-analysis.
+
+The correction relies on the distance arising from an inner product, so it is unavailable under quantum noise, in the `CIELAB`, `CIELCh` and `coc` spaces, and for achromatic contrast in a colourspace model, where luminance contrast is a ratio rather than a distance.
 
 The remaining argument, `ci.type`, controls how the limits are read off the bootstrap distribution. Colour distances are bounded below by zero and are usually right-skewed, which is the situation in which percentile limits sit off-centre. Passing `"bca"` gives bias-corrected and accelerated limits instead, shifting them to account both for that skew and for where the empirical distance falls within the bootstrap distribution.
 
