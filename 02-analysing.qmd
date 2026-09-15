@@ -226,6 +226,35 @@ vismod.idi <- vismodel(sppspec,
 vismod.idi
 ```
 
+##### Pigment Templates
+
+By default, `sensmodel()` uses the A1 template of @Govardovskii2000, which is what every sensitivity curve modelled above assumes. Other templates are available through the `template` argument, which names both the author and the chromophore, since the shape of a pigment's absorbance band depends on both.
+
+The most consequential alternative is `"govardovskii_a2"`, covering the vitamin A2 chromophore (porphyropsin) found in freshwater fish, amphibians, and species that switch chromophore seasonally. At a given peak sensitivity an A2 band is around 20% broader than its A1 equivalent, so it is not recovered by shifting `peaksens` on the default template:
+
+```{r}
+#| message: false
+#| fig: true
+#| include: true
+#| fig-width: 5
+#| fig-height: 4
+#| fig-cap: A1 (black) and A2 (red) pigments modelled at the same peak sensitivity
+#|   of 450 nm. Both curves are integrated to an area of one, so the broader A2
+#|   band sits lower at its peak.
+a1 <- sensmodel(450, template = "govardovskii_a1", sensnames = "A1")
+a2 <- sensmodel(450, template = "govardovskii_a2", sensnames = "A2")
+
+both <- as.rspec(data.frame(wl = a1$wl, A1 = a1$A1, A2 = a2$A2))
+
+plot(both, col = c("black", "red"), ylab = "Absorbance")
+```
+
+When comparing chromophores, pair `"govardovskii_a2"` with the default rather than with one of the alternatives below, so that the comparison is of chromophores and not of template families. The template used is recorded as a `"template"` attribute on the result.
+
+The remaining two options, `"ssh_a1"` and `"ssh_a2"`, implement the templates of @Stavenga1993. Above 450 nm these differ from their Govardovskii equivalents by only a few percent, but they diverge in the ultraviolet, where @Stavenga2010 regards both families as unreliable. `"ssh_a2"` was calibrated on carp porphyropsin alone, so it rests on a narrower base than the Govardovskii A2 template.
+
+One caveat applies to both SSH templates, and `beta = FALSE` is recommended with either. Their beta band sits at a fixed wavelength rather than scaling with `peaksens` as Govardovskii's does, so for short-wavelength pigments it drags the maximum of the summed curve away from the peak that was asked for. `sensmodel()` warns where that shift exceeds 5 nm, which for `"ssh_a1"` happens between roughly 388 and 402 nm, and for `"ssh_a2"` anywhere below about 475 nm. @Stavenga2010 notes the fixed beta peak as a known shortcoming of the template. Both Govardovskii beta bands scale with `peaksens` and are unaffected.
+
 #### The Receptor Noise Model
 
 The receptor-noise limited (RNL) model of @Vorobyev1998, @Vorobyev2001 offers a basis for estimating the 'perceptual' distance between coloured stimuli (depending on available physiological and behavioural data), and assumes that the simultaneous discrimination of colours is fundamentally limited by photoreceptor noise. Colour distances under the RNL model can be calculated by using the inverse of the noise-to-signal ratio, known as the Weber fraction ($w_i$ for each cone $i$). The Weber fraction can be calculated from the noise-to-signal ratio of cone $i$ ($v_i$) and the relative number of receptor cells of type $i$ within the receptor field ($n_i$):
